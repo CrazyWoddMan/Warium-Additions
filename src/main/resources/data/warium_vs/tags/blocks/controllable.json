@@ -1,8 +1,8 @@
 {
   "values": [
-    "warium_create:converter_out",
-    "warium_create:converter_in",
-    "warium_create:controllable_trigger",
+    "warium_additions:converter_out",
+    "warium_additions:converter_in",
+    "warium_additions:controllable_trigger",
     {
       "id": "valkyrien_warium:propeller",
       "required": false

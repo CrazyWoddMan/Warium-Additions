@@ -1,43 +1,50 @@
 modLoader="javafml"
 loaderVersion="${loader_version_range}"
-issueTrackerURL = "https://github.com/CrazyWoddMan/Warium-Create-Bridge/issues/"
+issueTrackerURL = "https://github.com/CrazyWoddMan/${project.name}/issues/"
 license="MIT"
 
 [[mods]]
 	modId="${mod_id}"
 	version="${mod_version}"
 	displayName="${mod_name}"
-    displayURL="https://www.curseforge.com/minecraft/mc-mods/warium-create"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/${mod_id}"
     logoFile = "icon.png"
     credits="${credits}"
 	authors="${mod_authors}" 
 	description='''${mod_description}'''
-    mixins = "mixins.${mod_id}.json"
+    mixins = "${mod_id}.mixins.json"
 
-[[dependencies.warium_create]]
+[[dependencies.${mod_id}]]
     modId="forge"
     mandatory=true 
     versionRange="${forge_version_range}"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.warium_create]]
+[[dependencies.${mod_id}]]
     modId="minecraft"
     mandatory=true
     versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.warium_create]]
+[[dependencies.${mod_id}]]
     modId="crusty_chunks"
     mandatory=true 
     versionRange="${warium_version_range}"
     ordering="AFTER"
     side="BOTH"
 
-[[dependencies.warium_create]]
+[[dependencies.${mod_id}]]
     modId="create"
-    mandatory=true 
+    mandatory=false
     versionRange="${create_version_range}"
     ordering="NONE"
+    side="BOTH"
+	
+[[dependencies.${mod_id}]]
+    modId="immersiveengineering"
+    mandatory=false
+    versionRange="${immersiveengineering_version_range}"
+    ordering="AFTER"
     side="BOTH"

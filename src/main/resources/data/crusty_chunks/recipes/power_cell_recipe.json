@@ -20,7 +20,7 @@
       "tag": "forge:ingots/lead"
     },
     "e": {
-      "tag": "warium_create:power_cell_core"
+      "tag": "warium_additions:power_cell_core"
     }
   },
   "result": {
