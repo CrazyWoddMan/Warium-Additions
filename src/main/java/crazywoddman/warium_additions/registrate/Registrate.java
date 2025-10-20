@@ -12,6 +12,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 public class Registrate {
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(WariumAdditions.MODID);
+    public static final CreateRegistrate REGISTRATE_OLDID = CreateRegistrate.create("warium_create");
 
     static {
         REGISTRATE.setTooltipModifierFactory(item -> {
@@ -23,5 +24,6 @@ public class Registrate {
 
     public static void register(IEventBus bus) {
         REGISTRATE.registerEventListeners(bus);
+        REGISTRATE_OLDID.registerEventListeners(bus);
     }
 }

@@ -55,6 +55,12 @@ public abstract class EnergyTooltipProvider implements IHaveGoggleInformation {
         
         IEnergyStorage energyStorage = resolve.get();
         String type = ForgeRegistries.BLOCKS.getKey(blockEntity.getBlockState().getBlock()).getPath();
+        tooltip.add(Component
+                .literal("    ")
+                .append(Component.translatable("block.crusty_chunks." + type))
+                .append(Component.literal(":"))
+                .withStyle(ChatFormatting.AQUA)
+            );
         
         if (List.of("energy_battery", "electric_firebox", "power_reactor_port").contains(type)) {
             tooltip.add(Component
@@ -80,7 +86,7 @@ public abstract class EnergyTooltipProvider implements IHaveGoggleInformation {
             );
         }
 
-        if (!List.of("energy_battery", "power_reactpr_input").contains(type)) {
+        if (!List.of("energy_battery", "power_reactor_port").contains(type)) {
             Level level = blockEntity.getLevel();
             BlockPos pos = blockEntity.getBlockPos();
             tooltip.add(Component

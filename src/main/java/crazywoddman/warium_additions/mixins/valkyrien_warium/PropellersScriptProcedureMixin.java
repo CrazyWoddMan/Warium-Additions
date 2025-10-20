@@ -3,6 +3,7 @@ package crazywoddman.warium_additions.mixins.valkyrien_warium;
 import net.mcreator.valkyrienwarium.block.entity.BoatPropellerTileEntity;
 import net.mcreator.valkyrienwarium.block.entity.VehicleControlNodeBlockEntity;
 import net.mcreator.valkyrienwarium.procedures.HeliRotorScriptProcedure;
+import net.mcreator.valkyrienwarium.procedures.LargeHeliRotorScriptProcedure;
 import net.mcreator.valkyrienwarium.procedures.PropellerScriptProcedure;
 import net.mcreator.valkyrienwarium.procedures.WaterPropScriptProcedure;
 import net.minecraft.core.BlockPos;
@@ -25,7 +26,8 @@ import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
     value = {
         WaterPropScriptProcedure.class,
         PropellerScriptProcedure.class,
-        HeliRotorScriptProcedure.class
+        HeliRotorScriptProcedure.class,
+        LargeHeliRotorScriptProcedure.class
     }
 )
 public class PropellersScriptProcedureMixin {

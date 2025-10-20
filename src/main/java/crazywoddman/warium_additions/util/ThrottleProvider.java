@@ -16,20 +16,20 @@ public class ThrottleProvider {
      */
     public static Integer get(BlockEntity blockEntity, Integer altThrottle) {
         Integer result = altThrottle;
-        CompoundTag persistentData = blockEntity.getPersistentData();
+        CompoundTag data = blockEntity.getPersistentData();
 
-        if (persistentData.contains("ControlX")) {
+        if (data.contains("ControlX")) {
             BlockEntity controlNode = blockEntity.getLevel().getBlockEntity(
                 new BlockPos(
-                    persistentData.getInt("ControlX"),
-                    persistentData.getInt("ControlY"),
-                    persistentData.getInt("ControlZ")
+                    data.getInt("ControlX"),
+                    data.getInt("ControlY"),
+                    data.getInt("ControlZ")
                 )
             );
 
             if (controlNode != null && controlNode instanceof VehicleControlNodeBlockEntity) {
                 int throttle = controlNode.getPersistentData().getInt("Throttle");
-                String key = persistentData.getString("Key");
+                String key = data.getString("Key");
 
                 if (throttle != 0 && switch (key) {
                     case "Throttle+" -> throttle > 0;

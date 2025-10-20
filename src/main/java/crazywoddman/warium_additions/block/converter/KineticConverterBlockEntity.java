@@ -28,14 +28,14 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
 
-public class ConverterInBlockEntity extends GeneratingKineticBlockEntity {
+public class KineticConverterBlockEntity extends GeneratingKineticBlockEntity {
 
-    public ConverterInBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public KineticConverterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
-    private final int defaultStress = Config.SERVER.defaultStress.get();
-    private final int defaultSpeed = Config.SERVER.defaultSpeed.get();
+    private final int defaultStress = Config.SERVER.kineticToStressRatio.get();
+    private final int defaultSpeed = Config.SERVER.kineticToSpeedRatio.get();
     private final int maxThrottle = Config.SERVER.maxThrottle.get();
     private final int kineticConverterReponse = Config.SERVER.kineticConverterReponse.get();
     private boolean converterSpeedControl = Config.SERVER.converterSpeedControl.get();
@@ -127,7 +127,7 @@ public class ConverterInBlockEntity extends GeneratingKineticBlockEntity {
             
         return convertToDirection(
             speed / this.maxThrottle * (this.throttleToRotationDirection ? this.lastThrottle : Math.abs(this.lastThrottle)), 
-            getBlockState().getValue(ConverterIn.FACING)
+            getBlockState().getValue(OldKineticConverterBlock.FACING)
         );
     }
 
@@ -146,7 +146,7 @@ public class ConverterInBlockEntity extends GeneratingKineticBlockEntity {
         if (this.level.getGameTime() % kineticConverterReponse != 0)
             return;
 
-        Direction facing = getBlockState().getValue(ConverterIn.FACING);
+        Direction facing = getBlockState().getValue(OldKineticConverterBlock.FACING);
         BlockPos backPos = getBlockPos().relative(facing.getOpposite());
         BlockState backState = this.level.getBlockState(backPos);
         BlockEntity backBlockEntity = this.level.getBlockEntity(backPos);
@@ -196,7 +196,7 @@ public class ConverterInBlockEntity extends GeneratingKineticBlockEntity {
         @Override
         public Vec3 getLocalOffset(BlockState state) {     
             return super.getLocalOffset(state).add(Vec3
-                .atLowerCornerOf(state.getValue(ConverterIn.FACING).getNormal())
+                .atLowerCornerOf(state.getValue(OldKineticConverterBlock.FACING).getNormal())
                 .scale(2 / 16f)
             );
         }
@@ -204,7 +204,7 @@ public class ConverterInBlockEntity extends GeneratingKineticBlockEntity {
         @Override
         public void rotate(BlockState state, PoseStack ms) {
             super.rotate(state, ms);
-            Direction facing = state.getValue(ConverterIn.FACING);
+            Direction facing = state.getValue(OldKineticConverterBlock.FACING);
             if (facing.getAxis() == Direction.Axis.Y)
                 return;
             if (getSide() != Direction.UP)
@@ -215,7 +215,7 @@ public class ConverterInBlockEntity extends GeneratingKineticBlockEntity {
 
         @Override
         protected boolean isSideActive(BlockState state, Direction direction) {
-            Direction facing = state.getValue(ConverterIn.FACING);
+            Direction facing = state.getValue(OldKineticConverterBlock.FACING);
             
             if (facing.getAxis() != Direction.Axis.Y && direction == Direction.DOWN)
                 return false;

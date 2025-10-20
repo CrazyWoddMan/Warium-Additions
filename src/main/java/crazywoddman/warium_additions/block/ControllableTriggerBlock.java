@@ -21,11 +21,11 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class ControllableTrigger extends Block implements EntityBlock {
+public class ControllableTriggerBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = DirectionalBlock.FACING;
     public static final BooleanProperty POWERED = BooleanProperty.create("powered");
 
-    public ControllableTrigger() {
+    public ControllableTriggerBlock() {
         super(
             Properties
             .of()
@@ -42,7 +42,6 @@ public class ControllableTrigger extends Block implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
         builder.add(FACING, POWERED);
     }
 
@@ -86,11 +85,5 @@ public class ControllableTrigger extends Block implements EntityBlock {
     @Override
     public int getDirectSignal(BlockState state, BlockGetter world, BlockPos pos, Direction direction) {
         return getSignal(state, world, pos, direction);
-    }
-    
-    @SuppressWarnings("deprecation")
-    @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-        super.neighborChanged(state, level, pos, block, fromPos, isMoving);
     }
 }

@@ -8,9 +8,9 @@
 		"1": "crusty_chunks:block/aluminumcasingside",
 		"2": "crusty_chunks:block/kineticpoweroutput",
 		"3": "create:block/gauge",
-		"4": "warium_additions:block/converter_side",
+		"4": "warium_additions:block/rotation_converter_side",
 		"5": "create:block/axis_top",
-		"6": "warium_additions:block/converter_out_back",
+		"6": "warium_additions:block/rotation_converter_back",
 		"particle": "create:block/gauge"
 	},
 	"elements": [

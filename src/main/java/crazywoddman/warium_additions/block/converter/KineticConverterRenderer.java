@@ -15,24 +15,24 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class ConverterInRenderer extends KineticBlockEntityRenderer<ConverterInBlockEntity> {
+public class KineticConverterRenderer extends KineticBlockEntityRenderer<KineticConverterBlockEntity> {
 
-    public ConverterInRenderer(BlockEntityRendererProvider.Context context) {
+    public KineticConverterRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    protected SuperByteBuffer getRotatedModel(ConverterInBlockEntity be, BlockState state) {
-        Direction facing = state.getValue(ConverterIn.FACING);
+    protected SuperByteBuffer getRotatedModel(KineticConverterBlockEntity be, BlockState state) {
+        Direction facing = state.getValue(OldKineticConverterBlock.FACING);
         return CachedBufferer.partialFacing(AllPartialModels.SHAFT_HALF, state, facing);
     }
 
     @Override
-    protected void renderSafe(ConverterInBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
+    protected void renderSafe(KineticConverterBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         if (Backend.canUseInstancing(be.getLevel())) return;
 
         BlockState state = be.getBlockState();
-        Direction facing = state.getValue(ConverterIn.FACING);
+        Direction facing = state.getValue(OldKineticConverterBlock.FACING);
         VertexConsumer vb = buffer.getBuffer(RenderType.cutoutMipped());
         int lightBehind = LevelRenderer.getLightColor(be.getLevel(), be.getBlockPos().relative(facing.getOpposite()));
         SuperByteBuffer shaftHalf = CachedBufferer.partialFacing(AllPartialModels.SHAFT_HALF, state, facing);

@@ -15,27 +15,27 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 
-public class ConverterOutRenderer extends KineticBlockEntityRenderer<ConverterOutBlockEntity> {
+public class RotationConverterRenderer extends KineticBlockEntityRenderer<RotationConverterBlockEntity> {
 
-    public ConverterOutRenderer(BlockEntityRendererProvider.Context context) {
+    public RotationConverterRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    protected SuperByteBuffer getRotatedModel(ConverterOutBlockEntity blockEntity, BlockState state) {
-        Direction facing = state.getValue(ConverterOut.FACING);
+    protected SuperByteBuffer getRotatedModel(RotationConverterBlockEntity blockEntity, BlockState state) {
+        Direction facing = state.getValue(RotationConverterBlock.FACING);
         return CachedBufferer.partialFacing(AllPartialModels.SHAFT_HALF, state, facing.getOpposite());
     }
 
     @Override
-    protected void renderSafe(ConverterOutBlockEntity blockEntity, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
+    protected void renderSafe(RotationConverterBlockEntity blockEntity, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         if (Backend.canUseInstancing(blockEntity.getLevel())) return;
 
         super.renderSafe(blockEntity, partialTicks, ms, buffer, light, overlay);
 
         BlockState state = blockEntity.getBlockState();
-        Direction facing = state.getValue(ConverterOut.FACING);
-        AttachFace face = state.getValue(ConverterOut.FACE);
+        Direction facing = state.getValue(RotationConverterBlock.FACING);
+        AttachFace face = state.getValue(RotationConverterBlock.FACE);
         VertexConsumer vb = buffer.getBuffer(RenderType.solid());
 
         SuperByteBuffer shaftHalf = CachedBufferer.partialFacing(AllPartialModels.SHAFT_HALF, state, facing.getOpposite());

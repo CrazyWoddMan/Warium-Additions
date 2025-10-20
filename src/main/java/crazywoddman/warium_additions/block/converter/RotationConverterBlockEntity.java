@@ -17,37 +17,33 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class ConverterOutBlockEntity extends SpeedGaugeBlockEntity {
+public class RotationConverterBlockEntity extends SpeedGaugeBlockEntity {
 
-    public ConverterOutBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public RotationConverterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
+        setLazyTickRate(5);
     }
 
-    private final int defaultStress = Config.SERVER.defaultStress.get();
-    private final int defaultSpeed = Config.SERVER.defaultSpeed.get();
+    private final int kineticToStressRatio = Config.SERVER.kineticToStressRatio.get();
+    private final int kineticToSpeedRatio = Config.SERVER.kineticToSpeedRatio.get();
     private final int maxThrottle = Config.SERVER.maxThrottle.get();
     private int lastThrottle;
+    private int lastSignal;
 
-    private void updateKineticPower() {
-        getPersistentData().putDouble(
-            "KineticPower",
-            (double) Math.round(Math.abs(getSpeed()) / this.defaultSpeed / this.maxThrottle * this.lastThrottle * 10) / 10
-        );
-        sendData();
-    }
-
-    private void updateDialTarget() {
-        this.dialTarget = getDialTarget(getSpeed() / this.maxThrottle * lastThrottle);
+    private float scaleFromSignal(float value) {
+        return this.lastSignal > 0 ? value / 15 * (15 - this.lastSignal) : value;
     }
 
     @Override
-    public void tick() {
-        super.tick();
-
+    public void lazyTick() {
+        super.lazyTick();
+        
+        int signal = this.level.getBestNeighborSignal(this.getBlockPos());
         int throttle = Math.abs(ThrottleProvider.get(this, this.maxThrottle));
 
-        if (this.lastThrottle != throttle) {
+        if (this.lastThrottle != throttle || this.lastSignal != signal) {
             this.lastThrottle = throttle;
+            this.lastSignal = signal;
 
             if (this.level.isClientSide)
                 return;
@@ -57,28 +53,30 @@ public class ConverterOutBlockEntity extends SpeedGaugeBlockEntity {
             if (network != null)
                 network.updateStressFor(this, calculateStressApplied());
 
-            this.dialTarget = getDialTarget(getSpeed() / this.maxThrottle * throttle);
-            updateDialTarget();
-            updateKineticPower();
+            onSpeedChanged(this.speed);
         }
 
     }
 
     @Override
 	public void onSpeedChanged(float prevSpeed) {
-		super.onSpeedChanged(prevSpeed);
+        super.onSpeedChanged(prevSpeed);
 
-		updateDialTarget();
+		float speed = Math.round(Math.abs(scaleFromSignal(getSpeed())) / this.maxThrottle * this.lastThrottle * 10) / 10;
+        getPersistentData().putDouble(
+            "KineticPower",
+            speed / this.kineticToSpeedRatio
+        );
+        this.dialTarget = getDialTarget(speed);
         this.color = Color
-            .mixColors(SpeedLevel.of(this.speed)
+            .mixColors(SpeedLevel.of(speed)
 			.getColor(), 0xffffff, .25f);
-        updateKineticPower();
-        setChanged();
+        notifyUpdate();
 	}
 
     @Override
     public float calculateStressApplied() {
-        float impact = (float) this.defaultStress / this.defaultSpeed / this.maxThrottle * this.lastThrottle;
+        float impact = Math.round(scaleFromSignal(this.kineticToStressRatio) / this.kineticToSpeedRatio / this.maxThrottle * this.lastThrottle);
         this.lastStressApplied = impact;
 		return impact;
     }
@@ -91,7 +89,7 @@ public class ConverterOutBlockEntity extends SpeedGaugeBlockEntity {
 		Lang.translate("gui.speedometer.title")
 			.style(ChatFormatting.GRAY)
 			.forGoggles(tooltip);
-		SpeedLevel.getFormattedSpeedText(getSpeed() / this.maxThrottle * this.lastThrottle, this.overStressed)
+		SpeedLevel.getFormattedSpeedText(scaleFromSignal(getSpeed()) / this.maxThrottle * this.lastThrottle, this.overStressed)
 			.forGoggles(tooltip);
         addStressImpactStats(tooltip, calculateStressApplied());
 

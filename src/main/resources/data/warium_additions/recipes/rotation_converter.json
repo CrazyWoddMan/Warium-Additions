@@ -10,11 +10,11 @@
       "item": "minecraft:compass"
     },
     "b": {
-      "item": "warium_additions:converter_in"
+      "item": "warium_additions:kinetic_converter"
     }
   },
   "result": {
-    "item": "warium_additions:converter_out",
+    "item": "warium_additions:rotation_converter",
     "count": 1
   }
 }

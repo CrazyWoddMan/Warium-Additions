@@ -2,12 +2,12 @@
   "type": "minecraft:block",
   "pools": [
     {
-	  "name": "warium_additions:converter_in",
+	  "name": "warium_additions:rotation_converter",
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "warium_additions:converter_in"
+          "name": "warium_additions:rotation_converter"
         }
       ],
       "conditions": [

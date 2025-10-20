@@ -33,8 +33,8 @@ public class Config {
         public final ForgeConfigSpec.IntValue maxThrottle;
         public final ForgeConfigSpec.BooleanValue throttleToRotationDirection;
 
-        public final ForgeConfigSpec.IntValue defaultStress;
-        public final ForgeConfigSpec.IntValue defaultSpeed;
+        public final ForgeConfigSpec.IntValue kineticToStressRatio;
+        public final ForgeConfigSpec.IntValue kineticToSpeedRatio;
         public final ForgeConfigSpec.BooleanValue converterSpeedControl;
         public final ForgeConfigSpec.IntValue kineticConverterReponse;
         public final ForgeConfigSpec.ConfigValue<String> fireboxHeat;
@@ -130,9 +130,6 @@ public class Config {
                 maxThrottle = builder
                     .comment("Maximum throttle value that can be set using Control Seat")
                     .defineInRange("maxThrottle", 10, 1, Integer.MAX_VALUE);
-                throttleToRotationDirection = builder
-                    .comment("Whether negative throttle values should reverse rotation direction")
-                    .define("throttleToRotationDirection", false);
             builder.pop();
 
             builder.push("Create");
@@ -152,12 +149,12 @@ public class Config {
                             "KINDLED".equals(value) || "SEETHING".equals(value)
                     );
                 builder.pop();
-                defaultStress = builder
+                kineticToStressRatio = builder
                     .comment("How many Stress Untis will be equivalent to 1 Kinetic Power unit")
-                    .defineInRange("kineticToStressRate", 40, 1, Integer.MAX_VALUE);
-                defaultSpeed = builder
+                    .defineInRange("kineticToStressRatio", 40, 1, Integer.MAX_VALUE);
+                kineticToSpeedRatio = builder
                     .comment("What Rotation Speed is equivalent to 1 Kinetic Power unit")
-                    .defineInRange("kineticToSpeedRate", 2, 1, 5);
+                    .defineInRange("kineticToSpeedRatio", 2, 1, 5);
                 converterSpeedControl = builder
                     .comment("Whether Kinetic Converter value box allows to select generating speed")
                     .define("kineticConverterSpeedControl", false);
@@ -165,6 +162,9 @@ public class Config {
                     .comment("Tick-measured Kinetic Converter response delay when changing throttle")
                     .comment("WARNING: lowering this value may cause shafts to break when changing throttle too fast")
                     .defineInRange("kineticConverterReponse", 8, 0, 40);
+                throttleToRotationDirection = builder
+                    .comment("Whether negative throttle values should reverse Create rotation direction for Kinetic Converter and TMFG/Diesel Generators engines")
+                    .define("throttleToRotationDirection", false);
             builder.pop();
         }
     }

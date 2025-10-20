@@ -6,15 +6,15 @@ import com.simibubi.create.content.kinetics.base.KineticBlockEntityInstance;
 import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
 import net.minecraft.core.Direction;
 
-public class ConverterInInstance extends KineticBlockEntityInstance<ConverterInBlockEntity> {
+public class KineticConverterInstance extends KineticBlockEntityInstance<KineticConverterBlockEntity> {
 
     protected final RotatingData shaft;
     final Direction facing;
 
-    public ConverterInInstance(MaterialManager materialManager, ConverterInBlockEntity blockEntity) {
+    public KineticConverterInstance(MaterialManager materialManager, KineticConverterBlockEntity blockEntity) {
         super(materialManager, blockEntity);
 
-        facing = blockState.getValue(ConverterIn.FACING);
+        facing = blockState.getValue(OldKineticConverterBlock.FACING);
         shaft = getRotatingMaterial().getModel(AllPartialModels.SHAFT_HALF, blockState, facing).createInstance();
         
         setup(shaft);

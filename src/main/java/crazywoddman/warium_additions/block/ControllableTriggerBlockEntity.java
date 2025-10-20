@@ -34,9 +34,9 @@ public class ControllableTriggerBlockEntity extends BlockEntity {
             }
         }
 
-        boolean currentPowered = state.getValue(ControllableTrigger.POWERED);      
+        boolean currentPowered = state.getValue(ControllableTriggerBlock.POWERED);      
         if (currentPowered != powered) {
-            level.setBlock(pos, state.setValue(ControllableTrigger.POWERED, powered), 3);
+            level.setBlock(pos, state.setValue(ControllableTriggerBlock.POWERED, powered), 3);
             level.updateNeighborsAt(pos, state.getBlock());
             for (Direction dir : Direction.values()) {
                 level.updateNeighborsAt(pos.relative(dir), state.getBlock());

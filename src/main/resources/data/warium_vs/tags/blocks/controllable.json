@@ -1,8 +1,17 @@
 {
   "values": [
-    "warium_additions:converter_out",
-    "warium_additions:converter_in",
-    "warium_additions:controllable_trigger",
+    {
+      "id": "warium_additions:rotation_converter",
+      "required": false
+    },
+    {
+      "id": "warium_additions:kinetic_converter",
+      "required": false
+    },
+    {
+      "id": "warium_additions:controllable_trigger",
+      "required": false
+    },
     {
       "id": "valkyrien_warium:propeller",
       "required": false
@@ -13,6 +22,10 @@
     },
     {
       "id": "valkyrien_warium:heli_rotor",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:large_heli_rotor",
       "required": false
     },
     {

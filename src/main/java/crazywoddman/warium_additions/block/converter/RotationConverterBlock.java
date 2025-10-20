@@ -26,7 +26,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class ConverterOut extends DirectionalKineticBlock implements IBE<ConverterOutBlockEntity> {
+public class RotationConverterBlock extends DirectionalKineticBlock implements IBE<RotationConverterBlockEntity> {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<AttachFace> FACE = BlockStateProperties.ATTACH_FACE;
@@ -35,7 +35,7 @@ public class ConverterOut extends DirectionalKineticBlock implements IBE<Convert
         return SHAPE.get((Direction)state.getValue(FACING));
     }
 
-    public ConverterOut(Properties properties) {
+    public RotationConverterBlock(Properties properties) {
         super(properties);
     }
 
@@ -93,13 +93,13 @@ public class ConverterOut extends DirectionalKineticBlock implements IBE<Convert
     }
 
     @Override
-    public Class<ConverterOutBlockEntity> getBlockEntityClass() {
-        return ConverterOutBlockEntity.class;
+    public Class<RotationConverterBlockEntity> getBlockEntityClass() {
+        return RotationConverterBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends ConverterOutBlockEntity> getBlockEntityType() {
-        return CreateBlockEntities.CONVERTER_OUT_BE.get();
+    public BlockEntityType<? extends RotationConverterBlockEntity> getBlockEntityType() {
+        return CreateBlockEntities.ROTATION_CONVERTER.get();
     }
 
     @Override

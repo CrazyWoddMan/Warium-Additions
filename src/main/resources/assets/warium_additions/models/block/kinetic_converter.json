@@ -7,7 +7,7 @@
 		"1": "crusty_chunks:block/aluminumcasingside",
 		"3": "crusty_chunks:block/kineticpowerinput",
 		"4": "create:block/windmill_bearing_side",
-		"6": "warium_additions:block/converter_front",
+		"6": "warium_additions:block/kinetic_converter_front",
 		"particle": "crusty_chunks:block/aluminumcasingtop"
 	},
 	"elements": [

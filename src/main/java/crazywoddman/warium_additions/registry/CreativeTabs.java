@@ -16,8 +16,8 @@ public class CreativeTabs {
     public static void onBuildCreativeTab(BuildCreativeModeTabContentsEvent event) {
         if (WariumAdditions.createLoaded) {
             if (event.getTabKey().location().equals(ResourceLocation.fromNamespaceAndPath("crusty_chunks", "warium_logistics"))) {
-                event.accept(CreateBlocks.CONVERTER_IN.asStack());
-                event.accept(CreateBlocks.CONVERTER_OUT.asStack());
+                event.accept(CreateBlocks.KINETIC_CONVERTER.asStack());
+                event.accept(CreateBlocks.ROTATION_CONVERTER.asStack());
             }
 
             if (event.getTabKey().location().equals(ResourceLocation.fromNamespaceAndPath("crusty_chunks", "crusty_production")))

@@ -13,7 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 
-public class ConverterOutInstance extends KineticBlockEntityInstance<ConverterOutBlockEntity> implements DynamicInstance {
+public class RotationConverterInstance extends KineticBlockEntityInstance<RotationConverterBlockEntity> implements DynamicInstance {
 
     protected final RotatingData shaft;
     protected final ModelData dial, head;
@@ -22,11 +22,11 @@ public class ConverterOutInstance extends KineticBlockEntityInstance<ConverterOu
     final Direction facing, opposite;
     final AttachFace face;
 
-    public ConverterOutInstance(MaterialManager materialManager, ConverterOutBlockEntity blockEntity) {
+    public RotationConverterInstance(MaterialManager materialManager, RotationConverterBlockEntity blockEntity) {
         super(materialManager, blockEntity);
 
-        facing = blockState.getValue(ConverterOut.FACING);
-        face = blockState.getValue(ConverterOut.FACE);
+        facing = blockState.getValue(RotationConverterBlock.FACING);
+        face = blockState.getValue(RotationConverterBlock.FACE);
         opposite = facing.getOpposite();
 
         shaft = getRotatingMaterial().getModel(AllPartialModels.SHAFT_HALF, blockState, opposite).createInstance();
