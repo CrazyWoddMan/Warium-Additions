@@ -6,6 +6,7 @@ import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.mcreator.crustychunks.block.entity.BlockMinerBlockEntity;
 import net.mcreator.crustychunks.block.entity.EngineCyllinderBlockEntity;
+import net.mcreator.crustychunks.block.entity.FlameThrowerBlockEntity;
 import net.mcreator.crustychunks.block.entity.FuelTankBlockEntity;
 import net.mcreator.crustychunks.block.entity.FuelTankInputBlockEntity;
 import net.mcreator.crustychunks.block.entity.FuelTankModuleBlockEntity;
@@ -38,7 +39,8 @@ import java.util.List;
         JetTurbineBlockEntity.class,
         RefineryTowerBlockEntity.class,
         OilFireboxBlockEntity.class,
-        BlockMinerBlockEntity.class
+        BlockMinerBlockEntity.class,
+        FlameThrowerBlockEntity.class
     },
     remap = false
 )
