@@ -1,6 +1,22 @@
 {
   "values": [
     "crusty_chunks:flowing_diesel",
-    "crusty_chunks:diesel"
+    "crusty_chunks:diesel",
+    {
+      "id":"createdieselgenerators:biodiesel",
+      "required":false
+    },
+    {
+      "id":"createdieselgenerators:flowing_biodiesel",
+      "required":false
+    },
+    {
+      "id":"immersiveengineering:biodiesel",
+      "required":false
+    },
+    {
+      "id":"immersiveengineering:biodiesel_flowing",
+      "required":false
+    }
   ]
 }

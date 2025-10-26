@@ -3,14 +3,23 @@
   "category": "misc",
   "ingredients": [
     {
+      "tag": "forge:dusts/iron"
+    },
+    {
+      "tag": "forge:charcoal"
+    },
+    {
       "tag": "forge:dusts/sulfur"
     },
     {
-      "item": "minecraft:coal"
+      "tag": "forge:dusts/sulfur"
+    },
+    {
+      "tag": "forge:charcoal"
     }
   ],
   "result": {
     "item": "minecraft:gunpowder",
-    "count": 3
+    "count": 5
   }
 }

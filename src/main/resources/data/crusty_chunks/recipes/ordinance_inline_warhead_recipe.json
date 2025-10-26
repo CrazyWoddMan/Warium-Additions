@@ -2,19 +2,19 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "aba",
-    "c c",
-    "aba"
+    "a a",
+    "bcb",
+    "a a"
   ],
   "key": {
     "a": {
       "tag": "forge:plates/steel"
     },
     "b": {
-      "item": "crusty_chunks:large_volatile_pile"
+      "item": "crusty_chunks:bent_component"
     },
     "c": {
-      "item": "crusty_chunks:bent_component"
+      "item": "crusty_chunks:large_volatile_pile"
     }
   },
   "result": {

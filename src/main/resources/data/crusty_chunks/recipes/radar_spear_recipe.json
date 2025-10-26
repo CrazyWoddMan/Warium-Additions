@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ab ",
+    "bcb",
+    " bd"
+  ],
+  "key": {
+    "a": {
+      "item": "crusty_chunks:radar_component"
+    },
+    "b": {
+      "tag": "forge:plates/aluminum"
+    },
+    "c": {
+      "item": "crusty_chunks:fire_spear_rocket"
+    },
+    "d": {
+      "item": "crusty_chunks:bent_component"
+    }
+  },
+  "result": {
+    "item": "crusty_chunks:radar_spear_missile"
+  }
+}

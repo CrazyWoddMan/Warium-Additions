@@ -2,20 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "ab ",
-    "bcd"
+    " a ",
+    "abc"
   ],
   "key": {
     "a": {
-      "item": "crusty_chunks:steel_tube"
-    },
-    "b": {
       "item": "crusty_chunks:bent_component"
     },
-    "c": {
+    "b": {
       "item": "crusty_chunks:firing_mechanism"
     },
-    "d": {
+    "c": {
       "tag": "forge:plates/steel"
     }
   },

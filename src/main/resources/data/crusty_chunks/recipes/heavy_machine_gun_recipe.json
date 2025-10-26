@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "abc",
+    "deb",
+    "cdf"
+  ],
+  "key": {
+    "a": {
+      "item": "crusty_chunks:huge_bored_barrel"
+    },
+    "b": {
+      "item": "crusty_chunks:steel_spring"
+    },
+    "c": {
+      "tag": "forge:plates/steel"
+    },
+    "d": {
+      "tag": "forge:ingots/steel"
+    },
+    "e": {
+      "item": "crusty_chunks:mg_receiver"
+    },
+    "f": {
+      "item": "crusty_chunks:steel_component"
+    }
+  },
+  "result": {
+    "item": "crusty_chunks:heavy_machine_gun"
+  }
+}

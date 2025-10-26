@@ -3,27 +3,24 @@
   "category": "misc",
   "pattern": [
     "aba",
-    "cdc",
-    "efe"
+    "aca",
+    "ded"
   ],
   "key": {
     "a": {
-      "item": "crusty_chunks:advanced_component"
+      "tag": "forge:ingots/steel"
     },
     "b": {
       "item": "crusty_chunks:steel_tube"
     },
     "c": {
-      "tag": "forge:ingots/steel"
-    },
-    "d": {
       "item": "crusty_chunks:engine_component"
     },
-    "e": {
+    "d": {
       "item": "crusty_chunks:brass_fitting"
     },
-    "f": {
-      "item": "crusty_chunks:steel_cylinder"
+    "e": {
+      "tag": "forge:storage_blocks/steel"
     }
   },
   "result": {

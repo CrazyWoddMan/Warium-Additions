@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "experience": 0.56,
+  "cookingtime": 100,
+  "ingredient": {
+    "item": "crusty_chunks:gold_dust"
+  },
+  "result": "minecraft:gold_ingot"
+}
