@@ -26,9 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-@Restriction(require = @Condition(value = "supplementaries", versionPredicates = "[3.1.18]"))
-// TODO: test with create 6
-// @Restriction(require = @Condition("supplementaries"))
+@Restriction(require = @Condition("supplementaries"))
 @Mixin(value = SoapWashableHelper.class, remap = false)
 public class SoapWashableHelperMixin {
 
@@ -38,7 +36,8 @@ public class SoapWashableHelperMixin {
             value = "INVOKE",
             target = "Ljava/util/function/Supplier;get()Ljava/lang/Object;",
             ordinal = 0
-        )
+        ),
+        require = 0
     )
     private static Object redirectSoapBlacklistGet(Supplier<List<String>> instance) {
         List<String> original = instance.get();
@@ -51,7 +50,7 @@ public class SoapWashableHelperMixin {
     }
 
     @Redirect(
-        method = "tryUnoxidise",
+        method = {"tryUnoxidise", "tryCleanFromConfig"},
         at = @At(
             value = "INVOKE",
             target = "Ljava/util/function/Supplier;get()Ljava/lang/Object;",
@@ -59,28 +58,22 @@ public class SoapWashableHelperMixin {
         )
     )
     private static Object redirectSoapSpecialGet(Supplier<Map<BlockPredicate, ResourceLocation>> instance) {
-        Map<BlockPredicate, ResourceLocation> original = instance.get();
         BiMap<BlockPredicate, ResourceLocation> extended = HashBiMap.create();
         
-        try {
-            for (ColoringRecipe template : ColoringRecipeRegistry.getCachedRecipes()) {
-                String base = template.baseIngredient;
+        for (ColoringRecipe template : ColoringRecipeRegistry.getCachedRecipes()) {
+            String base = template.baseIngredient;
 
-                if (base.startsWith("#")) {
-                    TagKey<Item> tag = ItemTags.create(ResourceLocation.tryParse(base.substring(1)));
-                    ITag<Item> items = ForgeRegistries.ITEMS.tags().getTag(tag);
+            if (base.startsWith("#")) {
+                TagKey<Item> tag = ItemTags.create(ResourceLocation.tryParse(base.substring(1)));
+                ITag<Item> items = ForgeRegistries.ITEMS.tags().getTag(tag);
 
-                    if (!items.isEmpty()) {
-                        String firstItemId = ForgeRegistries.ITEMS.getKey(items.iterator().next()).toString();
-                        extended.put(BlockPredicate.create(base), ResourceLocation.tryParse(firstItemId));
-                    }
+                if (!items.isEmpty()) {
+                    String firstItemId = ForgeRegistries.ITEMS.getKey(items.iterator().next()).toString();
+                    extended.put(BlockPredicate.create(base), ResourceLocation.tryParse(firstItemId));
                 }
             }
-        
-            return extended;
-        } catch (Exception e) {
-            System.err.println("Failed to extend soap special: " + e);
-            return original;
         }
+    
+        return extended;
     }
 }

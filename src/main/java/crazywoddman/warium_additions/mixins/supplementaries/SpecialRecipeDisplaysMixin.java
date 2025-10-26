@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.function.Supplier;
 
 @Restriction(require = @Condition(value = "supplementaries", versionPredicates = "[3.1.18]"))
-// TODO: test with create 6
-// @Restriction(require = @Condition("supplementaries"))
 @Mixin(value = SpecialRecipeDisplays.class, remap = false)
 public class SpecialRecipeDisplaysMixin {
 
