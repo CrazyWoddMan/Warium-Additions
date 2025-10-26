@@ -4,6 +4,7 @@ import net.mcreator.crustychunks.procedures.FuelTankInputTickProcedure;
 import net.mcreator.crustychunks.procedures.FuelTankModuleOnTickUpdateProcedure;
 import net.mcreator.crustychunks.procedures.FuelTankTickProcedure;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
@@ -17,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -31,6 +33,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class FuelTanksTickProcedureMixin {
     private static Fluid realFluid;
     private static BlockPos neighborPos;
+
+    @Redirect(
+        method = "execute",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/nbt/CompoundTag;putString(Ljava/lang/String;Ljava/lang/String;)V"
+        )
+    )
+    private static void redirectPut(CompoundTag compound, String key, String value) {}
 
     @ModifyConstant(
         method = "execute",

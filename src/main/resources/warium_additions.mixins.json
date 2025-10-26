@@ -1,10 +1,10 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "crazywoddman.warium_additions.mixins",
-  "plugin": "crazywoddman.warium_additions.MixinPlugin",
+  "package": "${mod_group_id}.mixins",
+  "plugin": "${mod_group_id}.MixinPlugin",
   "compatibilityLevel": "JAVA_17",
-  "refmap": "warium_additions.mixins.refmap.json",
+  "refmap": "${mod_id}.mixins.refmap.json",
   "mixins": [
     "crusty_chunks.energy.ElectricFireboxUpdateTickProcedureMixin",
 	"crusty_chunks.energy.ElectricFireboxBlockEntityMixin",
@@ -28,15 +28,18 @@
     "crusty_chunks.fluid.FuelTanksBlockEntityMixin",
     "crusty_chunks.fluid.FuelTanksTickProcedureMixin",
 	"crusty_chunks.fluid.FuelTanksFillMixin",
+	"crusty_chunks.fluid.GetFluidTankLevelMixin",
     "crusty_chunks.fluid.DrainFillProceduresMixin",
     "crusty_chunks.fluid.UniqueTankBlockEntitiesMixin",
     "crusty_chunks.fluid.OilFireboxUpdateProcedureMixin",
 	"crusty_chunks.fluid.RefineryOnTickUpdateProcedureMixin",
 	"crusty_chunks.fluid.RefineryGetValueMixin",
 	"crusty_chunks.fluid.ConnectionProceduresMixin",
+	"crusty_chunks.fluid.HeavyFlameThrowerFireScriptProcedureMixin",
 	
     "crusty_chunks.EnginesUpdateProcedureMixin",
 	"crusty_chunks.JetTurbineUpdateTickProcedureMixin",
+	"crusty_chunks.WeaponCrossOverlayProcedureMixin",
 
     "valkyrien_warium.PropellersScriptProcedureMixin",
     "valkyrien_warium.Throttle0PressProcedureMixin",

@@ -36,12 +36,14 @@ public class GeneratorBlockEntityMixin {
         remap = false
     )
     private void injectEnergyStorage(BlockPos position, BlockState state, CallbackInfo ci) {
-        this.energyStorage = new EnergyStorage(transLimit, 0, transLimit) {
+        this.energyStorage = new EnergyStorage(this.transLimit, 0, this.transLimit) {
 
             @Override
             public int receiveEnergy(int maxReceive, boolean simulate) {
                 if (simulate)
                     return 0;
+                
+                System.out.println("Received: " + maxReceive);
 
                 this.energy = maxReceive;
                 
@@ -85,7 +87,21 @@ public class GeneratorBlockEntityMixin {
         remap = false
     )
     private void injectEnergyCapability(Capability<?> capability, Direction facing, CallbackInfoReturnable<LazyOptional<?>> cir) {
-        if (capability == ForgeCapabilities.ENERGY && (facing == null || facing == ((BlockEntity)(Object)this).getBlockState().getValue(GeneratorBlock.FACING)))
-            cir.setReturnValue(LazyOptional.of(() -> this.energyStorage).cast());
+        if (capability == ForgeCapabilities.ENERGY)
+            if (facing == null)
+                cir.setReturnValue(LazyOptional.of(() -> this.energyStorage).cast());
+
+            else if (facing == ((BlockEntity)(Object)this).getBlockState().getValue(GeneratorBlock.FACING))
+                cir.setReturnValue(LazyOptional.of(() -> new EnergyStorage(this.transLimit, 0, this.transLimit) {
+                    @Override
+                    public int receiveEnergy(int maxReceive, boolean simulate) {
+                        return 0;
+                    }
+
+                    @Override
+                    public int extractEnergy(int maxExtract, boolean simulate) {
+                        return 0;
+                    }
+                }).cast());
     }
 }

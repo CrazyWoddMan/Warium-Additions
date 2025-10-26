@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="${loader_version_range}"
-issueTrackerURL = "https://github.com/CrazyWoddMan/${project.name}/issues/"
+issueTrackerURL = "https://github.com/${mod_authors}/${project.name}/issues/"
 license="MIT"
 
 [[mods]]
@@ -17,21 +17,21 @@ license="MIT"
 [[dependencies.${mod_id}]]
     modId="forge"
     mandatory=true 
-    versionRange="${forge_version_range}"
+    versionRange="[${forge_version},)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
     modId="minecraft"
     mandatory=true
-    versionRange="${minecraft_version_range}"
+    versionRange="[${mc_version}]"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
     modId="crusty_chunks"
     mandatory=true 
-    versionRange="${warium_version_range}"
+    versionRange="[${warium_version},)"
     ordering="AFTER"
     side="BOTH"
 	
