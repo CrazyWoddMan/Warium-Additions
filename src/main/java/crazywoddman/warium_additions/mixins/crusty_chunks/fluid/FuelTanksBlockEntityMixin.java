@@ -1,6 +1,7 @@
 package crazywoddman.warium_additions.mixins.crusty_chunks.fluid;
 
 import net.mcreator.crustychunks.block.entity.EngineCyllinderBlockEntity;
+import net.mcreator.crustychunks.block.entity.FlameThrowerBlockEntity;
 import net.mcreator.crustychunks.block.entity.FuelTankBlockEntity;
 import net.mcreator.crustychunks.block.entity.FuelTankInputBlockEntity;
 import net.mcreator.crustychunks.block.entity.FuelTankModuleBlockEntity;
@@ -37,7 +38,8 @@ import crazywoddman.warium_additions.util.WariumAdditionsUtil;
         MediumPetrolEngineBlockEntity.class,
         SmalPetrolEngineBlockEntity.class,
         EngineCyllinderBlockEntity.class,
-        JetTurbineBlockEntity.class
+        JetTurbineBlockEntity.class,
+        FlameThrowerBlockEntity.class
     },
     remap = false
 )
@@ -66,7 +68,7 @@ public class FuelTanksBlockEntityMixin {
             if (blockEntity instanceof LightCombustionEngineBlockEntity || blockEntity instanceof SmallDieselEngineBlockEntity || blockEntity instanceof EngineCyllinderBlockEntity)
                 return WariumAdditionsUtil.compareFluids(stack.getFluid(), CrustyChunksModFluids.DIESEL.get());
 
-            if (blockEntity instanceof MediumPetrolEngineBlockEntity || blockEntity instanceof SmalPetrolEngineBlockEntity)
+            if (blockEntity instanceof MediumPetrolEngineBlockEntity || blockEntity instanceof SmalPetrolEngineBlockEntity || blockEntity instanceof FlameThrowerBlockEntity)
                 return WariumAdditionsUtil.compareFluids(stack.getFluid(), CrustyChunksModFluids.PETROLIUM.get());
 
             else if (blockEntity instanceof JetTurbineBlockEntity)

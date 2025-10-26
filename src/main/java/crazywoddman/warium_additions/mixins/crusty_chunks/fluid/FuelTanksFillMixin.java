@@ -21,7 +21,8 @@ import crazywoddman.warium_additions.util.WariumAdditionsUtil;
         "net.mcreator.crustychunks.block.entity.MediumPetrolEngineBlockEntity$1",
         "net.mcreator.crustychunks.block.entity.SmalPetrolEngineBlockEntity$1",
         "net.mcreator.crustychunks.block.entity.EngineCyllinderBlockEntity$1",
-        "net.mcreator.crustychunks.block.entity.JetTurbineBlockEntity$1"
+        "net.mcreator.crustychunks.block.entity.JetTurbineBlockEntity$1",
+        "net.mcreator.crustychunks.block.entity.FlameThrowerBlockEntity$1"
     }
 )
 public abstract class FuelTanksFillMixin extends FluidTank {
