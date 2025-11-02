@@ -4,7 +4,7 @@ import com.jesz.createdieselgenerators.blocks.DieselGeneratorBlock;
 import com.jesz.createdieselgenerators.blocks.entity.DieselGeneratorBlockEntity;
 import com.jesz.createdieselgenerators.blocks.entity.HugeDieselEngineBlockEntity;
 import com.jesz.createdieselgenerators.blocks.entity.LargeDieselGeneratorBlockEntity;
-import com.simibubi.create.content.contraptions.bearing.WindmillBearingBlockEntity;
+import com.simibubi.create.content.contraptions.bearing.WindmillBearingBlockEntity.RotationDirection;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollOptionBehaviour;
 
@@ -24,7 +24,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Restriction(require = @Condition(value = "createdieselgenerators", versionPredicates = "[1.2i]"))
+@Restriction(require = {
+    @Condition(value = "createdieselgenerators", versionPredicates = "[1.2i]"),
+    @Condition("valkyrien_warium")
+})
 // TODO: test with create 6
 // @Restriction(require = @Condition("createdieselgenerators"))
 @Mixin(
@@ -68,19 +71,19 @@ public class GeneratorsThrottleControl {
         ),
         require = 0
     )
-    private ScrollOptionBehaviour<WindmillBearingBlockEntity.RotationDirection> redirectMovementDirection(HugeDieselEngineBlockEntity instance) {
-        return new ScrollOptionBehaviour<WindmillBearingBlockEntity.RotationDirection>(
-            WindmillBearingBlockEntity.RotationDirection.class,
+    private ScrollOptionBehaviour<RotationDirection> redirectMovementDirection(HugeDieselEngineBlockEntity instance) {
+        return new ScrollOptionBehaviour<RotationDirection>(
+            RotationDirection.class,
             null, instance, null
         ) {
             @Override
-            public WindmillBearingBlockEntity.RotationDirection get() {
-                WindmillBearingBlockEntity.RotationDirection originalDirection = instance.movementDirection.get();
+            public RotationDirection get() {
+                RotationDirection originalDirection = instance.movementDirection.get();
                 
                 if (throttleToRotationDirection && throttle != null && throttle < 0)
-                    return originalDirection == WindmillBearingBlockEntity.RotationDirection.CLOCKWISE 
-                        ? WindmillBearingBlockEntity.RotationDirection.COUNTER_CLOCKWISE
-                        : WindmillBearingBlockEntity.RotationDirection.CLOCKWISE;
+                    return originalDirection == RotationDirection.CLOCKWISE 
+                        ? RotationDirection.COUNTER_CLOCKWISE
+                        : RotationDirection.CLOCKWISE;
                 
                 return originalDirection;
             }
