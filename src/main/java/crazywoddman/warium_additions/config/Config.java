@@ -22,6 +22,7 @@ public class Config {
 
         public final ForgeConfigSpec.DoubleValue kineticToFeRate;
         public final ForgeConfigSpec.IntValue energyTransferLimit;
+        public final ForgeConfigSpec.IntValue cableLimit;
         public final ForgeConfigSpec.IntValue batteryCapacity;
         public final ForgeConfigSpec.IntValue electricFireboxCapacity;
         public final ForgeConfigSpec.IntValue electricFireboxConsumption;
@@ -102,6 +103,9 @@ public class Config {
                     energyTransferLimit = builder
                         .comment("Maximum amount of energy that can be transfered to/from Warium blocks per tick")
                         .defineInRange("energyTransferLimit", 1_000, 1, Integer.MAX_VALUE);
+                    cableLimit = builder
+                        .comment("Maximum amount of energy that can be transfered per tick by cable")
+                        .defineInRange("cableTransferLimit", 500, 1, Integer.MAX_VALUE);
                     batteryCapacity = builder
                         .comment("Energy Battery energy capacity (fe)")
                         .defineInRange("batteryCapacity", 800_000, 1, Integer.MAX_VALUE);

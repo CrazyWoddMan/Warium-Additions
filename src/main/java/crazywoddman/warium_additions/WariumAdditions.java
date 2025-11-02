@@ -1,22 +1,36 @@
 package crazywoddman.warium_additions;
 
+import org.lwjgl.glfw.GLFW;
+
+import com.mojang.blaze3d.platform.InputConstants;
+
+import crazywoddman.warium_additions.compat.create.CreateBlockEntities;
+import crazywoddman.warium_additions.compat.create.CreateBlocks;
+import crazywoddman.warium_additions.compat.create.CreateFluids;
+import crazywoddman.warium_additions.compat.create.CreateItems;
+import crazywoddman.warium_additions.compat.create.Registrate;
+import crazywoddman.warium_additions.compat.curios.CuriosEvents;
+import crazywoddman.warium_additions.compat.curios.CuriosUtil;
 import crazywoddman.warium_additions.config.ClothConfig;
 import crazywoddman.warium_additions.config.Config;
+import crazywoddman.warium_additions.network.ShootKeyPacket;
+import crazywoddman.warium_additions.network.NetworkHandler;
 import crazywoddman.warium_additions.recipe.WariumAdditionsRecipeTypes;
-import crazywoddman.warium_additions.registrate.CreateBlockEntities;
-import crazywoddman.warium_additions.registrate.CreateBlocks;
-import crazywoddman.warium_additions.registrate.CreateFluids;
-import crazywoddman.warium_additions.registrate.CreateItems;
-import crazywoddman.warium_additions.registrate.Registrate;
 import crazywoddman.warium_additions.registry.RegistryBlockEntities;
 import crazywoddman.warium_additions.registry.RegistryBlocks;
 import crazywoddman.warium_additions.registry.RegistryItems;
+import net.mcreator.crustychunks.init.CrustyChunksModItems;
 import net.mcreator.crustychunks.procedures.Rad1TickProcedure;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.InputEvent.Key;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
@@ -26,7 +40,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(WariumAdditions.MODID)
@@ -34,10 +47,11 @@ public class WariumAdditions {
     public static final String MODID = "warium_additions";
     
     private static final ModList modlist = ModList.get();
-    public static final boolean supplementariesLoaded = modlist.isLoaded("supplementaries");
-    public static final boolean valkyrienWariumLoaded = modlist.isLoaded("valkyrien_warium");
-    public static final boolean IEloaded = modlist.isLoaded("immersiveengineering");
-    public static final boolean createLoaded = modlist
+    public static final boolean curios = modlist.isLoaded("curios");
+    public static final boolean supplementaries = modlist.isLoaded("supplementaries");
+    public static final boolean valkyrien_warium = modlist.isLoaded("valkyrien_warium");
+    public static final boolean immersiveengineering = modlist.isLoaded("immersiveengineering");
+    public static final boolean create = modlist
             .getModContainerById("create")
             .map(container -> 
                 container
@@ -47,6 +61,12 @@ public class WariumAdditions {
                 .equals("0.5.1.j")
             )
             .orElse(false);
+    public static final KeyMapping SHOOT_KEY = new KeyMapping(
+        "key." + WariumAdditions.MODID + ".shoot",
+        InputConstants.Type.KEYSYM,
+        GLFW.GLFW_KEY_R,
+        "key.categories." + WariumAdditions.MODID
+    );
 
     public WariumAdditions(FMLJavaModLoadingContext context) {
         IEventBus bus = context.getModEventBus();
@@ -54,7 +74,7 @@ public class WariumAdditions {
         RegistryBlocks.WARIUM_REGISTRY.register(bus);
         RegistryItems.WARIUM_REGISTRY.register(bus);
 
-        if (createLoaded || supplementariesLoaded) {
+        if (create || supplementaries) {
             WariumAdditionsRecipeTypes.register();
             WariumAdditionsRecipeTypes.Recipes.SERIALIZER_REGISTER.register(bus);
             WariumAdditionsRecipeTypes.Recipes.TYPE_REGISTER.register(bus);
@@ -68,7 +88,7 @@ public class WariumAdditions {
             RegistryBlockEntities.OLD_REGISTRY.register(bus);
         }
 
-        if (createLoaded) {
+        if (create) {
             context.registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC);
             Registrate.register(bus);
             CreateBlocks.register();
@@ -76,13 +96,36 @@ public class WariumAdditions {
             CreateItems.register();
             CreateFluids.register();
         }
+
+        if (curios) {
+            NetworkHandler.register();
+            MinecraftForge.EVENT_BUS.register(CuriosEvents.class);
+        }
     }
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientEvents {
 
         @SubscribeEvent
+        public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
+            if (curios)
+                event.register(SHOOT_KEY);
+        }
+
+        @SubscribeEvent
         public static void onClientSetup(final FMLClientSetupEvent event) {
+            if (curios) {
+                CuriosUtil.registerBeltRenderers(new Item[]{RegistryItems.ENERGY_METER.get(), CrustyChunksModItems.GEIGER_COUNTER.get()});
+                CuriosUtil.registerHeadRenderers(new Item[]{CrustyChunksModItems.LIGHT_MACHINE_GUN.get()});
+                CuriosUtil.registerBackRenderers(new Item[]{
+                    CrustyChunksModItems.EMPTY_MISSILE_HARDPOINT.get(),
+                    CrustyChunksModItems.FIRE_SPEAR_ROCKET.get(),
+                    CrustyChunksModItems.SEEKER_SPEAR_ROCKET.get(),
+                    CrustyChunksModItems.RADAR_SPEAR_MISSILE.get(),
+                    CrustyChunksModItems.STRIKE_SPEAR_MISSILE.get()
+                });
+            }
+            
             if (modlist.isLoaded("cloth_config"))
                 ClothConfig.registerConfigScreen();
             
@@ -92,7 +135,7 @@ public class WariumAdditions {
 
         @SubscribeEvent
         public static void onBuildCreativeTab(BuildCreativeModeTabContentsEvent event) {
-            if (createLoaded) {
+            if (create) {
                 if (event.getTabKey().location().equals(ResourceLocation.fromNamespaceAndPath("crusty_chunks", "warium_logistics"))) {
                     event.accept(CreateBlocks.KINETIC_CONVERTER.asStack());
                     event.accept(CreateBlocks.ROTATION_CONVERTER.asStack());
@@ -107,23 +150,33 @@ public class WariumAdditions {
                 }
             }
 
-            if (valkyrienWariumLoaded && event.getTabKey().location().equals(ResourceLocation.fromNamespaceAndPath("valkyrien_warium", "warium_vs")))
+            if (valkyrien_warium && event.getTabKey().location().equals(ResourceLocation.fromNamespaceAndPath("valkyrien_warium", "warium_vs")))
                 event.accept(RegistryItems.CONTROLLABLE_TRIGGER);
         }
     }
 
-    @Mod.EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.FORGE)
-    public class Events {
+    @Mod.EventBusSubscriber(modid = WariumAdditions.MODID, value = Dist.CLIENT)
+    public class ClientKeyEvents {
+        
+        @SubscribeEvent
+        public static void onKeyInput(Key event) {
+            if (curios && SHOOT_KEY.consumeClick())
+                NetworkHandler.CHANNEL.sendToServer(new ShootKeyPacket());
+        }
+    }
+
+    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+    public static class Events {
 
         @SubscribeEvent
         public static void onFurnaceFuelBurnTime(FurnaceFuelBurnTimeEvent event) {
-            if (createLoaded && event.getItemStack().is(CreateItems.YELLOWCAKE.get()))
+            if (create && event.getItemStack().is(CreateItems.YELLOWCAKE.get()))
                 event.setBurnTime(12800);
         }
 
         @SubscribeEvent
         public static void onPlayerTick(PlayerTickEvent event) {
-            if (createLoaded) {
+            if (create) {
                 Player player = event.player;
                 Level level = player.level();
                 BlockPos pos = player.blockPosition();

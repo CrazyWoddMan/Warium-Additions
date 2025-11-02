@@ -1,1 +1,13 @@
-{"type":"immersiveengineering:blast_furnace","input":{"item":"crusty_chunks:brass_dust"},"result":{"item":"crusty_chunks:brass_ingot"},"slag":{"tag":"forge:slag"},"time":1200}
+{
+    "type": "immersiveengineering:blast_furnace",
+    "input": {
+        "tag": "forge:dusts/brass"
+    },
+    "result": {
+        "item": "crusty_chunks:brass_ingot"
+    },
+    "slag": {
+        "tag": "forge:slag"
+    },
+    "time": 1200
+}

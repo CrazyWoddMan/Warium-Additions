@@ -89,6 +89,6 @@ public class EnergyBatteryBlockEntityMixin {
     )
     private void injectEnergyCapability(Capability<?> capability, Direction facing, CallbackInfoReturnable<LazyOptional<?>> cir) {
         if (capability == ForgeCapabilities.ENERGY)
-            cir.setReturnValue(LazyOptional.of(() -> WariumAdditions.IEloaded ? BatteryProvider.get((BlockEntity)(Object)this, this.energyStorage, facing) : this.energyStorage).cast());
+            cir.setReturnValue(LazyOptional.of(() -> WariumAdditions.immersiveengineering ? BatteryProvider.get((BlockEntity)(Object)this, this.energyStorage, facing) : this.energyStorage).cast());
     }
 }

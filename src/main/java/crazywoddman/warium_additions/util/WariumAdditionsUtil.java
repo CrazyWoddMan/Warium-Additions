@@ -1,13 +1,23 @@
 package crazywoddman.warium_additions.util;
 
-import java.util.List;
-
+import crazywoddman.warium_additions.WariumAdditions;
+import crazywoddman.warium_additions.compat.curios.CuriosUtil;
+import crazywoddman.warium_additions.registry.RegistryItems;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -34,29 +44,35 @@ public class WariumAdditionsUtil {
         );
     }
 
-    /**
-     * @param fluid
-     * @return Warium's {@code FuelType} of <b>fluid<b>
-     */
-    public static String getFuelType(FluidStack fluidStack) {
-        if (fluidStack != null && !fluidStack.isEmpty()) {
-            Fluid fluid = fluidStack.getFluid();
-            String path = ForgeRegistries.FLUIDS.getKey(fluid).getPath();
-            
-            for (String fuelType : List.of("diesel", "kerosene")) {
-                if (
-                    path.equals(fuelType) ||
-                    ForgeRegistries.FLUIDS
-                        .tags()
-                        .getTag(FluidTags.create(ResourceLocation.fromNamespaceAndPath("forge", fuelType)))
-                        .contains(fluid)
-                )
+    public static void checkEnergy(LevelAccessor level, Player player, boolean isSelected) {
+        if (!isSelected && WariumAdditions.curios)
+            isSelected = CuriosUtil.checkForItem(player, "belt", RegistryItems.ENERGY_METER.get());
 
-                return fuelType;
+        if (isSelected) {
+            Vec3 eyePosition = player.getEyePosition(1.0F);
+            Vec3 endPosition = eyePosition.add(player.getViewVector(1.0F).scale(player.getBlockReach()));
+            BlockHitResult hitResult = level.clip(new ClipContext(
+                eyePosition, 
+                endPosition, 
+                ClipContext.Block.OUTLINE, 
+                ClipContext.Fluid.NONE, 
+                player
+            ));
+            
+            if (hitResult.getType() == HitResult.Type.BLOCK) {
+                BlockEntity blockEntity = level.getBlockEntity(hitResult.getBlockPos());
+
+                if (blockEntity != null)
+                    blockEntity.getCapability(ForgeCapabilities.ENERGY).ifPresent(storage -> {
+                        player.displayClientMessage(
+                        Component
+                            .translatable("warium_additions.tooltip.energy.power")
+                            .append(Component.literal(": " + WariumAdditionsUtil.formatFE(storage.getEnergyStored()))),
+                        true
+                        );
+                    });
             }
         }
-
-        return "";
     }
 
     /**

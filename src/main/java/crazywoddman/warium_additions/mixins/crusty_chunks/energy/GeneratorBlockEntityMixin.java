@@ -42,8 +42,6 @@ public class GeneratorBlockEntityMixin {
             public int receiveEnergy(int maxReceive, boolean simulate) {
                 if (simulate)
                     return 0;
-                
-                System.out.println("Received: " + maxReceive);
 
                 this.energy = maxReceive;
                 

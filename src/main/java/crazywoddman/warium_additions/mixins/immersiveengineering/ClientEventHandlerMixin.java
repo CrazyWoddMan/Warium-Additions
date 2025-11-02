@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import blusunrize.immersiveengineering.client.ClientEventHandler;
 import blusunrize.immersiveengineering.common.register.IEItems.Tools;
-import crazywoddman.warium_additions.item.ModifiedEnergyMeterItem;
+import crazywoddman.warium_additions.compat.immersiveengineering.ModifiedIEEnergyMeterItem;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +21,7 @@ public class ClientEventHandlerMixin {
         name = "equipped"
     )
     private ItemStack modifyEquippedStack(ItemStack equipped) {
-        if (equipped.getItem() instanceof ModifiedEnergyMeterItem)
+        if (equipped.getItem() instanceof ModifiedIEEnergyMeterItem)
             return new ItemStack(Tools.VOLTMETER.get());
 
         

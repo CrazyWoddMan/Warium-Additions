@@ -59,7 +59,7 @@ public class ElectricFireboxUpdateTickProcedureMixin {
             .extractEnergy(1, false)
         > 0;
 
-        if (WariumAdditions.createLoaded)
+        if (WariumAdditions.create)
             ElectricFireboxHeatProvider.setHeatLevel(consuming ? Config.SERVER.electricFireboxHeat.get() : "NONE", pos, level);
 
         return consuming;

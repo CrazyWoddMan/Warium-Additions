@@ -1,9 +1,9 @@
 package crazywoddman.warium_additions.registry;
 
 import crazywoddman.warium_additions.WariumAdditions;
-import crazywoddman.warium_additions.registrate.CreateBlocks;
-import crazywoddman.warium_additions.registrate.CreateFluids;
-import crazywoddman.warium_additions.registrate.CreateItems;
+import crazywoddman.warium_additions.compat.create.CreateBlocks;
+import crazywoddman.warium_additions.compat.create.CreateFluids;
+import crazywoddman.warium_additions.compat.create.CreateItems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,7 +14,7 @@ public class CreativeTabs {
 
     @SubscribeEvent
     public static void onBuildCreativeTab(BuildCreativeModeTabContentsEvent event) {
-        if (WariumAdditions.createLoaded) {
+        if (WariumAdditions.create) {
             if (event.getTabKey().location().equals(ResourceLocation.fromNamespaceAndPath("crusty_chunks", "warium_logistics"))) {
                 event.accept(CreateBlocks.KINETIC_CONVERTER.asStack());
                 event.accept(CreateBlocks.ROTATION_CONVERTER.asStack());
@@ -29,7 +29,7 @@ public class CreativeTabs {
             }
         }
 
-        if (WariumAdditions.valkyrienWariumLoaded && event.getTabKey().location().equals(ResourceLocation.fromNamespaceAndPath("valkyrien_warium", "warium_vs")))
+        if (WariumAdditions.valkyrien_warium && event.getTabKey().location().equals(ResourceLocation.fromNamespaceAndPath("valkyrien_warium", "warium_vs")))
             event.accept(crazywoddman.warium_additions.registry.RegistryItems.CONTROLLABLE_TRIGGER);
     }
 }

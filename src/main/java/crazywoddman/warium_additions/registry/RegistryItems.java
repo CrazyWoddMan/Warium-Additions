@@ -1,9 +1,10 @@
 package crazywoddman.warium_additions.registry;
 
 import crazywoddman.warium_additions.WariumAdditions;
-import crazywoddman.warium_additions.item.ModifiedCuttersItem;
-import crazywoddman.warium_additions.item.ModifiedEnergyMeterItem;
-import crazywoddman.warium_additions.item.ModifiedHammerItem;
+import crazywoddman.warium_additions.compat.immersiveengineering.ModifiedIECuttersItem;
+import crazywoddman.warium_additions.compat.immersiveengineering.ModifiedIEEnergyMeterItem;
+import crazywoddman.warium_additions.compat.immersiveengineering.ModifiedIEHammerItem;
+import crazywoddman.warium_additions.items.ModifiedEnergyMeterItem;
 import net.mcreator.crustychunks.init.CrustyChunksModFluids;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
@@ -28,9 +29,12 @@ public class RegistryItems {
 
     public static final RegistryObject<Item> CONTROLLABLE_TRIGGER = registerBlock(RegistryBlocks.CONTROLLABLE_TRIGGER);
     
-    public static final RegistryObject<Item> HAMMER = WariumAdditions.IEloaded ? WARIUM_REGISTRY.register("hammer", ModifiedHammerItem::new) : null;
-    public static final RegistryObject<Item> CUTTERS = WariumAdditions.IEloaded ? WARIUM_REGISTRY.register("cutters", ModifiedCuttersItem::new) : null;
-    public static final RegistryObject<Item> ENERGY_METER = WariumAdditions.IEloaded ? WARIUM_REGISTRY.register("energy_meter", ModifiedEnergyMeterItem::new) : null;
+    public static final RegistryObject<Item> HAMMER = WariumAdditions.immersiveengineering ? WARIUM_REGISTRY.register("hammer", ModifiedIEHammerItem::new) : null;
+    public static final RegistryObject<Item> CUTTERS = WariumAdditions.immersiveengineering ? WARIUM_REGISTRY.register("cutters", ModifiedIECuttersItem::new) : null;
+    public static final RegistryObject<Item> ENERGY_METER =
+        WariumAdditions.immersiveengineering
+        ? WARIUM_REGISTRY.register("energy_meter", ModifiedIEEnergyMeterItem::new)
+        : WARIUM_REGISTRY.register("energy_meter", ModifiedEnergyMeterItem::new);
 
     private static RegistryObject<Item> registerBucket(RegistryObject<FlowingFluid> fluid) {
         return WARIUM_REGISTRY.register(fluid.getId().getPath() + "_bucket", () -> new BucketItem(fluid, new Properties().stacksTo(1).craftRemainder(Items.BUCKET)));

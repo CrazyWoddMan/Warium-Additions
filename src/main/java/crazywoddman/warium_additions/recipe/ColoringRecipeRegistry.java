@@ -103,13 +103,13 @@ public class ColoringRecipeRegistry {
             recipeManager.replaceRecipes(allRecipes);
             System.out.println("Generated " + recipesAdded + " recipes from " + cachedRecipes.size() + " ColoringRecipes");
 
-            if (WariumAdditions.supplementariesLoaded)
+            if (WariumAdditions.supplementaries)
                 System.out.println("Supplementaries detected - crafting recipes with soap included");
         }
     }
 
     private static Recipe<?> createMixingRecipe(ResourceLocation recipeId, ColoringRecipe template, DyeColor color) {
-        if (!WariumAdditions.createLoaded)
+        if (!WariumAdditions.create)
             return null;
             
         try {
@@ -146,7 +146,7 @@ public class ColoringRecipeRegistry {
     }
 
     private static Recipe<?> createDeployingRecipe(ResourceLocation recipeId, ColoringRecipe template, DyeColor color) {
-        if (!WariumAdditions.createLoaded)
+        if (!WariumAdditions.create)
             return null;
 
         try {
@@ -239,7 +239,7 @@ public class ColoringRecipeRegistry {
     }
 
     private static Recipe<?> createSoapCleanRecipe(ResourceLocation recipeId, ColoringRecipe template) {
-        if (!WariumAdditions.supplementariesLoaded)
+        if (!WariumAdditions.supplementaries)
             return null;
 
         try {

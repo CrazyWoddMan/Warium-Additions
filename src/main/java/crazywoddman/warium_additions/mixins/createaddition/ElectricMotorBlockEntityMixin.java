@@ -17,7 +17,10 @@ import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-@Restriction(require = @Condition(value = "createaddition", versionPredicates = "[1.2.5]"))
+@Restriction(require = {
+    @Condition(value = "createaddition", versionPredicates = "[1.2.5]"),
+    @Condition("valkyrien_warium")
+})
 // TODO: test with create 6
 // @Restriction(require = @Condition("createaddition"))
 @Mixin(remap = false, value = ElectricMotorBlockEntity.class)

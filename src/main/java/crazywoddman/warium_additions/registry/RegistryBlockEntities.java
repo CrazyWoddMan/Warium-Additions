@@ -1,8 +1,8 @@
 package crazywoddman.warium_additions.registry;
 
 import crazywoddman.warium_additions.WariumAdditions;
-import crazywoddman.warium_additions.block.ControllableTriggerBlockEntity;
-import crazywoddman.warium_additions.block.OldControllableTriggerBlock.OldControllableTriggerBlockEntity;
+import crazywoddman.warium_additions.blocks.ControllableTriggerBlockEntity;
+import crazywoddman.warium_additions.blocks.OldControllableTriggerBlock.OldControllableTriggerBlockEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.BlockEntityType.BlockEntitySupplier;

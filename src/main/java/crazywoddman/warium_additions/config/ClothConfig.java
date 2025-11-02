@@ -37,7 +37,7 @@ public class ClothConfig {
                 categories.add(valkyrien);
             }
 
-            if (WariumAdditions.createLoaded) {
+            if (WariumAdditions.create) {
                 ConfigCategory create = builder.getOrCreateCategory(Component.literal("Create"));
                 categories.add(create);
             }
@@ -223,7 +223,7 @@ public class ClothConfig {
                 energy.add(
                     entryBuilder
                     .startIntField(
-                        Component.literal("Energy Transfer limit"),
+                        Component.literal("Energy transfer limit"),
                         Config.SERVER.energyTransferLimit.get()
                     )
                     .setTooltip(Component.literal("Maximum amount of energy that can be transfered to/from Warium blocks per tick"))
@@ -231,6 +231,21 @@ public class ClothConfig {
                     .setMin(1)
                     .setSaveConsumer(newValue -> {
                         Config.SERVER.energyTransferLimit.set(newValue);
+                        Config.SERVER_SPEC.save();
+                    })
+                    .build()
+                );
+                energy.add(
+                    entryBuilder
+                    .startIntField(
+                        Component.literal("Cable transfer limit"),
+                        Config.SERVER.cableLimit.get()
+                    )
+                    .setTooltip(Component.literal("Maximum amount of energy that can be transfered to/from Warium blocks per tick"))
+                    .setDefaultValue(Config.SERVER.cableLimit.getDefault())
+                    .setMin(1)
+                    .setSaveConsumer(newValue -> {
+                        Config.SERVER.cableLimit.set(newValue);
                         Config.SERVER_SPEC.save();
                     })
                     .build()
@@ -475,7 +490,7 @@ public class ClothConfig {
                     .build()
                 );
 
-                if (WariumAdditions.valkyrienWariumLoaded)
+                if (WariumAdditions.valkyrien_warium)
                     category.addEntry(
                         entryBuilder
                         .startBooleanToggle(

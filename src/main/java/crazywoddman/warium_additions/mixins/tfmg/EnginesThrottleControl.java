@@ -18,7 +18,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Restriction(require = @Condition(value = "tfmg", versionPredicates = "[0.9.3]"))
+@Restriction(require = {
+    @Condition(value = "tfmg", versionPredicates = "[0.9.3]"),
+    @Condition("valkyrien_warium")
+})
 // TODO: test with create 6
 // @Restriction(require = @Condition("tfmg"))
 @Mixin(

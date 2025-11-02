@@ -45,7 +45,7 @@ import crazywoddman.warium_additions.WariumAdditions;
 public class DrainFillProceduresMixin {
 
     private static void displayTankInfo(Player player, IFluidHandler handler) {
-        if (!WariumAdditions.createLoaded) {
+        if (!WariumAdditions.create) {
             FluidStack fluidInTank = handler.getFluidInTank(0);
             player.displayClientMessage(Component.literal(fluidInTank.isEmpty() ? "Empty" : (fluidInTank.getDisplayName().getString() + ": " + fluidInTank.getAmount() + "/" + handler.getTankCapacity(0))), true);
         }

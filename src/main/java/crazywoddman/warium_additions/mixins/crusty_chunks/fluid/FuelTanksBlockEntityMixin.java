@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-
+import net.minecraft.world.level.material.Fluid;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -65,14 +65,16 @@ public class FuelTanksBlockEntityMixin {
         BlockEntity blockEntity = (BlockEntity)(Object)this;
 
         fluidTank.setValidator(stack -> {
+            Fluid fluid = stack.getFluid();
+            
             if (blockEntity instanceof LightCombustionEngineBlockEntity || blockEntity instanceof SmallDieselEngineBlockEntity || blockEntity instanceof EngineCyllinderBlockEntity)
-                return WariumAdditionsUtil.compareFluids(stack.getFluid(), CrustyChunksModFluids.DIESEL.get());
+                return WariumAdditionsUtil.compareFluids(fluid, CrustyChunksModFluids.DIESEL.get());
 
             if (blockEntity instanceof MediumPetrolEngineBlockEntity || blockEntity instanceof SmalPetrolEngineBlockEntity || blockEntity instanceof FlameThrowerBlockEntity)
-                return WariumAdditionsUtil.compareFluids(stack.getFluid(), CrustyChunksModFluids.PETROLIUM.get());
+                return WariumAdditionsUtil.compareFluids(fluid, CrustyChunksModFluids.PETROLIUM.get());
 
             else if (blockEntity instanceof JetTurbineBlockEntity)
-                return WariumAdditionsUtil.compareFluids(stack.getFluid(), CrustyChunksModFluids.KEROSENE.get());
+                return WariumAdditionsUtil.compareFluids(fluid, CrustyChunksModFluids.KEROSENE.get());
 
             else
                 return true;
