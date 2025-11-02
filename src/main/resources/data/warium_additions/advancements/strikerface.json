@@ -1,0 +1,31 @@
+{
+  "parent": "crusty_chunks:powder_types",
+  "display": {
+    "icon": {
+      "item": "crusty_chunks:light_machine_gun"
+    },
+    "title": {
+      "text": ":Strikerface:"
+    },
+    "description": {
+      "translate": "advancement.warium_additions.strikerface.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "curios:equip_curio",
+      "conditions": {
+        "slot": "head",
+        "item": {
+          "items": [
+            "crusty_chunks:light_machine_gun"
+          ]
+        }
+      }
+    }
+  }
+}
