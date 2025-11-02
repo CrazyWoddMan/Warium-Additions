@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import crazywoddman.warium_additions.config.Config;
+import crazywoddman.warium_additions.util.ThrottleProvider;
 
 @Mixin(LargeElectricMotorBlockEntity.class)
 public class LargeElectricMotorBlockMixin {
@@ -29,6 +30,7 @@ public class LargeElectricMotorBlockMixin {
     @Unique
     private EnergyStorage energyStorage;
     private final int transLimit = Config.SERVER.energyTransferLimit.get();
+    private final int maxThrottle = Config.SERVER.maxThrottle.get();
 
     @Inject(
         method = "<init>",
@@ -37,11 +39,17 @@ public class LargeElectricMotorBlockMixin {
     )
     private void injectEnergyStorage(BlockPos pos, BlockState state, CallbackInfo ci) {
         BlockEntity blockEntity = (BlockEntity)(Object)this;
-        this.energyStorage = new EnergyStorage(transLimit, transLimit, 0) {
+        this.energyStorage = new EnergyStorage(this.transLimit, this.transLimit, 0) {
 
             @Override
             public int receiveEnergy(int maxReceive, boolean simulate) {
-                int receive = blockEntity.getLevel().hasNeighborSignal(pos) ? 0 : Math.min(transLimit, maxReceive);
+                int receive = Math.min(this.capacity, Math.round(
+                    maxReceive
+                    / 15.0f
+                    * (15 - blockEntity.getLevel().getBestNeighborSignal(pos))
+                    / maxThrottle
+                    * ThrottleProvider.get(blockEntity, maxThrottle))
+                );
 
                 if (!simulate)
                     this.energy = receive;

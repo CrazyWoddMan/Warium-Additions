@@ -1,11 +1,15 @@
 package crazywoddman.warium_additions.mixins.crusty_chunks.energy;
 
+import net.mcreator.crustychunks.block.LargeElectricMotorBlock;
 import net.mcreator.crustychunks.procedures.MotorTickProcedure;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -37,11 +41,28 @@ public class MotorTickProcedureMixin {
         remap = false
     )
     private static double modifyZero(double power, LevelAccessor world, double x, double y, double z) {
-        int energy = world
-            .getBlockEntity(BlockPos.containing(x, y, z))
-            .getCapability(ForgeCapabilities.ENERGY)
-            .orElse(null)
-            .getEnergyStored();
+        BlockPos pos = BlockPos.containing(x, y, z);
+        BlockEntity blockEntity =  world.getBlockEntity(pos);
+        Direction facing = blockEntity.getBlockState().getValue(LargeElectricMotorBlock.FACING);
+        IEnergyStorage storage = blockEntity.getCapability(ForgeCapabilities.ENERGY).orElse(null);
+        int energy = storage.getEnergyStored();
+
+        if (energy == 0) {
+            BlockEntity connected = world.getBlockEntity(pos.relative(facing.getOpposite()));
+
+            if (connected != null) {
+                IEnergyStorage connectedStorage = connected.getCapability(ForgeCapabilities.ENERGY, facing).orElse(null);
+
+                if (connectedStorage != null && connectedStorage.canExtract()) {
+                    int canExtract = connectedStorage.extractEnergy(Config.SERVER.energyTransferLimit.get(), true);
+                    
+                    if (canExtract > 0) {
+                        int extracted = connectedStorage.extractEnergy(canExtract, false);
+                        energy = storage.receiveEnergy(extracted, false);
+                    }
+                }
+            }
+        }
         
         return energy > 0 ? -1.0 : 0.0;
     }
@@ -54,7 +75,7 @@ public class MotorTickProcedureMixin {
         )
     )
     private static boolean redirectHasNeighborSignal(Level level, BlockPos pos) {
-        return !level.hasNeighborSignal(pos);
+        return true;
     }
 
     @ModifyVariable(
