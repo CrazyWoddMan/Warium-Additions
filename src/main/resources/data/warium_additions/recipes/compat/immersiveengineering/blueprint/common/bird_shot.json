@@ -1,0 +1,22 @@
+{
+    "type": "immersiveengineering:blueprint",
+    "category": "warium_common",
+    "inputs": [
+        {
+            "base_ingredient": {
+                "item": "crusty_chunks:shotgun_casing"
+            },
+            "count": 5
+        },
+        {
+            "tag": "forge:dusts/lead"
+        },
+        {
+            "item": "crusty_chunks:propellent"
+        }
+    ],
+    "result": {
+        "item": "crusty_chunks:bird_shot",
+        "count": 6
+    }
+}

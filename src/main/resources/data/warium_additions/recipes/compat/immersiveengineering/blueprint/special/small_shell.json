@@ -1,0 +1,28 @@
+{
+    "type": "immersiveengineering:blueprint",
+    "category": "warium_special",
+    "inputs": [
+        {
+            "base_ingredient": {
+                "tag": "forge:plates/brass"
+            },
+            "count": 3
+        },
+        {
+            "base_ingredient": {
+                "item": "crusty_chunks:propellent"
+            },
+            "count": 3
+        },
+        {
+            "base_ingredient": {
+                "item": "crusty_chunks:small_he_projectile"
+            },
+            "count": 3
+        }
+    ],
+    "result": {
+        "item": "crusty_chunks:small_shell",
+        "count": 4
+    }
+}

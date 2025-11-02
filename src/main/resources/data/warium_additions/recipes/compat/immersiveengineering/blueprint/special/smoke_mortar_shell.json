@@ -1,0 +1,19 @@
+{
+    "type": "immersiveengineering:blueprint",
+    "category": "warium_special",
+    "inputs": [
+        {
+            "item": "crusty_chunks:propellent"
+        },
+        {
+            "item": "crusty_chunks:smoke_agent"
+        },
+        {
+            "item": "crusty_chunks:steel_component"
+        }
+    ],
+    "result": {
+        "item": "crusty_chunks:smoke_mortar_shell",
+        "count": 5
+    }
+}

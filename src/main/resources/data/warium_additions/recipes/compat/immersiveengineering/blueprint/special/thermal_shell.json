@@ -1,0 +1,22 @@
+{
+    "type": "immersiveengineering:blueprint",
+    "category": "warium_special",
+    "inputs": [
+        {
+            "base_ingredient": {
+                "item": "crusty_chunks:shotgun_casing"
+            },
+            "count": 5
+        },
+        {
+            "item": "crusty_chunks:fire_agent"
+        },
+        {
+            "item": "crusty_chunks:propellent"
+        }
+    ],
+    "result": {
+        "item": "crusty_chunks:thermal_shell",
+        "count": 6
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "type": "immersiveengineering:blueprint",
+    "category": "warium_special",
+    "inputs": [
+        {
+            "item": "minecraft:paper"
+        },
+        {
+            "tag": "forge:gunpowder"
+        },
+        {
+            "tag": "forge:dusts/aluminum"
+        },
+        {
+            "tag": "forge:plates/brass"
+        }
+    ],
+    "result": {
+        "item": "crusty_chunks:chaff_charge",
+        "count": 9
+    }
+}

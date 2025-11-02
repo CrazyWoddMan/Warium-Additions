@@ -1,0 +1,21 @@
+{
+    "type": "immersiveengineering:blueprint",
+    "category": "warium_special",
+    "inputs": [
+        {
+            "item": "crusty_chunks:impact_fuze"
+        },
+        {
+            "item": "crusty_chunks:fire_agent"
+        },
+        {
+            "item": "crusty_chunks:volatile_dust"
+        },
+        {
+            "item": "crusty_chunks:hollowed_huge_projectile"
+        }
+    ],
+    "result": {
+        "item": "crusty_chunks:fire_artillery_shell"
+    }
+}
