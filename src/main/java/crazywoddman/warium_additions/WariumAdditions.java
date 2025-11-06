@@ -47,6 +47,7 @@ public class WariumAdditions {
     public static final String MODID = "warium_additions";
     
     private static final ModList modlist = ModList.get();
+    public static final boolean cloth_config = modlist.isLoaded("cloth_config");
     public static final boolean curios = modlist.isLoaded("curios");
     public static final boolean supplementaries = modlist.isLoaded("supplementaries");
     public static final boolean valkyrien_warium = modlist.isLoaded("valkyrien_warium");
@@ -74,6 +75,9 @@ public class WariumAdditions {
         RegistryBlocks.WARIUM_REGISTRY.register(bus);
         RegistryItems.WARIUM_REGISTRY.register(bus);
 
+        if (cloth_config)
+            context.registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC);
+
         if (create || supplementaries) {
             WariumAdditionsRecipeTypes.register();
             WariumAdditionsRecipeTypes.Recipes.SERIALIZER_REGISTER.register(bus);
@@ -89,7 +93,6 @@ public class WariumAdditions {
         }
 
         if (create) {
-            context.registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC);
             Registrate.register(bus);
             CreateBlocks.register();
             CreateBlockEntities.register();
