@@ -9,14 +9,11 @@ import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.impl.builders.SubCategoryBuilder;
 import net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.Minecraft;
 
 public class ClothConfig {
-    private static final boolean valkyrienLoaded = ModList.get().isLoaded("valkyrien_warium");
-
     @SuppressWarnings("removal")
     public static void registerConfigScreen() {
         FMLJavaModLoadingContext.get().registerExtensionPoint(ConfigScreenFactory.class, () -> new ConfigScreenFactory((mc, screen) -> {
@@ -32,7 +29,7 @@ public class ClothConfig {
             List<ConfigCategory> categories = new ArrayList<>(3);
             categories.add(builder.getOrCreateCategory(Component.literal("Warium")));
 
-            if (valkyrienLoaded) {
+            if (WariumAdditions.valkyrien_warium) {
                 ConfigCategory valkyrien = builder.getOrCreateCategory(Component.literal("Valkyrien Warium"));
                 categories.add(valkyrien);
             }
@@ -67,7 +64,6 @@ public class ClothConfig {
 
     private static void addCategory(ConfigCategory category, ConfigEntryBuilder entryBuilder) {
         switch (category.getCategoryKey().getString()) {
-            // if (category.getCategoryKey().getString().equals("Warium")) {
             case "Warium" -> {
                 SubCategoryBuilder fluidcap = entryBuilder.startSubCategory(Component.literal("Fluid Capacities"));
                 
@@ -79,10 +75,7 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.fuelTanksCapacity.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.fuelTanksCapacity.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.fuelTanksCapacity.set(newValue))
                     .build()
                 );
                 fluidcap.add(
@@ -93,10 +86,7 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.refineryTowerCapacity.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.refineryTowerCapacity.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.refineryTowerCapacity.set(newValue))
                     .build()
                 );
                 fluidcap.add(
@@ -107,10 +97,7 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.oilFireboxCapacity.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.oilFireboxCapacity.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.oilFireboxCapacity.set(newValue))
                     .build()
                 );
                 fluidcap.add(
@@ -121,10 +108,7 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.blockMinerCapacity.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.blockMinerCapacity.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.blockMinerCapacity.set(newValue))
                     .build()
                 );
 
@@ -139,10 +123,7 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.mediumDieselEnginePower.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.mediumDieselEnginePower.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.mediumDieselEnginePower.set(newValue))
                     .build()
                 );
                 power.add(
@@ -153,10 +134,7 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.smallDieselEnginePower.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.smallDieselEnginePower.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.smallDieselEnginePower.set(newValue))
                     .build()
                 );
                 power.add(
@@ -167,10 +145,7 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.mediumPetrolEnginePower.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.mediumPetrolEnginePower.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.mediumPetrolEnginePower.set(newValue))
                     .build()
                 );
                 power.add(
@@ -181,10 +156,7 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.smallPetrolEnginePower.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.smallPetrolEnginePower.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.smallPetrolEnginePower.set(newValue))
                     .build()
                 );
                 power.add(
@@ -195,10 +167,7 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.turbinePower.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.turbinePower.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.turbinePower.set(newValue))
                     .build()
                 );
 
@@ -214,10 +183,7 @@ public class ClothConfig {
                     .setTooltip(Component.literal("This affects Rotation Generator and Electric Motor"))
                     .setDefaultValue(Config.SERVER.kineticToFeRate.getDefault())
                     .setMin(0.01)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.kineticToFeRate.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.kineticToFeRate.set(newValue))
                     .build()
                 );
                 energy.add(
@@ -229,10 +195,7 @@ public class ClothConfig {
                     .setTooltip(Component.literal("Maximum amount of energy that can be transfered to/from Warium blocks per tick"))
                     .setDefaultValue(Config.SERVER.energyTransferLimit.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.energyTransferLimit.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.energyTransferLimit.set(newValue))
                     .build()
                 );
                 energy.add(
@@ -244,10 +207,7 @@ public class ClothConfig {
                     .setTooltip(Component.literal("Maximum amount of energy that can be transfered to/from Warium blocks per tick"))
                     .setDefaultValue(Config.SERVER.cableLimit.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.cableLimit.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.cableLimit.set(newValue))
                     .build()
                 );
                 energy.add(
@@ -258,10 +218,7 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.batteryCapacity.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.batteryCapacity.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.batteryCapacity.set(newValue))
                     .build()
                 );
                 energy.add(
@@ -272,10 +229,7 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.electricFireboxCapacity.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.electricFireboxCapacity.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.electricFireboxCapacity.set(newValue))
                     .build()
                 );
                 energy.add(
@@ -286,10 +240,7 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.electricFireboxConsumption.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.electricFireboxConsumption.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.electricFireboxConsumption.set(newValue))
                     .build()
                 );
                 energy.add(
@@ -300,10 +251,7 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.reactorCapacity.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.reactorCapacity.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.reactorCapacity.set(newValue))
                     .build()
                 );
                 energy.add(
@@ -314,10 +262,7 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.reactorGeneration.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.reactorGeneration.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.reactorGeneration.set(newValue))
                     .build()
                 );
 
@@ -329,17 +274,13 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.solarGeneration.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.solarGeneration.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.solarGeneration.set(newValue))
                     .build()
                 );
 
                 category.addEntry(energy.build());
             }
 
-            // else if (category.getCategoryKey().getString().equals("Valkyrien Warium")) {
             case "Valkyrien Warium" -> {
                 category.addEntry(
                     entryBuilder
@@ -349,10 +290,7 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.minThrottle.getDefault())
                     .setMax(-1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.minThrottle.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.minThrottle.set(newValue))
                     .build()
                 );
                 category.addEntry(
@@ -363,15 +301,11 @@ public class ClothConfig {
                     )
                     .setDefaultValue(Config.SERVER.maxThrottle.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.maxThrottle.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.maxThrottle.set(newValue))
                     .build()
                 );
             }
 
-            // else if (category.getCategoryKey().getString().equals("Create")) {
             case "Create" -> {
                 SubCategoryBuilder heat = entryBuilder.startSubCategory(Component.literal("Heat Level"));
 
@@ -383,10 +317,7 @@ public class ClothConfig {
                         Config.SERVER.fireboxHeat.get()
                     )
                     .setDefaultValue(Config.SERVER.fireboxHeat.getDefault())
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.fireboxHeat.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.fireboxHeat.set(newValue))
                     .build()
                 );
                 heat.add(
@@ -397,10 +328,7 @@ public class ClothConfig {
                         Config.SERVER.oilFireboxHeat.get()
                     )
                     .setDefaultValue(Config.SERVER.oilFireboxHeat.getDefault())
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.oilFireboxHeat.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.oilFireboxHeat.set(newValue))
                     .build()
                 );
                 heat.add(
@@ -411,10 +339,7 @@ public class ClothConfig {
                         Config.SERVER.electricFireboxHeat.get()
                     )
                     .setDefaultValue(Config.SERVER.electricFireboxHeat.getDefault())
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.electricFireboxHeat.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.electricFireboxHeat.set(newValue))
                     .build()
                 );
 
@@ -431,10 +356,7 @@ public class ClothConfig {
                     .setTooltip(Component.literal("How many Stress Untis will be equivalent to 1 Kinetic Power unit"))
                     .setDefaultValue(Config.SERVER.kineticToStressRatio.getDefault())
                     .setMin(1)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.kineticToStressRatio.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.kineticToStressRatio.set(newValue))
                     .build()
                 );
                 ratios.add(
@@ -447,10 +369,7 @@ public class ClothConfig {
                     .setDefaultValue(Config.SERVER.kineticToSpeedRatio.getDefault())
                     .setMin(1)
                     .setMax(5)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.kineticToSpeedRatio.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.kineticToSpeedRatio.set(newValue))
                     .build()
                 );
 
@@ -464,10 +383,7 @@ public class ClothConfig {
                     )
                     .setTooltip(Component.literal("Whether Kinetic Converter value box allows to select generating speed"))
                     .setDefaultValue(Config.SERVER.converterSpeedControl.getDefault())
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.converterSpeedControl.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.converterSpeedControl.set(newValue))
                     .build()
                 );
                 category.addEntry(
@@ -483,10 +399,7 @@ public class ClothConfig {
                     .setDefaultValue(Config.SERVER.kineticConverterReponse.getDefault())
                     .setMin(0)
                     .setMax(40)
-                    .setSaveConsumer(newValue -> {
-                        Config.SERVER.kineticConverterReponse.set(newValue);
-                        Config.SERVER_SPEC.save();
-                    })
+                    .setSaveConsumer(newValue -> Config.SERVER.kineticConverterReponse.set(newValue))
                     .build()
                 );
 
@@ -502,10 +415,7 @@ public class ClothConfig {
                             Component.literal("for Kinetic Converter and TMFG/Diesel Generators engines")
                         )
                         .setDefaultValue(Config.SERVER.throttleToRotationDirection.getDefault())
-                        .setSaveConsumer(newValue -> {
-                            Config.SERVER.throttleToRotationDirection.set(newValue);
-                            Config.SERVER_SPEC.save();
-                        })
+                        .setSaveConsumer(newValue -> Config.SERVER.throttleToRotationDirection.set(newValue))
                         .build()
                     );
             }

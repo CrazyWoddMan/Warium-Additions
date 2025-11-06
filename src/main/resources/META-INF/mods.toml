@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="${loader_version_range}"
-issueTrackerURL = "https://github.com/${mod_authors}/${project.name}/issues/"
+issueTrackerURL = "https://github.com/${mod_authors}/Warium-Additions/issues/"
 license="MIT"
 
 [[mods]]
