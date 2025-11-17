@@ -28,11 +28,10 @@ public class GeigerCounterHandTickProcedureMixin {
     )
     private static ItemStack redirectItem(LivingEntity livingEntity, LevelAccessor world, double x, double y, double z, Entity entity) {
         ItemStack stack = livingEntity.getOffhandItem();
-        if (stack == ItemStack.EMPTY && livingEntity instanceof Player player)
-            if (CuriosUtil.checkForItem(player, "belt", CrustyChunksModItems.GEIGER_COUNTER.get()))
-                return new ItemStack(CrustyChunksModItems.GEIGER_COUNTER.get());
 
-        return stack;
+        return (stack == ItemStack.EMPTY && livingEntity instanceof Player player)
+        ? CuriosUtil.getItem(player, "belt", CrustyChunksModItems.GEIGER_COUNTER.get()).orElse(stack)
+        : stack;
     }
 
     @Redirect(

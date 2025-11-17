@@ -19,6 +19,12 @@ public class NetworkHandler {
     private static int packetId = 0;
     
     public static void register() {
+        CHANNEL.messageBuilder(LaunchKeyPacket.class, packetId++, NetworkDirection.PLAY_TO_SERVER)
+            .encoder(LaunchKeyPacket::encode)
+            .decoder(LaunchKeyPacket::decode)
+            .consumerMainThread(LaunchKeyPacket::handle)
+            .add();
+
         CHANNEL.messageBuilder(ShootKeyPacket.class, packetId++, NetworkDirection.PLAY_TO_SERVER)
             .encoder(ShootKeyPacket::encode)
             .decoder(ShootKeyPacket::decode)

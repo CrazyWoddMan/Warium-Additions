@@ -46,7 +46,7 @@ public class WariumAdditionsUtil {
 
     public static void checkEnergy(LevelAccessor level, Player player, boolean isSelected) {
         if (!isSelected && WariumAdditions.curios)
-            isSelected = CuriosUtil.checkForItem(player, "belt", RegistryItems.ENERGY_METER.get());
+            isSelected = CuriosUtil.getItem(player, "belt", RegistryItems.ENERGY_METER.get()).isPresent();
 
         if (isSelected) {
             Vec3 eyePosition = player.getEyePosition(1.0F);

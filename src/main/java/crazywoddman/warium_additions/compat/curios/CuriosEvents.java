@@ -4,14 +4,19 @@ import java.util.UUID;
 
 import com.google.common.collect.ImmutableMultimap;
 
-import net.mcreator.crustychunks.init.CrustyChunksModItems;
-import net.minecraft.server.level.ServerPlayer;
+import crazywoddman.warium_additions.WariumAdditions;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.Event.Result;
+import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.event.CurioChangeEvent;
-import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
-import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
+import top.theillusivec4.curios.api.event.CurioEquipEvent;
+import top.theillusivec4.curios.api.event.CurioUnequipEvent;
 
 public class CuriosEvents {
     private static final ImmutableMultimap<String, AttributeModifier> HARDPOINT_SLOT_MAP = ImmutableMultimap.of(
@@ -32,54 +37,81 @@ public class CuriosEvents {
             AttributeModifier.Operation.ADDITION
         )
     );
-    
+
     @SubscribeEvent
-    public static void onCurioChange(CurioChangeEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player)
-            CuriosApi.getCuriosInventory(player).ifPresent(inventory -> {
-                ICurioStacksHandler requiredSlot = inventory.getStacksHandler("back").orElse(null);
-                ICurioStacksHandler targetSlot = inventory.getStacksHandler("hardpoint").orElse(null);
-                IDynamicStackHandler stacks;
-                int slots;
-                boolean hasItem = false;
+    public static Result onCurioEquip(CurioEquipEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            if (event.getSlotContext().identifier().equals("hardpoint")) {
+                if (player instanceof LocalPlayer localPlayer)
+                    localPlayer.displayClientMessage(
+                        Component
+                            .translatable(WariumAdditions.MODID + ".tooltip.presskey")
+                            .append(" " + WariumAdditions.ClientEvents.LAUNCH_KEY.getKey().getDisplayName().getString() + " ")
+                            .append(Component.translatable(WariumAdditions.MODID + ".tooltip.launch_missile")),
+                        true
+                    );
+                player.level().playLocalSound(
+                    player.getX(), player.getY(), player.getZ(),
+                    ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.tryParse("block.iron_trapdoor.open")),
+                    SoundSource.NEUTRAL,
+                    1.0F,
+                    0.3F,
+                    false
+                );
+            }
+            else CuriosApi.getCuriosInventory(player).ifPresent(inventory -> {
+                switch (ForgeRegistries.ITEMS.getKey(event.getStack().getItem()).getPath()) {
+                    case "light_machine_gun" -> inventory.addTransientSlotModifiers(AMMOBOX_SLOT_MAP);
+                    case "empty_missile_hardpoint" -> inventory.addTransientSlotModifiers(HARDPOINT_SLOT_MAP);
+                    case "machine_gun_box" -> {
+                        playAmmoboxEquipSound(player);
+                        if (player instanceof LocalPlayer localPlayer)
+                            localPlayer.displayClientMessage(
+                                Component
+                                    .translatable(WariumAdditions.MODID + ".tooltip.presskey")
+                                    .append(" " + WariumAdditions.ClientEvents.SHOOT_KEY.getKey().getDisplayName().getString() + " ")
+                                    .append(Component.translatable(WariumAdditions.MODID + ".tooltip.shoot")),
+                                true
+                            );
+                    }
+                } 
+            });
+        }
+        return event.getResult();
+    }
 
-                if (requiredSlot != null && targetSlot != null) {
-                    stacks = requiredSlot.getStacks();
-                    slots = targetSlot.getSlots();
-
-                    for (int i = 0; i < stacks.getSlots(); i++)
-                        if (stacks.getStackInSlot(i).is(CrustyChunksModItems.EMPTY_MISSILE_HARDPOINT.get())) {
-                            hasItem = true;
-                            break;
-                        }
-
-                    if (hasItem && slots == 0)
-                        inventory.addTransientSlotModifiers(HARDPOINT_SLOT_MAP);
-
-                    else if (!hasItem && slots > 0)
-                        inventory.removeSlotModifiers(HARDPOINT_SLOT_MAP);
-                }
-
-                requiredSlot = inventory.getStacksHandler("head").orElse(null);
-                targetSlot = inventory.getStacksHandler("ammobox").orElse(null);
-
-                if (requiredSlot != null && targetSlot != null) {
-                    stacks = requiredSlot.getStacks();
-                    hasItem = false;
-                    slots = targetSlot.getSlots();
-
-                    for (int i = 0; i < stacks.getSlots(); i++)
-                        if (stacks.getStackInSlot(i).is(CrustyChunksModItems.LIGHT_MACHINE_GUN.get())) {
-                            hasItem = true;
-                            break;
-                        }
-
-                    if (hasItem && slots == 0)
-                        inventory.addTransientSlotModifiers(AMMOBOX_SLOT_MAP);
-
-                    else if (!hasItem && slots > 0)
-                        inventory.removeSlotModifiers(AMMOBOX_SLOT_MAP);
+    @SubscribeEvent
+    public static Result onCurioUnequip(CurioUnequipEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            if (event.getSlotContext().identifier().equals("hardpoint"))
+                player.level().playLocalSound(
+                    player.getX(), player.getY(), player.getZ(),
+                    ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.tryParse("block.iron_trapdoor.open")),
+                    SoundSource.NEUTRAL,
+                    1.0F,
+                    0.3F,
+                    false
+                );
+            else CuriosApi.getCuriosInventory(player).ifPresent(inventory -> {
+                switch (ForgeRegistries.ITEMS.getKey(event.getStack().getItem()).getPath()) {
+                    case "light_machine_gun" -> inventory.removeSlotModifiers(AMMOBOX_SLOT_MAP);
+                    case "empty_missile_hardpoint" -> inventory.removeSlotModifiers(HARDPOINT_SLOT_MAP);
+                    case "machine_gun_box" -> playAmmoboxEquipSound(player);
                 }
             });
+        }
+
+        return event.getResult();
+    }
+
+    private static void playAmmoboxEquipSound(Player player) {
+        player.level().playLocalSound(
+            player.getX(), player.getY(), player.getZ(),
+            ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.fromNamespaceAndPath("crusty_chunks", "pistolaction")),
+            SoundSource.NEUTRAL,
+            1.0F,
+            0.8F,
+            false
+        );
     }
 }
