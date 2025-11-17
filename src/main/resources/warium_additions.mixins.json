@@ -51,6 +51,10 @@
     "valkyrien_warium.KeroseneFueledBlockEntitiesMixin",
 	"valkyrien_warium.KeroseneFueledProceduresMixin",
 	"valkyrien_warium.ValkyrienWariumModKeyMappingsMixin",
+	"valkyrien_warium.LinkerUseProcedureMixin",
+
+	"curios.GasMaskOverlayProcedureMixin",
+	"curios.CuriosItemsProceduresMixin",
 
     "create.BlazeBurnerBlockEntityMixin",
     "create.BasinCategoryMixin",
