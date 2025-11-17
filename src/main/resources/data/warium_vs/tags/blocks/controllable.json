@@ -13,22 +13,6 @@
       "required": false
     },
     {
-      "id": "valkyrien_warium:propeller",
-      "required": false
-    },
-    {
-      "id": "valkyrien_warium:boat_propeller",
-      "required": false
-    },
-    {
-      "id": "valkyrien_warium:heli_rotor",
-      "required": false
-    },
-    {
-      "id": "valkyrien_warium:large_heli_rotor",
-      "required": false
-    },
-    {
       "id": "createdieselgenerators:diesel_engine",
       "required": false
     },

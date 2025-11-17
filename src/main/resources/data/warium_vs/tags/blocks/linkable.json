@@ -1,5 +1,9 @@
 {
-  "remove": [
+  "values": [
+    "#warium_vs:controllable",
+    "#warium_vs:reversible",
+    "#warium_vs:triggerable",
+    "valkyrien_warium:control_seat",
     "valkyrien_warium:propeller",
     "valkyrien_warium:boat_propeller",
     "valkyrien_warium:heli_rotor",
