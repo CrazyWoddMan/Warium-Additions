@@ -2,6 +2,7 @@ package crazywoddman.warium_additions.mixins.crusty_chunks.energy;
 
 import net.mcreator.crustychunks.procedures.ElectricFireboxUpdateTickProcedure;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraft.world.level.Level;
@@ -9,6 +10,8 @@ import net.minecraft.world.level.LevelAccessor;
 import crazywoddman.warium_additions.WariumAdditions;
 import crazywoddman.warium_additions.config.Config;
 import crazywoddman.warium_additions.util.ElectricFireboxHeatProvider;
+
+import java.util.Optional;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -52,12 +55,26 @@ public class ElectricFireboxUpdateTickProcedureMixin {
         )
     )
     private static boolean modifyEnergy(Level level, BlockPos pos) {
-        boolean consuming =!level.hasNeighborSignal(pos) && level
-            .getBlockEntity(pos)
-            .getCapability(ForgeCapabilities.ENERGY)
-            .orElse(null)
-            .extractEnergy(1, false)
-        > 0;
+        boolean consuming = level.getBlockEntity(pos).getCapability(ForgeCapabilities.ENERGY).map(storage -> {
+            for (int i = 0; i < Math.round(Config.SERVER.electricFireboxConsumption.get() * 40 / (float)Config.SERVER.cableLimit.get()); i ++)
+                for (Direction facing : Direction.values())
+                    if (storage.getMaxEnergyStored() > storage.getEnergyStored())
+                        Optional.ofNullable(level.getBlockEntity(pos.relative(facing))).ifPresent(sideBlock ->
+                            sideBlock.getCapability(ForgeCapabilities.ENERGY, facing.getOpposite()).ifPresent(cap -> {
+                                if (cap.canExtract())
+                                    storage.receiveEnergy(
+                                        cap.extractEnergy(
+                                            storage.receiveEnergy(Config.SERVER.energyTransferLimit.get(), true),
+                                            false
+                                        ),
+                                        false
+                                    );
+                            })
+                        );
+                    else break;
+
+            return !level.hasNeighborSignal(pos) && storage.extractEnergy(-1, false) != 0;
+        }).orElse(false);
 
         if (WariumAdditions.create)
             ElectricFireboxHeatProvider.setHeatLevel(consuming ? Config.SERVER.electricFireboxHeat.get() : "NONE", pos, level);

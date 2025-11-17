@@ -52,10 +52,10 @@ public class ElectricFireboxBlockEntityMixin {
 
             @Override
             public int extractEnergy(int maxExtract, boolean simulate) {
-                if (simulate || energy < consumption)
+                if (simulate || maxExtract != -1 || this.energy < consumption)
                     return 0;
                 
-                energy -= consumption;
+                this.energy -= consumption;
 
                 return consumption;
             }
