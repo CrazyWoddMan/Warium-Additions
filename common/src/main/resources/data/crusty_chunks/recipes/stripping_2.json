@@ -6,7 +6,7 @@
       "item": "crusty_chunks:cutters"
     },
     {
-      "item": "forge:plates/steel"
+      "tag": "forge:plates/steel"
     }
   ],
   "result": {
