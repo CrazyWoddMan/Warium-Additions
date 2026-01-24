@@ -5,6 +5,7 @@ import net.mcreator.valkyrienwarium.block.entity.LiquidFuelRocketBlockEntity;
 import net.mcreator.valkyrienwarium.block.entity.TestThrusterBlockEntity;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,7 +20,7 @@ import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 
 @Restriction(require = @Condition("valkyrien_warium"))
 @Mixin({LiquidFuelRocketBlockEntity.class, TestThrusterBlockEntity.class})
-public class KeroseneFueledBlockEntitiesMixin {
+public class FuelContainingBlockEntitiesMixin {
 
     @Shadow(remap = false)
     private FluidTank fluidTank;
@@ -30,6 +31,12 @@ public class KeroseneFueledBlockEntitiesMixin {
         remap = false
     )
     private void acceptAnyKerosene(BlockPos position, BlockState state, CallbackInfo callback) {
-        fluidTank.setValidator(stack -> WariumAdditionsUtil.compareFluids(stack.getFluid(), CrustyChunksModFluids.KEROSENE.get()));
+        fluidTank.setValidator(stack ->
+            WariumAdditionsUtil.compareFluids(stack.getFluid(), CrustyChunksModFluids.KEROSENE.get())
+            || ((BlockEntity)(Object)this instanceof TestThrusterBlockEntity
+                ? WariumAdditionsUtil.compareFluids(stack.getFluid(), CrustyChunksModFluids.HYDRAZINE.get())
+                : false
+            )
+        );
     }
 }

@@ -5,6 +5,7 @@ import net.mcreator.crustychunks.procedures.EngineUpdateProcedure;
 import net.mcreator.crustychunks.procedures.PetrolEngineUpdateProcedure;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
@@ -37,24 +39,16 @@ public class EnginesUpdateProcedureMixin {
         engineType = ForgeRegistries.BLOCKS.getKey(world.getBlockState(BlockPos.containing(x, y, z)).getBlock()).getPath();
     }
 
-    @ModifyConstant(
+    @Redirect(
         method = "execute",
-        constant = @Constant(stringValue = "Diesel"),
-        require = 0,
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraftforge/fluids/FluidStack;isFluidEqual(Lnet/minecraftforge/fluids/FluidStack;)Z"
+        ),
         remap = false
     )
-    private static String modifyDiesel(String value) {
-        return "";
-    }
-
-    @ModifyConstant(
-        method = "execute",
-        constant = @Constant(stringValue = "Petrol"),
-        require = 0,
-        remap = false
-    )
-    private static String modifyPetrol(String value) {
-        return "";
+    private static boolean redirectIsFluidEqual(FluidStack fluid1, FluidStack fluid2, LevelAccessor world, double x, double y, double z) {
+        return true;
     }
 
     @ModifyConstant(

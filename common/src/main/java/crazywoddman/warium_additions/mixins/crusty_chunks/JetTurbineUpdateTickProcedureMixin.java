@@ -3,11 +3,13 @@ package crazywoddman.warium_additions.mixins.crusty_chunks;
 import net.mcreator.crustychunks.procedures.JetTurbineUpdateTickProcedure;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraftforge.fluids.FluidStack;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 
 import crazywoddman.warium_additions.config.Config;
@@ -16,13 +18,16 @@ import crazywoddman.warium_additions.util.WariumAdditionsUtil;
 @Mixin(JetTurbineUpdateTickProcedure.class)
 public class JetTurbineUpdateTickProcedureMixin {
 
-    @ModifyConstant(
+    @Redirect(
         method = "execute",
-        constant = @Constant(stringValue = "Kerosene"),
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraftforge/fluids/FluidStack;isFluidEqual(Lnet/minecraftforge/fluids/FluidStack;)Z"
+        ),
         remap = false
     )
-    private static String modifyKerosene(String value) {
-        return "";
+    private static boolean redirectIsFluidEqual(FluidStack fluid1, FluidStack fluid2, LevelAccessor world, double x, double y, double z) {
+        return true;
     }
 
     @ModifyConstant(

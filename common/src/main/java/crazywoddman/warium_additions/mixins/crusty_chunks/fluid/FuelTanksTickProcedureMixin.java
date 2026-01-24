@@ -55,7 +55,7 @@ public class FuelTanksTickProcedureMixin {
             ordinal = 4
         )
     )
-    private static BlockPos redirectIsFluidEqual(double nx, double ny, double nz, LevelAccessor world, double x, double y, double z) {
+    private static BlockPos redirectBlockPos(double nx, double ny, double nz, LevelAccessor world, double x, double y, double z) {
         neighbor = BlockPos.containing(nx, ny, nz);
         return neighbor;
     }
