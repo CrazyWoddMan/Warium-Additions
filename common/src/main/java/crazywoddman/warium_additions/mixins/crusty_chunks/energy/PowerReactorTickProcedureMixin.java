@@ -32,7 +32,8 @@ public class PowerReactorTickProcedureMixin {
 
     @ModifyConstant(
         method = "execute",
-        constant = @Constant(intValue = 2000),
+        constant = @Constant(intValue = 3000),
+        require = 0,
         remap = false
     )
     private static int modifyGeneration(int original, LevelAccessor world, double x, double y, double z) {
