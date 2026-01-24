@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/chlorine"
+    },
+    {
+      "tag": "forge:dusts/sulfur"
+    },
+    {
+      "item": "crusty_chunks:smoke_agent"
+    },
+    {
+      "tag": "forge:dusts/chlorine"
+    },
+    {
+      "tag": "forge:dusts/copper"
+    }
+  ],
+  "result": {
+    "item": "crusty_chunks:toxic_agent"
+  }
+}

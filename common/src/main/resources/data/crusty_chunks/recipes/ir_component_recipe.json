@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "abc",
+    "bde",
+    "cef"
+  ],
+  "key": {
+    "a": {
+      "tag": "crusty_chunks:silicoid"
+    },
+    "b": {
+      "tag": "forge:plates/copper"
+    },
+    "c": {
+      "item": "crusty_chunks:bent_component"
+    },
+    "d": {
+      "item": "crusty_chunks:tech_component"
+    },
+    "e": {
+      "item": "crusty_chunks:advanced_component"
+    },
+    "f": {
+      "tag": "forge:ingots/niobium"
+    }
+  },
+  "result": {
+    "item": "crusty_chunks:ir_component"
+  }
+}

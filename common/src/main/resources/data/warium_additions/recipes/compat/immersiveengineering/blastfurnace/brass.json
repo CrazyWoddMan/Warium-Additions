@@ -1,0 +1,19 @@
+{
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "immersiveengineering"
+        }
+    ],
+    "type": "immersiveengineering:blast_furnace",
+    "input": {
+        "tag": "forge:dusts/brass"
+    },
+    "result": {
+        "item": "crusty_chunks:brass_ingot"
+    },
+    "slag": {
+        "tag": "forge:slag"
+    },
+    "time": 1200
+}

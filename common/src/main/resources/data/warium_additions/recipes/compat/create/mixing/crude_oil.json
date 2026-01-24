@@ -1,0 +1,21 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mixing",
+  "heatRequirement": "heated",
+  "ingredients": [
+    {
+      "item": "crusty_chunks:shale_oil"
+    }
+  ],
+  "results": [
+    {
+      "amount": 250,
+      "fluid": "crusty_chunks:crude_oil"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "immersiveengineering"
+        }
+    ],
+    "type": "immersiveengineering:blueprint",
+    "category": "warium_common",
+    "inputs": [
+        {
+            "base_ingredient": {
+                "item": "crusty_chunks:huge_casing"
+            },
+            "count": 3
+        },
+        {
+            "base_ingredient": {
+                "item": "crusty_chunks:large_projectile"
+            },
+            "count": 3
+        },
+        {
+            "item": "crusty_chunks:propellent"
+        }
+    ],
+    "result": {
+        "item": "crusty_chunks:huge_bullet",
+        "count": 4
+    }
+}

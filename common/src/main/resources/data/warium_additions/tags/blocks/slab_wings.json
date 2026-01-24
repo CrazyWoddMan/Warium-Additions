@@ -1,0 +1,76 @@
+{
+  "values": [
+    {
+      "id": "valkyrien_warium:slab_wing",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_dark_gray",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_green",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_yellow",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_brown",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_white",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_red",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_black",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_cyan",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_blue",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_orange",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_gray",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_lime",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_light_gray",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_light_blue",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_pink",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_magenta",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:slab_wing_purple",
+      "required": false
+    }
+  ]
+}

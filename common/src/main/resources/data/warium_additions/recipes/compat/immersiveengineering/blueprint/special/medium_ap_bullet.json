@@ -1,0 +1,25 @@
+{
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "immersiveengineering"
+        }
+    ],
+    "type": "immersiveengineering:blueprint",
+    "category": "warium_special",
+    "inputs": [
+        {
+            "base_ingredient": {
+                "item": "crusty_chunks:bullet"
+            },
+            "count": 4
+        },
+        {
+            "tag": "forge:nuggets/iron"
+        }
+    ],
+    "result": {
+        "item": "crusty_chunks:medium_ap_bullet",
+        "count": 4
+    }
+}

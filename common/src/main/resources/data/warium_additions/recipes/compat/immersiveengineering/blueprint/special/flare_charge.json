@@ -1,0 +1,31 @@
+{
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "immersiveengineering"
+        }
+    ],
+    "type": "immersiveengineering:blueprint",
+    "category": "warium_special",
+    "inputs": [
+        {
+            "base_ingredient": {
+                "item": "minecraft:paper"
+            },
+            "count": 2
+        },
+        {
+            "tag": "forge:gunpowder"
+        },
+        {
+            "item": "crusty_chunks:smoke_agent"
+        },
+        {
+            "tag": "forge:plates/brass"
+        }
+    ],
+    "result": {
+        "item": "crusty_chunks:flare_charge",
+        "count": 9
+    }
+}

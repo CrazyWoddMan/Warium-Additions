@@ -1,0 +1,27 @@
+{
+  "values": [
+    "#warium_vs:controllable",
+    "#warium_vs:reversible",
+    "#warium_vs:triggerable",
+    {
+      "id": "valkyrien_warium:control_seat",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:propeller",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:boat_propeller",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:heli_rotor",
+      "required": false
+    },
+    {
+      "id": "valkyrien_warium:large_heli_rotor",
+      "required": false
+    }
+  ]
+}

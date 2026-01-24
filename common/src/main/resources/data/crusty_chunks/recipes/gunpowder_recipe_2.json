@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "forge:charcoal"
+    },
+    {
+      "item": "crusty_chunks:nitrate"
+    },
+    {
+      "item": "crusty_chunks:nitrate"
+    },
+    {
+      "tag": "forge:charcoal"
+    },
+    {
+      "tag": "forge:dusts/sulfur"
+    },
+    {
+      "tag": "forge:dusts/sulfur"
+    },
+    {
+      "tag": "forge:charcoal"
+    }
+  ],
+  "result": {
+    "item": "minecraft:gunpowder",
+    "count": 6
+  }
+}

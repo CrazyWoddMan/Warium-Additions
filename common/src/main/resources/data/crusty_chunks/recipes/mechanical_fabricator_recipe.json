@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "aba",
+    "cdc",
+    "efe"
+  ],
+  "key": {
+    "a": {
+      "item": "crusty_chunks:advanced_component"
+    },
+    "b": {
+      "item": "crusty_chunks:mechanical_bore"
+    },
+    "c": {
+      "tag": "forge:storage_blocks/steel"
+    },
+    "d": {
+      "item": "crusty_chunks:bored_component"
+    },
+    "e": {
+      "tag": "forge:plates/aluminum"
+    },
+    "f": {
+      "item": "crusty_chunks:assembly_depot"
+    }
+  },
+  "result": {
+    "item": "crusty_chunks:assembly_mechanical_fabricator"
+  }
+}

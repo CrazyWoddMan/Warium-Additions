@@ -1,0 +1,24 @@
+{
+  "conditions": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "warium_extras"
+      }
+  ],
+  "type": "warium_additions:coloring",
+  "ingredients": [
+    {
+      "tag": "warium_additions:aluminum_layers"
+    },
+    {
+      "item": "minecraft:{color}_dye"
+    },
+    {
+      "fluid": "colored_water:{color}_fluid",
+      "amount": 20
+    }
+  ],
+  "result": {
+    "item": "warium_extras:aluminum_layer_{color}"
+  }
+}

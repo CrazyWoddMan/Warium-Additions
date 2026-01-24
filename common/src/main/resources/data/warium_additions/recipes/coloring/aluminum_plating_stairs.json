@@ -1,0 +1,18 @@
+{
+  "type": "warium_additions:coloring",
+  "ingredients": [
+    {
+      "tag": "warium_additions:aluminum_plating_stairs"
+    },
+    {
+      "item": "minecraft:{color}_dye"
+    },
+    {
+      "fluid": "colored_water:{color}_fluid",
+      "amount": 20
+    }
+  ],
+  "result": {
+    "item": "crusty_chunks:aluminum_plating_stairs_{color}"
+  }
+}

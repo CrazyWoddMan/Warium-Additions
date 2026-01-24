@@ -1,0 +1,76 @@
+{
+  "values": [
+    {
+      "id": "warium_extras:aluminum_layer",
+      "required": false
+    },
+    {
+      "id": "warium_extras:dark_gray_aluminum_layer",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_green",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_yellow",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_brown",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_white",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_red",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_black",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_cyan",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_blue",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_orange",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_gray",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_lime",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_light_gray",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_light_blue",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_pink",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_magenta",
+      "required": false
+    },
+    {
+      "id": "warium_extras:aluminum_layer_purple",
+      "required": false
+    }
+  ]
+}

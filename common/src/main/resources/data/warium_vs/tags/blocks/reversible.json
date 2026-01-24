@@ -1,0 +1,9 @@
+{
+  "values": [],
+  "remove": [
+    "valkyrien_warium:propeller",
+    "valkyrien_warium:boat_propeller",
+    "valkyrien_warium:heli_rotor",
+    "valkyrien_warium:large_heli_rotor"
+  ]
+}

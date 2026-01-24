@@ -1,0 +1,25 @@
+{
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "immersiveengineering"
+        }
+    ],
+    "type": "immersiveengineering:blueprint",
+    "category": "warium_special",
+    "inputs": [
+        {
+            "base_ingredient": {
+                "item": "crusty_chunks:smallbullet"
+            },
+            "count": 4
+        },
+        {
+            "item": "crusty_chunks:aluminum_tiny_dust"
+        }
+    ],
+    "result": {
+        "item": "crusty_chunks:small_stealth_bullet",
+        "count": 4
+    }
+}

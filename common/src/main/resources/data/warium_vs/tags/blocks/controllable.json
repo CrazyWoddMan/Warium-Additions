@@ -1,0 +1,60 @@
+{
+  "values": [
+    {
+      "id": "warium_additions:rotation_converter",
+      "required": false
+    },
+    {
+      "id": "warium_additions:kinetic_converter",
+      "required": false
+    },
+    {
+      "id": "warium_additions:controllable_trigger",
+      "required": false
+    },
+    {
+      "id": "createdieselgenerators:diesel_engine",
+      "required": false
+    },
+    {
+      "id": "createdieselgenerators:large_diesel_engine",
+      "required": false
+    },
+    {
+      "id": "createdieselgenerators:huge_diesel_engine",
+      "required": false
+    },
+    {
+      "id": "tfmg:gasoline_engine",
+      "required": false
+    },
+    {
+      "id": "tfmg:lpg_engine",
+      "required": false
+    },
+    {
+      "id": "tfmg:turbine_engine",
+      "required": false
+    },
+    {
+      "id": "tfmg:compact_engine",
+      "required": false
+    },
+    {
+      "id": "tfmg:low_grade_fuel_engine",
+      "required": false
+    },
+    {
+      "id": "tfmg:radial_engine",
+      "required": false
+    },
+    {
+      "id": "tfmg:large_radial_engine",
+      "required": false
+    },
+    {
+      "id": "createaddition:electric_motor",
+      "required": false
+    }
+  ]
+}

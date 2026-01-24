@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "aba",
+    "cdc",
+    " e "
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:plates/aluminum"
+    },
+    "b": {
+      "item": "minecraft:daylight_detector"
+    },
+    "c": {
+      "tag": "forge:ingots/lithium"
+    },
+    "d": {
+      "item": "crusty_chunks:cable"
+    },
+    "e": {
+      "item": "crusty_chunks:bent_component"
+    }
+  },
+  "result": {
+    "item": "crusty_chunks:solar_generator"
+  }
+}

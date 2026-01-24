@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "abc",
+    "ded",
+    "cba"
+  ],
+  "key": {
+    "a": {
+      "item": "crusty_chunks:advanced_component"
+    },
+    "b": {
+      "tag": "forge:storage_blocks/steel"
+    },
+    "c": {
+      "item": "crusty_chunks:copper_coil"
+    },
+    "d": {
+      "item": "crusty_chunks:steel_tube"
+    },
+    "e": {
+      "item": "crusty_chunks:assembly_depot"
+    }
+  },
+  "result": {
+    "item": "crusty_chunks:assembly_centrifuge_middle"
+  }
+}

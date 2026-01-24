@@ -1,0 +1,23 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:filling",
+  "ingredients": [
+    {
+        "item": "minecraft:glass_bottle"
+    },
+    {
+        "fluid": "crusty_chunks:petrolium",
+        "amount": 250
+    }
+  ],
+  "results": [
+    {
+        "item": "warium_additions:petrolium_bottle"
+    }
+  ]
+}

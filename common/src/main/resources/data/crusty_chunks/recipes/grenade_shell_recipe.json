@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "a ",
+    "b ",
+    "cd"
+  ],
+  "key": {
+    "a": {
+      "item": "crusty_chunks:bored_component"
+    },
+    "b": {
+      "item": "crusty_chunks:volatile_dust"
+    },
+    "c": {
+      "item": "crusty_chunks:propellent"
+    },
+    "d": {
+      "tag": "forge:plates/brass"
+    }
+  },
+  "result": {
+    "item": "crusty_chunks:grenade_shell",
+    "count": 4
+  }
+}

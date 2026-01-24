@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "aba",
+    "cdc",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "crusty_chunks:bent_component"
+    },
+    "b": {
+      "tag": "forge:storage_blocks/nickel"
+    },
+    "c": {
+      "item": "crusty_chunks:steel_component"
+    },
+    "d": {
+      "item": "crusty_chunks:assembly_depot"
+    }
+  },
+  "result": {
+    "item": "crusty_chunks:bauxite_digester"
+  }
+}

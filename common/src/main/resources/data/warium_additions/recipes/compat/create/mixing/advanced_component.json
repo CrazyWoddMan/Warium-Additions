@@ -1,0 +1,42 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "crusty_chunks:bent_component"
+    },
+    {
+      "item": "crusty_chunks:brass_fitting"
+    },
+    {
+      "tag": "forge:wires/steel"
+    },
+    {
+      "item": "crusty_chunks:steel_component"
+    },
+    {
+      "item": "crusty_chunks:bored_component"
+    },
+    {
+      "item": "crusty_chunks:electric_motor"
+    },
+    {
+      "item": "crusty_chunks:copper_coil"
+    },
+    {
+      "amount": 1000,
+      "fluidTag": "forge:oil"
+    }
+  ],
+  "results": [
+    {
+      "item": "crusty_chunks:advanced_component",
+      "count": 4
+    }
+  ]
+}

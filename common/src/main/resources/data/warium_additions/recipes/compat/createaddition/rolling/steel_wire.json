@@ -1,0 +1,15 @@
+{
+	"conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "createaddition"
+        }
+    ],
+	"type":"createaddition:rolling",
+	"input": {
+      	"tag": "forge:plates/steel"
+	},
+	"result": {
+		"item": "crusty_chunks:steel_wire"
+	}
+}

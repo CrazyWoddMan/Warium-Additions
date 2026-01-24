@@ -1,0 +1,22 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:deploying",
+  "ingredients": [
+    {
+      "item": "warium_additions:petrolium_bottle"
+    },
+    {
+      "item": "minecraft:paper"
+    }
+  ],
+  "results": [
+    {
+      "item": "crusty_chunks:incendiary_bottle"
+    }
+  ]
+}

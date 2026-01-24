@@ -1,0 +1,16 @@
+dependencies {
+    implementation project(":common")
+
+    compileOnly fg.deobf("com.simibubi.create:create-${mc_version}:6.0.7-281:slim") {transitive = false}
+    jarJar(group: 'net.createmod.ponder', name: 'Ponder-Forge-' + mc_version, version: '[1.0.92]') {transitive = false}
+    implementation fg.deobf("net.createmod.ponder:Ponder-Forge-${mc_version}:1.0.92")
+    jarJar(group: 'dev.engine-room.flywheel', name: 'flywheel-forge-' + mc_version, version: '[1.0.5]')
+    runtimeOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-${mc_version}:1.0.5")
+    compileOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-api-${mc_version}:1.0.5")
+
+    compileOnly fg.deobf("curse.maven:create-industry-693815:6816350")
+    compileOnly fg.deobf("curse.maven:create-diesel-generators-869316:6920093")
+    compileOnly fg.deobf("curse.maven:createaddition-439890:6306951")
+
+    compileOnly fg.deobf("curse.maven:supplementaries-412082:7113231")
+}

@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "warium_additions:rotation_converter",
+      "required": false
+    },
+    {
+      "id": "warium_additions:kinetic_converter",
+      "required": false
+    }
+  ]
+}

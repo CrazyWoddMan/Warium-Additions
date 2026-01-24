@@ -1,0 +1,35 @@
+{
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "createdieselgenerators"
+        }
+    ],
+    "type": "createdieselgenerators:distillation",
+    "ingredients": [
+        {
+            "fluid": "crusty_chunks:crude_oil",
+            "amount": 100
+        }
+    ],
+    "heatRequirement": "heated",
+    "processingTime": 60,
+    "results": [
+        {
+            "fluid": "crusty_chunks:oil",
+            "amount": 25
+        },
+        {
+            "fluid": "crusty_chunks:diesel",
+            "amount": 25
+        },
+        {
+            "fluid": "crusty_chunks:kerosene",
+            "amount": 25
+        },
+        {
+            "fluid": "crusty_chunks:petrolium",
+            "amount": 25
+        }
+    ]
+}
