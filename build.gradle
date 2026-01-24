@@ -162,7 +162,7 @@ subprojects {
                 forge_version: forge_version,
                 loader_version_range: loader_version_range, mod_group_id: mod_group_id,
                 mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
-                mod_authors: mod_authors, credits: credits, mod_description: mod_description, tests_directory: tests_directory,
+                mod_authors: mod_authors, credits: credits, mod_description: mod_description,
                 warium_version: warium_version, valkyrien_warium_version: valkyrien_warium_version, create_version: create_version,
                 immersiveengineering_version: immersiveengineering_version, jei_version: jei_version
         ]
@@ -255,9 +255,9 @@ subprojects {
             from("$buildDir/libs/") {
                 include "*-${project.name}.jar"
             }
-            into tests_directory
+            into System.getenv('MC_TESTS_DIR')
             onlyIf {
-                file(tests_directory).exists()
+                file(System.getenv('MC_TESTS_DIR')).exists()
             }
         }
 

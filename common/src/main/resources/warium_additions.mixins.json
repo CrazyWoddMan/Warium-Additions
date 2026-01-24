@@ -40,7 +40,8 @@
     "valkyrien_warium.PropellersScriptProcedureMixin",
     "valkyrien_warium.Throttle0PressProcedureMixin",
     "valkyrien_warium.Throttle1PressProcedureMixin",
-    "valkyrien_warium.KeroseneFueledBlockEntitiesMixin",
+    "valkyrien_warium.FuelContainingBlockEntitiesMixin",
+    "valkyrien_warium.FuelContainingTickProcedureMixin",
     "valkyrien_warium.ValkyrienWariumModKeyMappingsMixin",
     "valkyrien_warium.ControlShifterUseProcedureMixin",
     "valkyrien_warium.LinkerUseProcedureMixin",
@@ -66,6 +67,7 @@
     "create.ValkyrienWariumFluidTooltip",
 
     "createdieselgenerators.GeneratorsThrottleControl",
+    "createdieselgenerators.HammerItemMixin",
 
     "createaddition.LiquidBlazeBurnerBlockEntityMixin",
     "createaddition.ElectricMotorBlockEntityMixin",

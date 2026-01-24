@@ -8,6 +8,7 @@ public class Config {
     public static final ForgeConfigSpec SERVER_SPEC = builder.build();
 
     public static class Server {
+        // TODO: add integration toggle settings
         public final ForgeConfigSpec.IntValue fuelTanksCapacity;
         public final ForgeConfigSpec.IntValue refineryTowerCapacity;
 
@@ -108,7 +109,7 @@ public class Config {
                         .defineInRange("powerReactorCapacity", 800_000, 1, Integer.MAX_VALUE);
                     powerReactorGeneration = builder
                         .comment("Power Reactor energy generation (fe/t)")
-                        .defineInRange("powerReactorGeneration", 200, 1, Integer.MAX_VALUE);
+                        .defineInRange("powerReactorGeneration", 300, 1, Integer.MAX_VALUE);
                     solarGeneration = builder
                         .comment("Solar Generator energy generation (fe/t)")
                         .defineInRange("solarGeneration", 5, 1, Integer.MAX_VALUE);
