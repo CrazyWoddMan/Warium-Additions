@@ -2,9 +2,9 @@ dependencies {
     implementation project(":common")
 
     compileOnly fg.deobf("com.simibubi.create:create-${mc_version}:6.0.7-281:slim") {transitive = false}
-    jarJar(group: 'net.createmod.ponder', name: 'Ponder-Forge-' + mc_version, version: '[1.0.92]') {transitive = false}
+    jarJar(group: 'net.createmod.ponder', name: 'Ponder-Forge-' + mc_version, version: '[1.0.92,)') {transitive = false}
     implementation fg.deobf("net.createmod.ponder:Ponder-Forge-${mc_version}:1.0.92")
-    jarJar(group: 'dev.engine-room.flywheel', name: 'flywheel-forge-' + mc_version, version: '[1.0.5]')
+    jarJar(group: 'dev.engine-room.flywheel', name: 'flywheel-forge-' + mc_version, version: '[1.0.5,)')
     runtimeOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-${mc_version}:1.0.5")
     compileOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-api-${mc_version}:1.0.5")
 
