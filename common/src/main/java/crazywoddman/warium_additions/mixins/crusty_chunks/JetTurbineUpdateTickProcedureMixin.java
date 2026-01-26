@@ -80,7 +80,6 @@ public class JetTurbineUpdateTickProcedureMixin {
     )
     private static double modifySecondZero(double power, LevelAccessor world, double x, double y, double z) {
         int throttle = WariumAdditionsUtil.getThrottle(world.getBlockEntity(BlockPos.containing(x, y, z)), 0);
-        
         return throttle == 0 ? 0.0 : ((double) Config.SERVER.jetTurbinePower.get() / Config.SERVER.maxThrottle.get() * Math.abs(throttle));
     }
 }

@@ -132,11 +132,7 @@ public class WariumJEI implements IModPlugin {
         registration.addRecipeCatalysts(
             AssemblyCategory.TYPE,
             CrustyChunksModItems.ASSEMBLY_MACHINE.get(),
-            CrustyChunksModItems.ASSEMBLY_DEPOT.get(),
-            CrustyChunksModItems.MECHANICAL_EXTRUDER.get(),
-            CrustyChunksModItems.MECHANICAL_PRESS.get(),
-            CrustyChunksModItems.MECHANICAL_BORE.get(),
-            CrustyChunksModItems.MECHANICAL_SHEAR.get()
+            CrustyChunksModItems.ASSEMBLY_DEPOT.get()
         );
         registration.addRecipeCatalysts(
             DigesterCategory.TYPE,

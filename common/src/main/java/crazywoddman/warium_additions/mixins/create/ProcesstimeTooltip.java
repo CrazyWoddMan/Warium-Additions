@@ -6,16 +6,13 @@ import net.mcreator.crustychunks.block.AssemblyCentrifugeMiddleBlock;
 import net.mcreator.crustychunks.block.entity.AssemblyCentrifugeMiddleBlockEntity;
 import net.mcreator.crustychunks.block.entity.BreederReactorInterfaceBlockEntity;
 import net.mcreator.crustychunks.block.entity.ProductionInputBlockEntity;
-import net.mcreator.crustychunks.init.CrustyChunksModBlocks;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -34,8 +31,9 @@ public class ProcesstimeTooltip implements EngineersGoggles {
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         BlockEntity blockEntity = (BlockEntity)(Object)this;
         boolean isReactor = blockEntity instanceof BreederReactorInterfaceBlockEntity;
+        CompoundTag data = blockEntity.getPersistentData();
 
-        if (structureComplete(blockEntity, blockEntity.getBlockPos(), isReactor)) {
+        if (data.getBoolean("Ready")) {
             boolean validItem = false;
             int itemsAmount = 0;
 
@@ -56,7 +54,6 @@ public class ProcesstimeTooltip implements EngineersGoggles {
             }
 
             if (validItem) {
-                CompoundTag data = blockEntity.getPersistentData();
                 // TODO: fix different enrichmentTime for different items
                 int enrichmentTime = data.getInt("enrichmentTimeGamerule");
                 int timeLeft = (enrichmentTime * (isReactor ? 2 : 1) - data.getInt(isReactor ? "T" : "progress")) / 4;
@@ -97,29 +94,5 @@ public class ProcesstimeTooltip implements EngineersGoggles {
         }
 
         return false;
-    }
-
-    private static boolean getReady(Level level, BlockPos pos) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        return blockEntity != null && blockEntity.getPersistentData().getBoolean("Ready");
-    }
-
-    private static boolean structureComplete(BlockEntity blockEntity, BlockPos pos, boolean isReactor) {
-        Level level = blockEntity.getLevel();
-
-        if (!isReactor)
-            return getReady(level, pos);
-
-        return level.getBlockState(pos.below(2)).getBlock() == CrustyChunksModBlocks.BREEDER_REACTOR_PORT.get()
-            && level.getBlockState(pos.below(1)).getBlock() == CrustyChunksModBlocks.BREEDER_REACTOR_CORE.get()
-            && getReady(level, pos.below(1).north(2))
-            && getReady(level, pos.below(1).south(2))
-            && getReady(level, pos.below(1).west(2))
-            && getReady(level, pos.below(1).east(2))
-
-            && getReady(level, pos.north(2))
-            && getReady(level, pos.south(2))
-            && getReady(level, pos.west(2))
-            && getReady(level, pos.east(2));
     }
 }

@@ -124,7 +124,7 @@ subprojects {
     dependencies {
         minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
         
-        jarJar(group: 'me.fallenbreath', name: 'conditional-mixin-forge', version: '[0.6.4]')
+        jarJar(group: 'me.fallenbreath', name: 'conditional-mixin-forge', version: '[0.6.4,)')
         compileOnly fg.deobf("me.fallenbreath:conditional-mixin-forge:0.6.4")
 
         api fg.deobf("me.shedaniel.cloth:cloth-config-forge:11.1.136")
@@ -160,11 +160,20 @@ subprojects {
         var replaceProperties = [
                 mc_version: mc_version,
                 forge_version: forge_version,
-                loader_version_range: loader_version_range, mod_group_id: mod_group_id,
-                mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
-                mod_authors: mod_authors, credits: credits, mod_description: mod_description,
-                warium_version: warium_version, valkyrien_warium_version: valkyrien_warium_version, create_version: create_version,
-                immersiveengineering_version: immersiveengineering_version, jei_version: jei_version
+                loader_version_range: loader_version_range,
+                mod_group_id: mod_group_id,
+                mod_id: mod_id,
+                mod_name: mod_name,
+                mod_license: mod_license,
+                mod_version: mod_version,
+                mod_authors: mod_authors,
+                credits: credits,
+                mod_description: mod_description,
+                warium_version: warium_version,
+                valkyrien_warium_version: valkyrien_warium_version,
+                create_version: create_version,
+                immersiveengineering_version: immersiveengineering_version,
+                jei_version: jei_version
         ]
         inputs.properties replaceProperties
 
