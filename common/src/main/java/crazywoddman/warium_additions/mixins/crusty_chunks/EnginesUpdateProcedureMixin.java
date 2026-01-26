@@ -1,21 +1,25 @@
 package crazywoddman.warium_additions.mixins.crusty_chunks;
 
+import net.mcreator.crustychunks.block.entity.EngineCyllinderBlockEntity;
+import net.mcreator.crustychunks.block.entity.MediumDieselEngineBlockEntity;
+import net.mcreator.crustychunks.block.entity.MediumPetrolEngineBlockEntity;
+import net.mcreator.crustychunks.block.entity.SmallDieselEngineBlockEntity;
+import net.mcreator.crustychunks.block.entity.SmallPetrolEngineBlockEntity;
 import net.mcreator.crustychunks.procedures.EngineCyllinderOnTickUpdateProcedure;
 import net.mcreator.crustychunks.procedures.EngineUpdateProcedure;
 import net.mcreator.crustychunks.procedures.PetrolEngineUpdateProcedure;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import crazywoddman.warium_additions.config.Config;
 import crazywoddman.warium_additions.util.WariumAdditionsUtil;
@@ -26,19 +30,7 @@ import crazywoddman.warium_additions.util.WariumAdditionsUtil;
     EngineCyllinderOnTickUpdateProcedure.class
 })
 public class EnginesUpdateProcedureMixin {
-
-    private static String engineType;
-
-    @Inject(
-        method = "execute",
-        at = @At("HEAD"),
-        remap = false,
-        require = 0
-    )
-    private static void injectEnginesExecute(LevelAccessor world, double x, double y, double z, CallbackInfo ci) {
-        engineType = ForgeRegistries.BLOCKS.getKey(world.getBlockState(BlockPos.containing(x, y, z)).getBlock()).getPath();
-    }
-
+    
     @Redirect(
         method = "execute",
         at = @At(
@@ -158,16 +150,24 @@ public class EnginesUpdateProcedureMixin {
         remap = false
     )
     private static double modifySecondZero(double power, LevelAccessor world, double x, double y, double z) {
-        int throttle = WariumAdditionsUtil.getThrottle(world.getBlockEntity(BlockPos.containing(x, y, z)), 0);
-        double maxPower = switch (engineType) {
-            case "light_combustion_engine" -> Config.SERVER.mediumDieselEnginePower.get();
-            case "small_diesel_engine" -> Config.SERVER.smallDieselEnginePower.get();
-            case "medium_petrol_engine" -> Config.SERVER.mediumPetrolEnginePower.get();
-            case "smal_petrol_engine" -> Config.SERVER.mediumDieselEnginePower.get();
-            case "engine_cyllinder" -> Config.SERVER.largeEnginePower.get();
-            default -> 0;
-        };
-        
+        BlockEntity blockEntity = world.getBlockEntity(BlockPos.containing(x, y, z));
+        double maxPower;
+
+        if (blockEntity instanceof MediumDieselEngineBlockEntity)
+            maxPower = Config.SERVER.mediumDieselEnginePower.get();
+        else if (blockEntity instanceof SmallDieselEngineBlockEntity)
+            maxPower = Config.SERVER.smallDieselEnginePower.get();
+        else if (blockEntity instanceof MediumPetrolEngineBlockEntity)
+            maxPower = Config.SERVER.mediumPetrolEnginePower.get();
+        else if (blockEntity instanceof SmallPetrolEngineBlockEntity)
+            maxPower = Config.SERVER.smallPetrolEnginePower.get();
+        else if (blockEntity instanceof EngineCyllinderBlockEntity)
+            maxPower = Config.SERVER.largeEnginePower.get();
+        else
+            throw new IllegalStateException("Unsupported BlockEntity for this procedure: [" + ForgeRegistries.BLOCK_ENTITY_TYPES.getKey(blockEntity.getType()) + "]");
+
+        int throttle = WariumAdditionsUtil.getThrottle(blockEntity, 0);
+
         return throttle == 0 ? 0.0 : (maxPower / Config.SERVER.maxThrottle.get() * Math.abs(throttle));
     }
 }
