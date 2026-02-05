@@ -33,12 +33,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.mcreator.crustychunks.init.CrustyChunksModItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 
 public abstract class StructuredRecipeCategory<T> implements IRecipeCategory<T> {
+    private static final Item[] FIREBOXES = WariumAdditions.create
+        ? new Item[]{CrustyChunksModItems.FIREBOX.get(), CrustyChunksModItems.OIL_FIREBOX.get(), CrustyChunksModItems.ELECTRIC_FIREBOX.get(), ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("create", "blaze_burner"))}
+        : new Item[]{CrustyChunksModItems.FIREBOX.get(), CrustyChunksModItems.OIL_FIREBOX.get(), CrustyChunksModItems.ELECTRIC_FIREBOX.get()};
+    private static final String[] FIREBOX_TOOLTIPS = WariumAdditions.create
+        ? new String[]{".tooltip.fuel.needed", ".tooltip.fuel.needed", ".tooltip.power.needed", ".tooltip.heat.needed"}
+        : new String[]{".tooltip.fuel.needed", ".tooltip.fuel.needed", ".tooltip.power.needed"};
     protected record Block(Supplier<Item> item, int x, int y, int z, @Nullable Consumer<List<Component>> tooltip) {};
     protected final RecipeType<T> recipeType;
     protected final Item categoryItem;
@@ -102,17 +109,9 @@ public abstract class StructuredRecipeCategory<T> implements IRecipeCategory<T> 
 
     protected void firebox() {
         addBlock(
-            () -> WariumAdditionsUtil.ticker(
-                CrustyChunksModItems.FIREBOX.get(),
-                CrustyChunksModItems.OIL_FIREBOX.get(),
-                CrustyChunksModItems.ELECTRIC_FIREBOX.get()
-            ),
+            () -> WariumAdditionsUtil.ticker(FIREBOXES),
             0, 0, 0,
-            tooltip -> tooltip.add(1, Component.translatable(WariumAdditions.MODID + WariumAdditionsUtil.ticker(
-                ".tooltip.fuel_needed",
-                ".tooltip.fuel_needed",
-                ".tooltip.power_needed"
-            )).withStyle(ChatFormatting.GOLD))
+            tooltip -> tooltip.add(1, Component.translatable(WariumAdditions.MODID + WariumAdditionsUtil.ticker(FIREBOX_TOOLTIPS)).withStyle(ChatFormatting.GOLD))
         );
     }
 
