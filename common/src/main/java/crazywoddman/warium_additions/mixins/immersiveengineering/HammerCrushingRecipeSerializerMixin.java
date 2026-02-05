@@ -24,7 +24,6 @@ public class HammerCrushingRecipeSerializerMixin {
         )
     )
     private Ingredient redirectHammerIngredient(ItemLike[] items) {
-        System.out.println("HammerCrushingRecipeSerializerMixin working");
         return Ingredient.of(ItemTags.create(ResourceLocation.fromNamespaceAndPath("immersiveengineering", "tools/hammers")));
     }
 }

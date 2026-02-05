@@ -58,17 +58,12 @@ public class ControlShifterUseProcedureMixin {
                     else {
                         values = Arrays.copyOf(values, values.length + 1);
                         values[values.length - 1] = values[0];
-
-                        System.out.println("values: " + Arrays.toString(values));
                         
-                        for (int i = 0; i < values.length; i++) {
-                            System.out.println("values[" + i + "]: " + values[i]);
+                        for (int i = 0; i < values.length; i++)
                             if (scrollValue <= values[i]) {
-                                System.out.println("values[" + i + " + " + 1 + "]: " + values[i + 1]);
                                 scrollValue = values[i + 1];
                                 break;
                             }
-                        }
                     }
 
                     accessor.setScrollValue(scrollValue);
