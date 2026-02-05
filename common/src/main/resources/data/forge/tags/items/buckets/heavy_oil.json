@@ -1,5 +1,9 @@
 {
   "values": [
-    "crusty_chunks:oil_bucket"
+    "crusty_chunks:oil_bucket",
+    {
+      "id": "ad_astra:oil_bucket",
+      "required": false
+    }
   ]
 }

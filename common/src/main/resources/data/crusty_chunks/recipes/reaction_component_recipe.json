@@ -14,7 +14,7 @@
       "tag": "forge:ingots/beryllium"
     },
     "c": {
-      "item": "crusty_chunks:uranium_neural_ingot"
+      "tag": "forge:ingots/uranium"
     },
     "d": {
       "tag": "forge:storage_blocks/nickel"
