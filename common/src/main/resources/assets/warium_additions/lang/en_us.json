@@ -21,8 +21,9 @@
 	"warium_additions.tooltip.energy.limit": "Limit",
 	"warium_additions.tooltip.ammo": "Ammo",
 	"warium_additions.tooltip.empty": "empty",
-	"warium_additions.tooltip.fuel_needed": "Must be fueled",
-	"warium_additions.tooltip.power_needed": "Must be powered",
+	"warium_additions.tooltip.fuel.needed": "Must be fueled",
+	"warium_additions.tooltip.power.needed": "Must be powered",
+	"warium_additions.tooltip.heat.needed": "Must be heated",
 	"warium_additions.tooltip.rotation_required": "Requires rotation power",
 	"warium_additions.tooltip.not_consumed": "Not consumed",
 

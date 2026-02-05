@@ -27,6 +27,7 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
+// TODO: make mod optionally client-sided
 @Mod(WariumAdditions.MODID)
 public class WariumAdditions {
     public static final String MODID = "warium_additions";
@@ -47,6 +48,7 @@ public class WariumAdditions {
         WariumAdditionsRecipes.WARIUM_RECIPE_TYPES.register(bus);
         RegistryBlocks.WARIUM_REGISTRY.register(bus);
         RegistryItems.WARIUM_REGISTRY.register(bus);
+        context.registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC);
 
         if (create) {
             Registrate.register(bus);
@@ -56,9 +58,6 @@ public class WariumAdditions {
             CreateItems.register();
             CreateFluids.register();
         }
-
-        if (cloth_config)
-            context.registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC);
 
         if (modlist.isLoaded("valkyrien_warium")) {
             RegistryItems.REGISTRY.register(bus);
@@ -76,7 +75,7 @@ public class WariumAdditions {
         public static void onClientSetup(final FMLClientSetupEvent event) {
             WariumPonder.register();
 
-            if (modlist.isLoaded("cloth_config"))
+            if (cloth_config)
                 ClothConfig.registerConfigScreen();
         }
 

@@ -29,6 +29,7 @@
     "crusty_chunks.fluid.DrainFillProceduresMixin",
     "crusty_chunks.fluid.RefineryOnTickUpdateProcedureMixin",
     "crusty_chunks.fluid.ConnectionProceduresMixin",
+    "crusty_chunks.fluid.HeavyFlameThrowerFireScriptProcedureMixin",
 
     "crusty_chunks.EnginesUpdateProcedureMixin",
     "crusty_chunks.JetTurbineUpdateTickProcedureMixin",
