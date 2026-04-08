@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ab ",
+    "cde",
+    " cf"
+  ],
+  "key": {
+    "a": {
+      "item": "crusty_chunks:mini_gun_barrel"
+    },
+    "b": {
+      "tag": "forge:plates/steel"
+    },
+    "c": {
+      "item": "crusty_chunks:advanced_alloy_component"
+    },
+    "d": {
+      "item": "crusty_chunks:mg_receiver"
+    },
+    "e": {
+      "item": "crusty_chunks:advanced_component"
+    },
+    "f": {
+      "item": "crusty_chunks:steel_component"
+    }
+  },
+  "result": {
+    "item": "crusty_chunks:minigun"
+  }
+}

@@ -1,0 +1,57 @@
+package crazywoddman.warium_additions.compat.create;
+
+import crazywoddman.warium_additions.WariumAdditions;
+import crazywoddman.warium_additions.compat.create.blocks.ModifiedElectricFireboxBlock;
+import crazywoddman.warium_additions.compat.create.blocks.ModifiedFireboxBlock;
+import crazywoddman.warium_additions.compat.create.blocks.ModifiedOilFireboxBlock;
+import crazywoddman.warium_additions.compat.create.blocks.converters.KineticConverterBlock;
+import crazywoddman.warium_additions.compat.create.blocks.converters.OldKineticConverterBlock;
+import crazywoddman.warium_additions.compat.create.blocks.converters.OldRotationConverterBlock;
+import crazywoddman.warium_additions.compat.create.blocks.converters.RotationConverterBlock;
+
+import com.tterrag.registrate.util.entry.BlockEntry;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+
+public class WariumCreateBlocks {
+    private static final DeferredRegister<Block> WARIUM_REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCKS, "crusty_chunks");
+    public static void register(IEventBus bus) {
+        WARIUM_REGISTRY.register(bus);
+    }
+
+    static {
+        if (WariumAdditions.CREATE) {
+            WARIUM_REGISTRY.register("firebox", ModifiedFireboxBlock::new);
+            WARIUM_REGISTRY.register("oil_firebox", ModifiedOilFireboxBlock::new);
+            WARIUM_REGISTRY.register("electric_firebox", ModifiedElectricFireboxBlock::new);
+        }
+    }
+    
+    public static final BlockEntry<RotationConverterBlock> ROTATION_CONVERTER = Registrate.REGISTRATE
+        .defaultCreativeTab((ResourceKey<CreativeModeTab>)null)
+        .block("rotation_converter", RotationConverterBlock::new)
+        .properties(p -> p.strength(1.0F).mapColor(MapColor.METAL).sound(SoundType.ANVIL))
+        .simpleItem()
+        .register();
+
+    public static final BlockEntry<OldRotationConverterBlock> OLD_ROTATION_CONVERTER = Registrate.REGISTRATE_OLDID
+        .block("converter_out", OldRotationConverterBlock::new)
+        .register();
+
+    public static final BlockEntry<KineticConverterBlock> KINETIC_CONVERTER = Registrate.REGISTRATE
+        .defaultCreativeTab((ResourceKey<CreativeModeTab>)null)
+        .block("kinetic_converter", KineticConverterBlock::new)
+        .properties(p -> p.strength(1.0F).mapColor(MapColor.METAL).sound(SoundType.ANVIL))
+        .simpleItem()
+        .register();
+
+    public static final BlockEntry<OldKineticConverterBlock> OLD_KINETIC_CONVERTER = Registrate.REGISTRATE_OLDID
+        .block("converter_in", OldKineticConverterBlock::new)
+        .register();
+}

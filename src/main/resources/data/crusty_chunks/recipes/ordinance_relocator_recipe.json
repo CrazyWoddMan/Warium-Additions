@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "a a",
+    "b b",
+    "c c"
+  ],
+  "key": {
+    "a": {
+      "item": "crusty_chunks:steel_plating_slab"
+    },
+    "b": {
+      "item": "crusty_chunks:steel_component"
+    },
+    "c": {
+      "tag": "forge:plates/aluminum"
+    }
+  },
+  "result": {
+    "item": "crusty_chunks:ordinance_relocator",
+    "count": 1
+  }
+}

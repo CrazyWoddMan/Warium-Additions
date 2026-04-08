@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ab ",
+    " cd",
+    "efg"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:wires/steel"
+    },
+    "b": {
+      "item": "crusty_chunks:bored_component"
+    },
+    "c": {
+      "item": "crusty_chunks:copper_coil"
+    },
+    "d": {
+      "item": "crusty_chunks:steel_tube"
+    },
+    "e": {
+      "item": "crusty_chunks:bent_component"
+    },
+    "f": {
+      "item": "crusty_chunks:firing_mechanism"
+    },
+    "g": {
+      "item": "crusty_chunks:cut_component"
+    }
+  },
+  "result": {
+    "item": "crusty_chunks:welder"
+  }
+}
