@@ -35,7 +35,6 @@ public class WariumAdditionsItems {
         if (WariumAdditions.IMMERSIVEENGINEERING) {
             override(CrustyChunksModItems.HAMMER, ModifiedIEHammerItem::new);
             override(CrustyChunksModItems.CUTTERS, ModifiedIECuttersItem::new);
-            override(CrustyChunksModItems.ENERGY_METER, ModifiedIEEnergyMeterItem::new);
         }
 
         override(

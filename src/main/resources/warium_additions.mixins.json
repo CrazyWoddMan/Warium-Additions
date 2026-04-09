@@ -59,7 +59,6 @@
     "valkyrien_warium.ValkyrienWariumModKeyMappingsMixin",
     "valkyrien_warium.LinkerUseProcedureMixin",
 
-    "immersiveengineering.ClientEventHandlerMixin",
     "immersiveengineering.HammerCrushingRecipeSerializerMixin",
     "immersiveengineering.ImmersiveEnergyBatteryMixin",
     "immersiveengineering.ModWorkbenchContainerMixin",
