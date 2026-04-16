@@ -34,6 +34,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.simibubi.create.content.kinetics.base.DirectionalAxisKineticBlock;
 import com.simibubi.create.content.kinetics.deployer.DeployerFakePlayer;
 
+// TODO: fix VS grids placement
 @Restriction(require = @Condition("create"))
 @Mixin({
     OrdinanceClusterWarheadBlock.class,

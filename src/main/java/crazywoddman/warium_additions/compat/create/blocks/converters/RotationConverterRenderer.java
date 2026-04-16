@@ -29,15 +29,17 @@ public class RotationConverterRenderer extends KineticBlockEntityRenderer<Rotati
         return CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF, state, facing.getOpposite());
     }
 
+    // TODO: God have mercy
     @Override
     protected void renderSafe(RotationConverterBlockEntity blockEntity, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
-        if (VisualizationManager.supportsVisualization(blockEntity.getLevel())) return;
+        if (VisualizationManager.supportsVisualization(blockEntity.getLevel()))
+            return;
 
         super.renderSafe(blockEntity, partialTicks, ms, buffer, light, overlay);
 
         BlockState state = blockEntity.getBlockState();
         Direction facing = state.getValue(RotationConverterBlock.FACING);
-        AttachFace face = state.getValue(RotationConverterBlock.FACE);
+        // AttachFace face = state.getValue(RotationConverterBlock.FACE);
         VertexConsumer vb = buffer.getBuffer(RenderType.solid());
 
         SuperByteBuffer shaftHalf = CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF, state, facing.getOpposite());
@@ -49,35 +51,45 @@ public class RotationConverterRenderer extends KineticBlockEntityRenderer<Rotati
         float dialPivot = 5.75f / 16;
         float progress = Mth.lerp(partialTicks, blockEntity.prevDialState, blockEntity.dialState);
 
-        if (face == AttachFace.WALL) {
-            renderGaugePanelWall(ms, vb, dialBuffer, headBuffer, facing, -1f / 16f, dialPivot, progress, light, overlay);
-            renderGaugePanelWall(ms, vb, dialBuffer, headBuffer, facing.getOpposite(), 1f / 16f, dialPivot, progress, light, overlay);
-        } else {
-            renderGaugePanel(ms, vb, dialBuffer, headBuffer, facing, face, dialPivot, progress, light, overlay);
-        }
+        // if (face == AttachFace.WALL) {
+        //     renderGaugePanelWall(ms, vb, dialBuffer, headBuffer, facing, -1f / 16f, dialPivot, progress, light, overlay);
+        //     renderGaugePanelWall(ms, vb, dialBuffer, headBuffer, facing.getOpposite(), 1f / 16f, dialPivot, progress, light, overlay);
+        // } else {
+        //     renderGaugePanel(ms, vb, dialBuffer, headBuffer, facing, face, dialPivot, progress, light, overlay);
+        // }
     }
 
-    private void renderGaugePanelWall(PoseStack ms, VertexConsumer vb, SuperByteBuffer dialBuffer, SuperByteBuffer headBuffer,
-                                 Direction panelFacing, float offset, float dialPivot, float progress, int light, int overlay) {
-        dialBuffer.rotateCentered((float) ((-panelFacing.toYRot()) / 180 * Math.PI), Axis.YN)
-                .translate(0, 0, offset)
-                .translate(0, dialPivot, dialPivot)
-                .rotate((float) (Math.PI / 2 * -progress), Axis.YN)
-                .translate(0, -dialPivot, -dialPivot)
-                .light(light)
-                .renderInto(ms, vb);
-
-        headBuffer.rotateCentered((float) ((-panelFacing.toYRot()) / 180 * Math.PI), Axis.YN)
-                .translate(0, 0, offset)
-                .light(light)
-                .renderInto(ms, vb);
+    private void renderGaugePanelWall(
+        PoseStack ms,
+        VertexConsumer vb,
+        SuperByteBuffer dial,
+        SuperByteBuffer head,
+        Direction panelFacing,
+        float offset,
+        float dialPivot,
+        float progress,
+        int light,
+        int overlay
+    ) {
+        float radians = -panelFacing.toYRot() / 180 * (float)Math.PI;
+        dial.rotateCentered(radians, Axis.YN)
+            .translate(0, 0, offset)
+            .translate(0, dialPivot, dialPivot)
+            .rotate((float)Math.PI / 2 * -progress, Axis.YN)
+            .translate(0, -dialPivot, -dialPivot)
+            .light(light)
+            .renderInto(ms, vb);
+        head.rotateCentered(radians, Axis.YN)
+            .translate(0, 0, offset)
+            .light(light)
+            .renderInto(ms, vb);
     }
 
     private void renderGaugePanel(
         PoseStack ms,
         VertexConsumer vb,
-        SuperByteBuffer dialBuffer,
-        SuperByteBuffer headBuffer,
+        SuperByteBuffer dial,
+        SuperByteBuffer head,
         Direction facing,
         AttachFace face,
         float dialPivot,
@@ -85,24 +97,22 @@ public class RotationConverterRenderer extends KineticBlockEntityRenderer<Rotati
         int light,
         int overlay
     ) {
-        double offset;
-        if (face == AttachFace.CEILING)
-                offset = ((facing == Direction.SOUTH || facing == Direction.NORTH) ? -1f : 1f)/16f;
-            else
-                offset = -1f/16f;
-        dialBuffer.rotateCentered((face == AttachFace.FLOOR ? -1 : 1) * (float)Math.PI / 2, Axis.YN)
-                .rotateCentered((90 - facing.toYRot()) / 180 * (float)Math.PI, Axis.YN)
-                .translate(0, offset, 0)
-                .translate(0, dialPivot, dialPivot)
-                .rotate((float) (Math.PI / 2 * -progress), Axis.YN)
-                .translate(0, -dialPivot, -dialPivot)
-                .light(light)
-                .renderInto(ms, vb);
+        float radians1 = (face == AttachFace.FLOOR ? -1 : 1) * (float)Math.PI / 2;
+        float radians2 = (90 - facing.toYRot()) / 180 * (float)Math.PI;
+        double offset = ((face != AttachFace.CEILING || facing == Direction.SOUTH || facing == Direction.NORTH) ? -1f : 1f) / 16f;
+        dial.rotateCentered(radians1, Axis.YN)
+            .rotateCentered(radians2, Axis.YN)
+            .translate(0, offset, 0)
+            .translate(0, dialPivot, dialPivot)
+            .rotate((float) (Math.PI / 2 * -progress), Axis.YN)
+            .translate(0, -dialPivot, -dialPivot)
+            .light(light)
+            .renderInto(ms, vb);
 
-        headBuffer.rotateCentered((face == AttachFace.FLOOR ? -1 : 1) * (float)Math.PI / 2, Axis.YN)
-                .rotateCentered((90 - facing.toYRot()) / 180 * (float)Math.PI, Axis.YN)
-                .translate(0, offset, 0)
-                .light(light)
-                .renderInto(ms, vb);
+        head.rotateCentered(radians1, Axis.YN)
+            .rotateCentered(radians2, Axis.YN)
+            .translate(0, offset, 0)
+            .light(light)
+            .renderInto(ms, vb);
     }
 }

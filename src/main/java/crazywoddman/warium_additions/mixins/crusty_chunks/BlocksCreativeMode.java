@@ -4,19 +4,25 @@ import net.mcreator.crustychunks.block.ArtillerybreechBlock;
 import net.mcreator.crustychunks.block.AutocannonBlock;
 import net.mcreator.crustychunks.block.BattleCannonBreechBlock;
 import net.mcreator.crustychunks.block.CountermeasureDispenserBlock;
+import net.mcreator.crustychunks.block.EngineCyllinderBlock;
 import net.mcreator.crustychunks.block.FireSpearMissileHardpointBlock;
 import net.mcreator.crustychunks.block.FlameThrowerBlock;
 import net.mcreator.crustychunks.block.FuelTankBlock;
 import net.mcreator.crustychunks.block.HeavyMachineGunBlock;
+import net.mcreator.crustychunks.block.JetTurbineBlock;
 import net.mcreator.crustychunks.block.LargeRocketPodBlock;
 import net.mcreator.crustychunks.block.LightAutocannonBlock;
 import net.mcreator.crustychunks.block.LightMachineGunBlock;
 import net.mcreator.crustychunks.block.MachineGunBlock;
+import net.mcreator.crustychunks.block.MediumDieselEngineBlock;
+import net.mcreator.crustychunks.block.MediumPetrolEngineBlock;
 import net.mcreator.crustychunks.block.MinigunBlock;
 import net.mcreator.crustychunks.block.RadarSpearMissileHardpointBlock;
 import net.mcreator.crustychunks.block.RocketPodBlock;
 import net.mcreator.crustychunks.block.RotaryAutoCannonBlock;
 import net.mcreator.crustychunks.block.SeekerSpearMissileHardpointBlock;
+import net.mcreator.crustychunks.block.SmallDieselEngineBlock;
+import net.mcreator.crustychunks.block.SmallPetrolEngineBlock;
 import net.mcreator.crustychunks.block.SmokeLauncherBlock;
 import net.mcreator.crustychunks.block.StrikeSpearMissileHardpointBlock;
 import net.minecraft.world.level.block.Block;
@@ -30,12 +36,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import crazywoddman.warium_additions.mixins.crusty_chunks.fluid.FuelTanksCreativeMode;
 import crazywoddman.warium_additions.mixins.crusty_chunks.weapons.CannonsCreativeMode;
 import crazywoddman.warium_additions.mixins.crusty_chunks.weapons.HeavyFlameThrowerCreativeMode;
 import crazywoddman.warium_additions.mixins.crusty_chunks.weapons.PodsCreativeMode;
 import crazywoddman.warium_additions.mixins.crusty_chunks.weapons.TurretsCreativeMode;
 import crazywoddman.warium_additions.util.WariumAdditionsUtil;
 
+// TODO: implement for Kerosene Firebox
 /**
  * Adds <b>Creative Mode</b> {@link BlockState} {@link Property}.
  * <p>In this mode weapons don't require ammo and don't output casings, fluid tank doen't consume fuel
@@ -44,6 +52,7 @@ import crazywoddman.warium_additions.util.WariumAdditionsUtil;
  * @see CannonsCreativeMode
  * @see HeavyFlameThrowerCreativeMode
  * @see PodsCreativeMode
+ * @see FuelTanksCreativeMode
  */
 @Mixin({
     FireSpearMissileHardpointBlock.class,
@@ -64,7 +73,13 @@ import crazywoddman.warium_additions.util.WariumAdditionsUtil;
     RocketPodBlock.class,
     LargeRocketPodBlock.class,
     CountermeasureDispenserBlock.class,
-    FuelTankBlock.class
+    FuelTankBlock.class,
+    MediumDieselEngineBlock.class,
+    SmallDieselEngineBlock.class,
+    MediumPetrolEngineBlock.class,
+    SmallPetrolEngineBlock.class,
+    EngineCyllinderBlock.class,
+    JetTurbineBlock.class
 })
 public class BlocksCreativeMode {
 

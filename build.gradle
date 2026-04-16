@@ -135,7 +135,7 @@ dependencies {
     compileOnly fg.deobf("curse.maven:create-diesel-generators-869316:6920093")
     compileOnly fg.deobf("curse.maven:createaddition-439890:6306951")
 
-    compileOnly fg.deobf("curse.maven:supplementaries-412082:7113231")
+    compileOnly fg.deobf("curse.maven:supplementaries-412082:7884611")
 
     compileOnly fg.deobf("blank:warium_ponder_jei-${warium_ponder_jei_version}-all:${warium_ponder_jei_version}")
 }

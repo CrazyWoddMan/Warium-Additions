@@ -1,5 +1,6 @@
 package crazywoddman.warium_additions.compat.create.blocks.converters;
 
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.content.kinetics.base.DirectionalKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
 
@@ -14,92 +15,42 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
-// TODO add vertical placement
 public class RotationConverterBlock extends DirectionalKineticBlock implements IBE<RotationConverterBlockEntity> {
-
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final EnumProperty<AttachFace> FACE = BlockStateProperties.ATTACH_FACE;
-    public static final VoxelShaper FLOOR = Shaper
+    public static final BooleanProperty DIAL = BooleanProperty.create("dial");
+    public static final VoxelShaper SHAPE;
+    static {
+        VoxelShaper base = Shaper
         .shape(0, 0, 0, 16, 16, 4)
         .add(2, 2, 4, 14, 14, 15)
-        .add(1, 0, 4, 15, 2, 16)
         .forDirectional();
-    public static final VoxelShaper CEILING = Shaper
-        .shape(0, 0, 0, 16, 16, 4)
-        .add(2, 2, 4, 14, 14, 15)
-        .add(1, 14, 4, 15, 16, 16)
-        .forDirectional();
-    public static final VoxelShaper WALL = Shaper
-        .shape(0, 0, 0, 16, 16, 4)
-        .add(2, 2, 4, 14, 14, 15)
-        .add(1, 0, 4, 15, 2, 16)
-        .add(1, 14, 4, 15, 16, 16)
-        .forDirectional();
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return switch (state.getValue(FACE)) {
-            case FLOOR -> FLOOR.get(state.getValue(FACING));
-            case CEILING -> CEILING.get(state.getValue(FACING));
-            case WALL -> WALL.get(state.getValue(FACING));
-        };
+        SHAPE = base.withVerticalShapes(base.get(Direction.DOWN));
     }
-
+    
     public RotationConverterBlock(Properties properties) {
         super(properties);
     }
 
     @Override
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return SHAPE.get(state.getValue(FACING));
+    }
+
+
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, FACE);
+        builder.add(FACING, DIAL);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        Direction preferred = getPreferredFacing(context);
-        Direction facing;
-        Direction look = context.getHorizontalDirection();
-
-        if (preferred != null && (preferred.getAxis().isHorizontal())) {
-            if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) 
-                facing = look.getOpposite();
-            else
-                facing = preferred.getOpposite();
-        } else {
-            if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) 
-                facing = look.getOpposite();
-            else
-                facing = look;
-        }
-
-        AttachFace face;
-        switch (context.getClickedFace()) {
-            case UP: face = AttachFace.FLOOR; break;
-            case DOWN: face = AttachFace.CEILING; break;
-            default: face = AttachFace.WALL; break;
-        }
-
-        return defaultBlockState().setValue(FACING, facing).setValue(FACE, face);
-    }
-
-    @Override
-    public BlockState rotate(BlockState state, Rotation rot) {
-        return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
-    }
-
-    @Override
-    public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.setValue(FACING, mirrorIn.mirror(state.getValue(FACING)));
+        return super.getStateForPlacement(context).setValue(DIAL, context.getClickedFace().getAxis() != Direction.Axis.Y);
     }
 
     @Override
@@ -124,22 +75,11 @@ public class RotationConverterBlock extends DirectionalKineticBlock implements I
 
     @Override
     public InteractionResult onWrenched(BlockState state, UseOnContext context) {
-        Direction clickedFace = context.getClickedFace();
-        Direction facing = state.getValue(FACING);
-        AttachFace face = state.getValue(FACE);
-
-        if (clickedFace == facing || clickedFace == facing.getOpposite()) {
-            AttachFace newFace;
-            switch (face) {
-                case FLOOR: newFace = AttachFace.WALL; break;
-                case WALL: newFace = AttachFace.CEILING; break;
-                case CEILING: newFace = AttachFace.FLOOR; break;
-                default: newFace = AttachFace.FLOOR;
-            }
-            BlockState newState = state.setValue(FACE, newFace);
-            context.getLevel().setBlock(context.getClickedPos(), newState, 3);
-            return InteractionResult.SUCCESS;
+        if (context.getClickedFace().getAxis().equals(state.getValue(FACING).getAxis())) {
+            state = state.setValue(DIAL, !state.getValue(DIAL));
+            IWrenchable.playRotateSound(context.getLevel(), context.getClickedPos());
         }
+
         return super.onWrenched(state, context);
     }
 }

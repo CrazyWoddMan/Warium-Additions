@@ -26,11 +26,11 @@ import net.minecraftforge.registries.RegistryObject;
 @Mod.EventBusSubscriber(modid = WariumAdditions.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class WariumAdditionsItems {
     public static void register(IEventBus bus) {
-        WariumAdditionsItems.WARIUM_REGISTRY.register(bus);
+        WARIUM_REGISTRY.register(bus);
     }
     
     private static final DeferredRegister<Item> WARIUM_REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, "crusty_chunks");
-    
+
     static {
         if (WariumAdditions.IMMERSIVEENGINEERING) {
             override(CrustyChunksModItems.HAMMER, ModifiedIEHammerItem::new);

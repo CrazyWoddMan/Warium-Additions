@@ -12,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class WariumAdditionsBlocks {
     public static void register(IEventBus bus) {
-        WariumAdditionsBlocks.WARIUM_REGISTRY.register(bus);
+        WARIUM_REGISTRY.register(bus);
     }
     
     private static final DeferredRegister<Block> WARIUM_REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCKS, "crusty_chunks");

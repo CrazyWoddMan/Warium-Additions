@@ -19,8 +19,8 @@ public class WariumCreateBlockEntities {
     public static final BlockEntityEntry<RotationConverterBlockEntity> ROTATION_CONVERTER = Registrate.REGISTRATE
         .blockEntity("rotation_converter", RotationConverterBlockEntity::new)
         .visual(() -> RotationConverterVisual::new)
-        .validBlocks(WariumCreateBlocks.ROTATION_CONVERTER)
         .renderer(() -> RotationConverterRenderer::new)
+        .validBlocks(WariumCreateBlocks.ROTATION_CONVERTER)
         .register();
 
     public static final BlockEntityEntry<OldRotationConverterBlockEntity> OLD_ROTATION_CONVERTER = Registrate.REGISTRATE_OLDID
@@ -31,15 +31,15 @@ public class WariumCreateBlockEntities {
     public static final BlockEntityEntry<KineticConverterBlockEntity> KINETIC_CONVERTER = Registrate.REGISTRATE
         .blockEntity("kinetic_converter", KineticConverterBlockEntity::new)
         .visual(() -> (context, blockEntity, partialTick) -> new OrientedRotatingVisual<>(
-                context,
-                blockEntity,
-                partialTick,
-                Direction.SOUTH,
-                blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING),
-                Models.partial(AllPartialModels.SHAFT_HALF)
+            context,
+            blockEntity,
+            partialTick,
+            Direction.SOUTH,
+            blockEntity.getBlockState().getValue(BlockStateProperties.FACING),
+            Models.partial(AllPartialModels.SHAFT_HALF)
         ))
-        .validBlocks(WariumCreateBlocks.KINETIC_CONVERTER)
         .renderer(() -> KineticConverterRenderer::new)
+        .validBlocks(WariumCreateBlocks.KINETIC_CONVERTER)
         .register();
 
     public static final BlockEntityEntry<OldKineticConverterBlockEntity> OLD_KINETIC_CONVERTER = Registrate.REGISTRATE_OLDID

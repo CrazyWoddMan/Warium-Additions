@@ -28,7 +28,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class WariumAdditions {
     public static final String MODID = "warium_additions";
     
-    private static final ModList MODLIST = ModList.get();
+    public static final ModList MODLIST = ModList.get();
     public static final boolean WARIUM_PONDER_JEI = MODLIST.isLoaded("warium_ponder_jei");
     public static final boolean SUPPLEMENTARIES = MODLIST.isLoaded("supplementaries");
     public static final boolean VALKYRIEN_WARIUM = MODLIST.isLoaded("valkyrien_warium");
@@ -65,7 +65,7 @@ public class WariumAdditions {
             Level level = event.player.level();
             BlockPos pos = event.player.blockPosition();
 
-            if (level.getFluidState(pos).getFluidType() == WariumCreateFluids.YELLOWCAKE_FLUID.get().getFluidType())
+            if (level.isLoaded(pos) && level.getFluidState(pos).getFluidType() == WariumCreateFluids.YELLOWCAKE_FLUID.get().getFluidType())
                 Rad1TickProcedure.execute(level, pos.getX(), pos.getY(), pos.getZ());
         }
     }

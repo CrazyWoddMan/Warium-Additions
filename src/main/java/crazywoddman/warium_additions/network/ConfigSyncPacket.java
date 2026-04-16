@@ -5,7 +5,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.network.NetworkEvent;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 import crazywoddman.warium_additions.config.Config;
@@ -16,8 +15,7 @@ public class ConfigSyncPacket extends AbstractPacket {
     
     private ConfigSyncPacket(ConfigValue<?> value) {
         this.value = value.get();
-        List<String> path = value.getPath();
-        this.index = Config.NAMES.indexOf(path.get(path.size() - 1));
+        this.index = Config.getIndex(value);
     }
 
     private ConfigSyncPacket(Object value, int index) {
@@ -59,7 +57,6 @@ public class ConfigSyncPacket extends AbstractPacket {
         }, buf.readVarInt());
     }
     
-    @SuppressWarnings("unchecked")
     @Override
     protected void handle(Supplier<NetworkEvent.Context> ctx) {
         ServerPlayer player = ctx.get().getSender();
@@ -67,6 +64,6 @@ public class ConfigSyncPacket extends AbstractPacket {
         if (player == null || !player.hasPermissions(4))
             return;
 
-        ((ConfigValue<Object>)Config.VALUES.get(this.index)).set(this.value);
+        Config.set(this.index, this.value);
     }
 }

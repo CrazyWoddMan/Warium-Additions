@@ -1,53 +1,30 @@
 {
-  "variants": {
-	"face=ceiling,facing=north": {
-      "model": "warium_additions:block/rotation_converter",
-      "x": 180,
-	  "y": 180
-    },
-	"face=ceiling,facing=east": {
-      "model": "warium_additions:block/rotation_converter",
-      "x": 180,
-	  "y": 270
-    },
-	"face=ceiling,facing=south": {
-      "model": "warium_additions:block/rotation_converter",
-      "x": 180
-    },
-	"face=ceiling,facing=west": {
-      "model": "warium_additions:block/rotation_converter",
-      "x": 180,
-	  "y": 90
-    },
-    "face=floor,facing=north": {
-      "model": "warium_additions:block/rotation_converter"
-    },
-    "face=floor,facing=east": {
-      "model": "warium_additions:block/rotation_converter",
-      "y": 90
-    },
-    "face=floor,facing=south": {
-      "model": "warium_additions:block/rotation_converter",
-      "y": 180
-    },
-    "face=floor,facing=west": {
-      "model": "warium_additions:block/rotation_converter",
-      "y": 270
-    },
-	"face=wall,facing=north": {
-      "model": "warium_additions:block/rotation_converter_wall"
-    },
-    "face=wall,facing=east": {
-      "model": "warium_additions:block/rotation_converter_wall",
-      "y": 90
-    },
-    "face=wall,facing=south": {
-      "model": "warium_additions:block/rotation_converter_wall",
-      "y": 180
-    },
-    "face=wall,facing=west": {
-      "model": "warium_additions:block/rotation_converter_wall",
-      "y": 270
+  "multipart":[
+    {"when":{"dial":"true","facing":"north"},"apply":{"model":"warium_additions:block/rotation_converter"}},
+    {"when":{"dial":"true","facing":"north"},"apply":{"model":"warium_additions:block/rotation_converter_vertical"}},
+    {"when":{"dial":"true","facing":"east"},"apply":{"model":"warium_additions:block/rotation_converter","y":90}},
+    {"when":{"dial":"true","facing":"east"},"apply":{"model":"warium_additions:block/rotation_converter_vertical","y":90}},
+    {"when":{"dial":"true","facing":"south"},"apply":{"model":"warium_additions:block/rotation_converter","y":180}},
+    {"when":{"dial":"true","facing":"south"},"apply":{"model":"warium_additions:block/rotation_converter_vertical","y":180}},
+    {"when":{"dial":"true","facing":"west"},"apply":{"model":"warium_additions:block/rotation_converter","y":270}},
+    {"when":{"dial":"true","facing":"west"},"apply":{"model":"warium_additions:block/rotation_converter_vertical","y":270}},
+    {"when":{"dial":"true","facing":"up"},"apply":{"model":"warium_additions:block/rotation_converter","x":270}},
+    {"when":{"dial":"true","facing":"up"},"apply":{"model":"warium_additions:block/rotation_converter_vertical","x":270}},
+    {"when":{"dial":"true","facing":"down"},"apply":{"model":"warium_additions:block/rotation_converter","x":90}},
+    {"when":{"dial":"true","facing":"down"},"apply":{"model":"warium_additions:block/rotation_converter_vertical","x":90}},
+
+    {"when":{"dial":"false","facing":"north"},"apply":{"model":"warium_additions:block/rotation_converter"}},
+    {"when":{"dial":"false","facing":"north"},"apply":{"model":"warium_additions:block/rotation_converter_sides"}},
+    {"when":{"dial":"false","facing":"east"},"apply":{"model":"warium_additions:block/rotation_converter","y":90}},
+    {"when":{"dial":"false","facing":"east"},"apply":{"model":"warium_additions:block/rotation_converter_sides","y":90}},
+    {"when":{"dial":"false","facing":"south"},"apply":{"model":"warium_additions:block/rotation_converter","y":180}},
+    {"when":{"dial":"false","facing":"south"},"apply":{"model":"warium_additions:block/rotation_converter_sides","y":180}},
+    {"when":{"dial":"false","facing":"west"},"apply":{"model":"warium_additions:block/rotation_converter","y":270}},
+    {"when":{"dial":"false","facing":"west"},"apply":{"model":"warium_additions:block/rotation_converter_sides","y":270}},
+    {"when":{"dial":"false","facing":"up"},"apply":{"model":"warium_additions:block/rotation_converter","x":270}},
+    {"when":{"dial":"false","facing":"up"},"apply":{"model":"warium_additions:block/rotation_converter_sides","x":270}},
+    {"when":{"dial":"false","facing":"down"},"apply":{"model":"warium_additions:block/rotation_converter","x":90}},
+    {"when":{"dial":"false","facing":"down"},"apply":{"model":"warium_additions:block/rotation_converter_sides","x":90}
     }
-  }
+  ]
 }

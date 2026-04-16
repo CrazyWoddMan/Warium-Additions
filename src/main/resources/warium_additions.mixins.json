@@ -31,7 +31,7 @@
     "crusty_chunks.fluid.HeavyFlameThrowerFireMixin",
     "crusty_chunks.fluid.FlamethrowerReloadScriptProcedureMixin",
     "crusty_chunks.fluid.RefineryTankProvider",
-    "crusty_chunks.fluid.FuelTankCreativeDrain",
+    "crusty_chunks.fluid.FuelTanksCreativeMode",
 
     "crusty_chunks.weapons.WeaponCrossOverlayCancel",
     "crusty_chunks.weapons.FireArmsCreativeFire",
@@ -45,11 +45,13 @@
 
     "crusty_chunks.EnginesUpdateProcedureMixin",
     "crusty_chunks.JetTurbineUpdateTickProcedureMixin",
+    "crusty_chunks.JetTurbinePowerMixin",
     "crusty_chunks.GeigerCounterHandTickProcedureMixin",
     "crusty_chunks.CrustyChunksModKeyMappingsMixin",
     "crusty_chunks.RedirectorShaftTickProcedureMixin",
     "crusty_chunks.FuelRodsLoadProcedureMixin",
     "crusty_chunks.BlocksCreativeMode",
+    "crusty_chunks.EngineThrottleSystemProcedureMixin",
 
     "valkyrien_warium.WaterPropScriptProcedureMixin",
     "valkyrien_warium.Throttle0PressProcedureMixin",
@@ -58,6 +60,8 @@
     "valkyrien_warium.FuelContainingTickProcedureMixin",
     "valkyrien_warium.ValkyrienWariumModKeyMappingsMixin",
     "valkyrien_warium.LinkerUseProcedureMixin",
+    "valkyrien_warium.SetThrottleMixin",
+    "valkyrien_warium.ReturnThrottleMixin",
 
     "immersiveengineering.HammerCrushingRecipeSerializerMixin",
     "immersiveengineering.ImmersiveEnergyBatteryMixin",

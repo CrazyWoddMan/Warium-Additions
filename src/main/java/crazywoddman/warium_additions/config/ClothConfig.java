@@ -72,7 +72,9 @@ public class ClothConfig {
                 category.add(Config.SERVER.smallDieselEnginePower, 1);
                 category.add(Config.SERVER.mediumPetrolEnginePower, 1);
                 category.add(Config.SERVER.smallPetrolEnginePower, 1);
-                category.add(Config.SERVER.jetTurbinePower, 1);
+                
+                if (!WariumAdditions.MODLIST.isLoaded("wariumtactics"))
+                    category.add(Config.SERVER.jetTurbinePower, 1);
             });
             warium.add("Energy", category -> {
                 category.add(Config.SERVER.kineticToFeRate, 0.01);

@@ -1,15 +1,18 @@
 package crazywoddman.warium_additions.mixins.crusty_chunks;
 
 import net.mcreator.crustychunks.procedures.JetTurbineUpdateTickProcedure;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import crazywoddman.warium_additions.config.Config;
+import crazywoddman.warium_additions.util.WariumAdditionsUtil;
 
 @Mixin(JetTurbineUpdateTickProcedure.class)
 public class JetTurbineUpdateTickProcedureMixin {
@@ -37,19 +40,34 @@ public class JetTurbineUpdateTickProcedureMixin {
 
     @ModifyConstant(
         method = "execute",
-        constant = @Constant(doubleValue = 51.0),
-        remap = false
-    )
-    private static double modifyPowerTurbine(double value) {
-        return Config.SERVER.jetTurbinePower.get();
-    }
-
-    @ModifyConstant(
-        method = "execute",
         constant = @Constant(doubleValue = 50.0, ordinal = 1),
         remap = false
     )
     private static double modifyPowerTurbineAfterBurner(double value) {
         return Config.SERVER.jetTurbinePower.get() - 1;
+    }
+
+    @Redirect(
+        method = "execute",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/mcreator/crustychunks/procedures/JetTurbineUpdateTickProcedure$6;getValue(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Ljava/lang/String;)D"
+        ),
+        remap = false
+    )
+    private static double allowNegativeThrottle1(@Coerce Object object, LevelAccessor level, BlockPos pos, String tag) {
+        return WariumAdditionsUtil.throttleKeyCheck(level, pos, tag);
+    }
+
+    @Redirect(
+        method = "execute",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/mcreator/crustychunks/procedures/JetTurbineUpdateTickProcedure$7;getValue(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Ljava/lang/String;)D"
+        ),
+        remap = false
+    )
+    private static double allowNegativeThrottle2(@Coerce Object object, LevelAccessor level, BlockPos pos, String tag) {
+        return WariumAdditionsUtil.throttleKeyCheck(level, pos, tag);
     }
 }

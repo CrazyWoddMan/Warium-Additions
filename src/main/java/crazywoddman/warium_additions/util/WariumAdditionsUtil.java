@@ -10,6 +10,7 @@ import net.mcreator.crustychunks.init.CrustyChunksModBlockEntities;
 import net.mcreator.crustychunks.init.CrustyChunksModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -195,5 +196,21 @@ public class WariumAdditionsUtil {
         private boolean check(BlockPos pos, Supplier<Block> block) {
             return this.level.getBlockState(pos).is(block.get());
         }
+    }
+
+    public static double throttleKeyCheck(LevelAccessor level, BlockPos pos, String tag) {
+        CompoundTag data = level.getBlockEntity(pos).getPersistentData();
+        double throttle = data.getDouble(tag);
+
+        if (throttle != 0) {
+            String key = data.getString("Key");
+            return Math.abs(switch (key) {
+                case "Throttle+" -> throttle > 0 ? throttle : 0;
+                case "Throttle-" -> throttle < 0 ? throttle : 0;
+                default -> throttle;
+            });
+        }
+
+        return 0;
     }
 }

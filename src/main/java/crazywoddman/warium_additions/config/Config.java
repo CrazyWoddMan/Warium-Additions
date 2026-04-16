@@ -16,8 +16,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class Config {
     public enum ValueTypes {INTEGER, DOUBLE, BOOLEAN, STRING}
-    public static final List<ConfigValue<?>> VALUES = new ArrayList<>();
-    public static final List<String> NAMES = new ArrayList<>();
+    private static final List<ConfigValue<?>> VALUES = new ArrayList<>();
+    private static final List<String> NAMES = new ArrayList<>();
     private static final Builder builder = new Builder() {
         @Override
         public <T> ConfigValue<T> define(List<String> path, ValueSpec value, Supplier<T> defaultSupplier) {
@@ -27,11 +27,22 @@ public class Config {
             return configValue;
         }
     };
+    public static final Server SERVER = new Server(builder);
+    private static final ForgeConfigSpec SERVER_SPEC = builder.build();
+
     public static void register(FMLJavaModLoadingContext context) {
         context.registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC);
     }
-    public static final Server SERVER = new Server(builder);
-    private static final ForgeConfigSpec SERVER_SPEC = builder.build();
+
+    public static int getIndex(ConfigValue<?> value) {
+        List<String> path = value.getPath();
+        return NAMES.indexOf(path.get(path.size() - 1));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void set(int index, Object value) {
+        ((ConfigValue<Object>)VALUES.get(index)).set(value);
+    }
 
     public static class Server {
         public final IntValue fuelTanksCapacity;

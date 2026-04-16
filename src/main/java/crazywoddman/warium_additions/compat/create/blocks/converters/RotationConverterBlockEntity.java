@@ -61,24 +61,16 @@ public class RotationConverterBlockEntity extends SpeedGaugeBlockEntity {
     @Override
 	public void onSpeedChanged(float prevSpeed) {
         super.onSpeedChanged(prevSpeed);
-
 		float speed = Math.round(Math.abs(scaleFromSignal(getSpeed())) / this.maxThrottle * this.lastThrottle * 10) / 10;
-        getPersistentData().putDouble(
-            "KineticPower",
-            speed / this.kineticToSpeedRatio
-        );
+        getPersistentData().putDouble("KineticPower", speed / this.kineticToSpeedRatio);
         this.dialTarget = getDialTarget(speed);
-        this.color = Color
-            .mixColors(SpeedLevel.of(speed)
-			.getColor(), 0xffffff, .25f);
+        this.color = Color.mixColors(SpeedLevel.of(speed).getColor(), 0xffffff, .25f);
         notifyUpdate();
 	}
 
     @Override
     public float calculateStressApplied() {
-        float impact = Math.round(scaleFromSignal(this.kineticToStressRatio) / this.kineticToSpeedRatio / this.maxThrottle * this.lastThrottle);
-        this.lastStressApplied = impact;
-		return impact;
+        return this.lastStressApplied = Math.round(scaleFromSignal(this.kineticToStressRatio) / this.kineticToSpeedRatio / this.maxThrottle * this.lastThrottle);
     }
 
     @Override

@@ -9,6 +9,7 @@ import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.instance.Instancer;
 import dev.engine_room.flywheel.api.visual.DynamicVisual;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
+import dev.engine_room.flywheel.lib.instance.ColoredLitOverlayInstance;
 import dev.engine_room.flywheel.lib.instance.InstanceTypes;
 import dev.engine_room.flywheel.lib.instance.TransformedInstance;
 import dev.engine_room.flywheel.lib.model.Models;
@@ -19,57 +20,104 @@ import dev.engine_room.flywheel.lib.visual.SimpleTickableVisual;
 import net.createmod.catnip.animation.AnimationTickHolder;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.block.state.properties.AttachFace;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import java.util.function.Consumer;
 
+import org.joml.Matrix4f;
+
 public class RotationConverterVisual extends KineticBlockEntityVisual<RotationConverterBlockEntity> implements SimpleDynamicVisual, SimpleTickableVisual {
 
     protected RotatingInstance shaft;
-    protected TransformedInstance dial, head, dial2, head2;
-    final Direction facing, opposite;
-    final AttachFace face;
+    protected TransformedInstance[] dials = new TransformedInstance[2];
+    protected TransformedInstance[] heads = new TransformedInstance[2];
+    protected final Direction facing;
+    protected final boolean dial;
+    protected final Matrix4f[] panelMatrix = new Matrix4f[2];
 
     public RotationConverterVisual(VisualizationContext context, RotationConverterBlockEntity blockEntity, float partialTick) {
         super(context, blockEntity, partialTick);
 
-        facing = blockState.getValue(RotationConverterBlock.FACING);
-        face = blockState.getValue(RotationConverterBlock.FACE);
-        opposite = facing.getOpposite();
+        this.facing = blockState.getValue(RotationConverterBlock.FACING);
+        this.dial = blockState.getValue(RotationConverterBlock.DIAL);
         
-        shaft = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(AllPartialModels.SHAFT_HALF))
+        this.shaft = instancerProvider()
+            .instancer(AllInstanceTypes.ROTATING, Models.partial(AllPartialModels.SHAFT_HALF))
             .createInstance()
-            .rotateToFace(Direction.SOUTH, opposite)
+            .rotateToFace(Direction.SOUTH, facing.getOpposite())
             .setup(blockEntity)
             .setPosition(getVisualPosition());
-        shaft.setChanged();
+        this.shaft.setChanged();
 
         Instancer<TransformedInstance> dialModel = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(AllPartialModels.GAUGE_DIAL));
         Instancer<TransformedInstance> headModel = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(AllPartialModels.GAUGE_HEAD_SPEED));
-
-        PoseStack ms = new PoseStack();
-        var msr = TransformStack.of(ms);
+        // ------------------ THE PROCEDURE OF ETERNAL AGONY AND SUFFERING ------------------
+        PoseStack pose = new PoseStack();
+        PoseTransformStack msr = TransformStack.of(pose);
         msr.translate(getVisualPosition());
 
-        float progress = Mth.lerp(AnimationTickHolder.getPartialTicks(), blockEntity.prevDialState, blockEntity.dialState);
-
-        dial = dialModel.createInstance();
-        head = headModel.createInstance();
-
-        if (face == AttachFace.WALL) {
-            dial2 = dialModel.createInstance();
-            head2 = headModel.createInstance();
+        for (int i = 0; i < 2; i++) {
+            this.dials[i] = dialModel.createInstance();
+            this.heads[i] = headModel.createInstance();
         }
 
-        setupDialTransform(ms, msr, progress);
+        Direction facing = this.facing;
+        int t = -1;
+
+        for (int i = 0; i < 2; i++) {
+            PoseStack tempPose = new PoseStack();
+            TransformStack<?> transform = TransformStack.of(tempPose);
+
+            transform.center();
+
+            if (this.dial) {
+                if (this.facing.getAxis() != Direction.Axis.Y)
+                    transform.rotate(-facing.toYRot() / 180f * Mth.PI, Direction.UP);
+                else if (t == 1)
+                    transform.rotate(Mth.PI, Direction.UP);
+            } else if (this.facing.getAxis() == Direction.Axis.Y) {
+                transform.rotate(t * Mth.HALF_PI, Direction.UP);
+            } else {
+                transform.rotate(t * (facing.toYRot() - 90) / 180f * Mth.PI, Direction.UP);
+                transform.rotate(t * Mth.HALF_PI, Direction.NORTH);
+            }
+
+            transform.uncenter();
+
+            if (this.dial) {
+                if (this.facing.getAxis() == Direction.Axis.Y)
+                    transform.translate(0, (this.facing == Direction.UP ? -1 : 1) / 16f, 0);
+                else transform.translate(0, 0, t / 16f);
+            } else {
+                float y = this.facing.getAxis() == Direction.Axis.Y
+                    ? (this.facing == Direction.UP ? -1 : 1) / 16f
+                    : (this.facing.getAxis() == Direction.Axis.X ? -1 : t) / 16f;
+                transform.translate(0, y, 0);
+            }
+
+            panelMatrix[i] = new Matrix4f(tempPose.last().pose());
+            facing = facing.getOpposite();
+            t = -t;
+        }
+        // ---------------------------------------------------------------------------------
+        setupDialTransform(pose, msr, Mth.lerp(AnimationTickHolder.getPartialTicks(), blockEntity.prevDialState, blockEntity.dialState));
+    }
+
+    protected void forEach(Consumer<ColoredLitOverlayInstance> operation) {
+        for (TransformedInstance dial : this.dials)
+            operation.accept(dial);
+
+        for (TransformedInstance head : this.heads)
+            operation.accept(head);
+
+        operation.accept(this.shaft);
     }
 
     @Override
     public void tick(SimpleTickableVisual.Context context) {
-        if (shaft != null)
-            shaft.setup(blockEntity).setChanged();
+        if (this.shaft != null)
+            this.shaft.setup(blockEntity).setChanged();
     }
 
     @Override
@@ -81,91 +129,36 @@ public class RotationConverterVisual extends KineticBlockEntityVisual<RotationCo
         PoseStack ms = new PoseStack();
         PoseTransformStack msr = TransformStack.of(ms);
         msr.translate(getVisualPosition());
-
         setupDialTransform(ms, msr, progress);
     }
 
     private void setupDialTransform(PoseStack ms, TransformStack<?> msr, float progress) {
         float dialPivot = 5.75f / 16f;
 
+    for (int i = 0; i < 2; i++) {
         msr.pushPose();
-
-        if (face == AttachFace.WALL) {
-            msr.center()
-               .rotate((float) ((-facing.toYRot()) / 180 * Math.PI), Direction.UP)
-               .uncenter();
-            msr.translate(0, 0, -1f / 16f);
-
-            head.setTransform(ms).setChanged();
-            
-            msr.translate(0, dialPivot, dialPivot)
-               .rotate((float) (Math.PI / 2 * -progress), Direction.EAST)
-               .translate(0, -dialPivot, -dialPivot);
-
-            dial.setTransform(ms).setChanged();
-
-            msr.popPose();
-            msr.pushPose();
-            
-            msr.center()
-               .rotate(-opposite.toYRot() / 180 * (float)Math.PI, Direction.UP)
-               .uncenter();
-            msr.translate(0, 0, 1f / 16f);
-
-            head2.setTransform(ms).setChanged();
-            
-            msr.translate(0, dialPivot, dialPivot)
-               .rotate((float) (Math.PI / 2 * -progress), Direction.EAST)
-               .translate(0, -dialPivot, -dialPivot);
-
-            dial2.setTransform(ms).setChanged();
-        } else {
-            msr.center()
-               .rotate((face == AttachFace.FLOOR ? -1 : 1) * (float)Math.PI / 2, Direction.NORTH)
-               .rotate((90 - facing.toYRot()) / 180 * (float)Math.PI, Direction.EAST)
-               .uncenter();
-
-            if (face == AttachFace.CEILING)
-                msr.translate(0, ((facing == Direction.SOUTH || facing == Direction.NORTH) ? -1f : 1f)/16f, 0);
-            else
-                msr.translate(0, -1f/16f, 0);
-
-            head.setTransform(ms).setChanged();
-
-            msr.translate(0, dialPivot, dialPivot)
-               .rotate((float) (Math.PI / 2 * -progress), Direction.EAST)
-               .translate(0, -dialPivot, -dialPivot);
-
-            dial.setTransform(ms).setChanged();
-        }
-
+        ms.mulPoseMatrix(panelMatrix[i]);
+        heads[i].setTransform(ms).setChanged();
+        msr.translate(0, dialPivot, dialPivot)
+           .rotate(Mth.HALF_PI * -progress, Direction.EAST)
+           .translate(0, -dialPivot, -dialPivot);
+        dials[i].setTransform(ms).setChanged();
         msr.popPose();
+    }
     }
 
     @Override
     public void updateLight(float partialTick) {
-        relight(this.shaft);
-        relight(this.dial, this.head);
-        
-        if (this.dial2 != null && this.head2 != null)
-            relight(this.dial2, this.head2);
+        forEach(this::relight);
     }
 
     @Override
     protected void _delete() {
-        this.shaft.delete();
-        this.dial.delete();
-        this.head.delete();
-        if (this.dial2 != null) dial2.delete();
-        if (this.head2 != null) head2.delete();
+        forEach(ColoredLitOverlayInstance::delete);
     }
 
     @Override
     public void collectCrumblingInstances(Consumer<Instance> consumer) {
-        consumer.accept(this.shaft);
-        consumer.accept(this.dial);
-        consumer.accept(this.head);
-        if (this.dial2 != null) consumer.accept(this.dial2);
-        if (this.head2 != null) consumer.accept(this.head2);
+        forEach(consumer::accept);
     }
 }

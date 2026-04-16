@@ -10,13 +10,12 @@ import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollOp
 import com.simibubi.create.foundation.utility.CreateLang;
 
 import crazywoddman.warium_additions.config.Config;
+import crazywoddman.warium_additions.data.WariumAdditionsTags;
 import crazywoddman.warium_additions.util.WariumAdditionsUtil;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -44,7 +43,6 @@ public class KineticConverterBlockEntity extends GeneratingKineticBlockEntity {
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
-
         movementDirection = new ScrollOptionBehaviour<RotationDirection>(
             RotationDirection.class,
             CreateLang.translateDirect("contraptions.windmill.rotation_direction"),
@@ -63,13 +61,13 @@ public class KineticConverterBlockEntity extends GeneratingKineticBlockEntity {
 
     @Override
     public float getGeneratedSpeed() {
-        return (this.lastKineticPower <= 0 || this.lastThrottle == 0 || this.lastSignal == 15)
+        return (this.lastKineticPower <= 0 || this.lastThrottle == 0 || this.lastSignal >= 15)
         ? 0
         : convertToDirection(
             scaleFromSignal(
                 this.defaultSpeed * (movementDirection.get() == RotationDirection.CLOCKWISE ? -1 : 1) * this.lastKineticPower
                 / this.maxThrottle
-                * Math.abs(this.lastThrottle)
+                * this.lastThrottle
             ), 
             getBlockState().getValue(KineticConverterBlock.FACING)
         );
@@ -77,10 +75,7 @@ public class KineticConverterBlockEntity extends GeneratingKineticBlockEntity {
 
     @Override
     public float calculateAddedStressCapacity() {
-        float capacity = (float) this.defaultStress / this.defaultSpeed;
-        this.lastCapacityProvided = capacity;
-
-        return capacity;
+        return this.lastCapacityProvided = (float)this.defaultStress / this.defaultSpeed;
     }
 
     @Override
@@ -91,28 +86,19 @@ public class KineticConverterBlockEntity extends GeneratingKineticBlockEntity {
         Direction facing = getBlockState().getValue(KineticConverterBlock.FACING);
         BlockPos backPos = pos.relative(facing.getOpposite());
         BlockState backState = this.level.getBlockState(backPos);
-        BlockEntity backBlockEntity = this.level.getBlockEntity(backPos);
-        float newKineticPower = 0.0f;
+        float newKineticPower = 0;
         float throttle = 0;
 
-        if (backBlockEntity != null) {
-            CompoundTag backData = backBlockEntity.getPersistentData();
-
-            if (backData.contains("KineticPower")) {
-                DirectionProperty facingProp = null;
-
-                for (Property<?> property : backState.getProperties())
-                    if (property instanceof DirectionProperty directionProperty) {
-                        facingProp = directionProperty;
-                        break;
+        if (backState.is(WariumAdditionsTags.Blocks.KINETIC_OUTPUT_FRONT))
+            for (Property<?> property : backState.getProperties())
+                if (property instanceof DirectionProperty direction) {
+                    if (backState.getValue(direction) == facing) {
+                        newKineticPower = this.level.getBlockEntity(backPos).getPersistentData().getFloat("KineticPower");
+                        throttle = WariumAdditionsUtil.getThrottle(this).orElse((double)this.maxThrottle).floatValue();
                     }
 
-                if (facingProp != null && backState.getValue(facingProp) == facing) {
-                    newKineticPower = backData.getFloat("KineticPower");
-                    throttle = WariumAdditionsUtil.getThrottle(this).orElse((double)this.maxThrottle).floatValue();
+                    break;
                 }
-            }
-        }
         
         // --------------------------------------------------------
         // to prevent Create shafts breaking when changing throttle
@@ -127,8 +113,7 @@ public class KineticConverterBlockEntity extends GeneratingKineticBlockEntity {
             this.lastSignal = signal;
             signalChanged = true;
         }
-        else if (signal == 15)
-            return;
+        else if (signal == 15) return;
         else signalChanged = false;
 
         boolean powerChanged = this.lastKineticPower != newKineticPower;
