@@ -32,6 +32,9 @@ import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
     "net.mcreator.valkyrienwarium.init.ValkyrienWariumModKeyMappings$21",
     "net.mcreator.valkyrienwarium.init.ValkyrienWariumModKeyMappings$22",
     "net.mcreator.valkyrienwarium.init.ValkyrienWariumModKeyMappings$23",
+    "net.mcreator.valkyrienwarium.init.ValkyrienWariumModKeyMappings$24",
+    "net.mcreator.valkyrienwarium.init.ValkyrienWariumModKeyMappings$25",
+    "net.mcreator.valkyrienwarium.init.ValkyrienWariumModKeyMappings$26"
 })
 public class ValkyrienWariumModKeyMappingsMixin {
     @ModifyArg(

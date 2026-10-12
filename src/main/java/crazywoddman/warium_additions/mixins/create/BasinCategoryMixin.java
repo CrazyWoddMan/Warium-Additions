@@ -25,12 +25,11 @@ public class BasinCategoryMixin {
         method = "setRecipe",
         at = @At("TAIL")
     )
-    private void addCustomBlazeCakeSlot(IRecipeLayoutBuilder builder, BasinRecipe recipe, IFocusGroup focuses, CallbackInfo ci) {
+    private void wadditions$setRecipe(IRecipeLayoutBuilder builder, BasinRecipe recipe, IFocusGroup focuses, CallbackInfo ci) {
         HeatCondition requiredHeat = recipe.getRequiredHeat();
 
         if (!requiredHeat.testBlazeBurner(HeatLevel.KINDLED))
-            builder
-            .addSlot(RecipeIngredientRole.CATALYST, 153, 81)
-            .addIngredients(Ingredient.of(AllTags.AllItemTags.BLAZE_BURNER_FUEL_SPECIAL.tag));
+            builder.addSlot(RecipeIngredientRole.CATALYST, 153, 81)
+                   .addIngredients(Ingredient.of(AllTags.AllItemTags.BLAZE_BURNER_FUEL_SPECIAL.tag));
     }
 }

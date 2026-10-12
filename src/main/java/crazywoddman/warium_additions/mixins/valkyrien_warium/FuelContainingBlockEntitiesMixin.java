@@ -7,6 +7,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -14,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import crazywoddman.warium_additions.util.WariumAdditionsUtil;
+import crazywoddman.warium_additions.data.WadditionsTags;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 
@@ -25,18 +26,17 @@ public class FuelContainingBlockEntitiesMixin {
     @Shadow(remap = false)
     private FluidTank fluidTank;
 
-     @Inject(
+    @SuppressWarnings("deprecation")
+    @Inject(
         method = "<init>",
         at = @At("RETURN"),
         remap = false
     )
-    private void acceptAnyKerosene(BlockPos position, BlockState state, CallbackInfo callback) {
-        fluidTank.setValidator(stack ->
-            WariumAdditionsUtil.compareFluids(stack.getFluid(), CrustyChunksModFluids.KEROSENE.get())
-            || ((BlockEntity)(Object)this instanceof TestThrusterBlockEntity
-                ? WariumAdditionsUtil.compareFluids(stack.getFluid(), CrustyChunksModFluids.HYDRAZINE.get())
-                : false
-            )
-        );
+    private void wadditions$init(BlockPos position, BlockState state, CallbackInfo callback) {
+        fluidTank.setValidator(stack -> {
+            Fluid fluid = stack.getFluid();
+            return fluid.is(WadditionsTags.Fluids.KEROSENE)
+            || ((BlockEntity)(Object)this instanceof TestThrusterBlockEntity && fluid == CrustyChunksModFluids.HYDRAZINE.get());
+        });
     }
 }

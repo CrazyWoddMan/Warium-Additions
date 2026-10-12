@@ -25,7 +25,7 @@ public class ConnectionProceduresMixin {
             target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;"
         )
     )
-    private static Block redirectGetBlock(BlockState state) {
+    private static Block wadditions$getBlock(BlockState state) {
         Block block = state.getBlock();
 
         if (block.equals(CrustyChunksModBlocks.REFINERY_TOWER.get()))
@@ -43,7 +43,7 @@ public class ConnectionProceduresMixin {
         ),
         remap = false
     )
-    private static void redirectShrink(ItemStack stack, int count, LevelAccessor world, double x, double y, double z, ItemStack itemstack, Entity entity) {
+    private static void wadditions$shrink(ItemStack stack, int count, LevelAccessor world, double x, double y, double z, ItemStack itemstack, Entity entity) {
         if (!((Player)entity).isCreative())
             stack.shrink(count);
     }

@@ -1,49 +1,26 @@
 package crazywoddman.warium_additions.mixins.create;
 
-import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlockEntity;
 
+import crazywoddman.warium_additions.compat.create.blocks.BlazeBurnerHeatProvider;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
-import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Restriction(require = @Condition("create"))
-@Mixin(remap = false, value = BlazeBurnerBlockEntity.class)
-public class BlazeBurnerBlockEntityMixin {
+@Mixin(BlazeBurnerBlockEntity.class)
+public class BlazeBurnerBlockEntityMixin extends BlockEntity {
 
-    @Inject(
-        method = "tick",
-        at = @At("HEAD")
-    )
-    private void provideHeat(CallbackInfo callback) {
-        BlazeBurnerBlockEntity self = (BlazeBurnerBlockEntity) (Object) this;
-        Level level = self.getLevel();
-        
-        if (!level.isClientSide()) {
-            BlazeBurnerBlock.HeatLevel blazeHeat = self.getHeatLevelFromBlock();
+    private BlazeBurnerBlockEntityMixin() {
+        super(null, null, null);
+    }
 
-            if (blazeHeat.isAtLeast(BlazeBurnerBlock.HeatLevel.FADING)) {
-                BlockPos pos = self.getBlockPos();
-
-                for (BlockPos offset : new BlockPos[]{pos.north(), pos.south(), pos.east(), pos.west(), pos.above()}) {
-                    BlockEntity blockEntity = level.getBlockEntity(offset);
-
-                    if (blockEntity != null) {
-                        CompoundTag data = blockEntity.getPersistentData();
-                        data.putDouble("Heat", Math.min(data.getDouble("Heat") + 1.0, 1000.0));
-                        BlockState state = level.getBlockState(offset);
-                        level.sendBlockUpdated(offset, state, state, 3);
-                    }
-                }
-            }
-        }
+    @Inject(method = "tick", at = @At("HEAD"), remap = false)
+    private void wadditions$tick(CallbackInfo callback) {
+        BlazeBurnerHeatProvider.tick(this, this.level, this.worldPosition);
     }
 }

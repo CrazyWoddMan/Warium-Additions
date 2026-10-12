@@ -6,7 +6,8 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import crazywoddman.warium_additions.config.Config;
+import crazywoddman.warium_additions.config.WadditionsConfig;
+import crazywoddman.warium_additions.utils.WadditionsUtil;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 
@@ -28,15 +29,16 @@ public class ElectricFireboxUpdateTickProcedureMixin2 {
             ordinal = 0
         )
     )
-    private static boolean setHeatLevel(Level level, BlockPos pos) {
+    private static boolean wadditions$hasNeighborSignal(Level level, BlockPos pos) {
         boolean hasSignal = level.hasNeighborSignal(pos);
         level.getBlockEntity(pos).getCapability(ForgeCapabilities.ENERGY).ifPresent(storage -> {
             BlockState currentState = level.getBlockState(pos);
-            BlockState newState = currentState.setValue(BlazeBurnerBlock.HEAT_LEVEL, BlazeBurnerBlock.HeatLevel.valueOf(
-                hasSignal && storage.getEnergyStored() >= Config.SERVER.electricFireboxConsume.get()
-                ? Config.SERVER.electricFireboxHeatLevel.get()
-                : "NONE"
-            ));
+            BlockState newState = currentState.setValue(
+                BlazeBurnerBlock.HEAT_LEVEL,
+                hasSignal && storage.getEnergyStored() >= WadditionsUtil.ELECTRIC_FIREBOX_CONSUME
+                    ? BlazeBurnerBlock.HeatLevel.valueOf(WadditionsConfig.ELECTRIC_FIREBOX_HEAT.get())
+                    : BlazeBurnerBlock.HeatLevel.NONE
+            );
 
             if (currentState != newState)
                 level.setBlock(pos, newState, Block.UPDATE_INVISIBLE);

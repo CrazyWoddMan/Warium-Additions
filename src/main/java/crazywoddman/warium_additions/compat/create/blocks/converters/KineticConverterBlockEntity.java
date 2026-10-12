@@ -9,9 +9,9 @@ import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform.Si
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollOptionBehaviour;
 import com.simibubi.create.foundation.utility.CreateLang;
 
-import crazywoddman.warium_additions.config.Config;
-import crazywoddman.warium_additions.data.WariumAdditionsTags;
-import crazywoddman.warium_additions.util.WariumAdditionsUtil;
+import crazywoddman.warium_additions.config.WadditionsConfig;
+import crazywoddman.warium_additions.data.WadditionsTags;
+import crazywoddman.warium_additions.utils.WadditionsUtil;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,14 +23,12 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
 
 public class KineticConverterBlockEntity extends GeneratingKineticBlockEntity {
+    private static final float ADDED_STRESS_CAPACITY = (float)(WadditionsConfig.KINETIC_TO_STRESS.get() / WadditionsConfig.KINETIC_TO_SPEED.get());
 
     public KineticConverterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
-    private final int defaultStress = Config.SERVER.kineticToStressRatio.get();
-    private final int defaultSpeed = Config.SERVER.kineticToSpeedRatio.get();
-    private final int maxThrottle = Config.SERVER.maxThrottle.get();
     private float lastThrottle;
     private float lastKineticPower;
     private ScrollOptionBehaviour<RotationDirection> movementDirection;
@@ -65,8 +63,8 @@ public class KineticConverterBlockEntity extends GeneratingKineticBlockEntity {
         ? 0
         : convertToDirection(
             scaleFromSignal(
-                this.defaultSpeed * (movementDirection.get() == RotationDirection.CLOCKWISE ? -1 : 1) * this.lastKineticPower
-                / this.maxThrottle
+                WadditionsConfig.KINETIC_TO_SPEED.get() * (movementDirection.get() == RotationDirection.CLOCKWISE ? -1 : 1) * this.lastKineticPower
+                / WadditionsUtil.MAX_THROTTLE
                 * this.lastThrottle
             ), 
             getBlockState().getValue(KineticConverterBlock.FACING)
@@ -75,7 +73,7 @@ public class KineticConverterBlockEntity extends GeneratingKineticBlockEntity {
 
     @Override
     public float calculateAddedStressCapacity() {
-        return this.lastCapacityProvided = (float)this.defaultStress / this.defaultSpeed;
+        return this.lastCapacityProvided = ADDED_STRESS_CAPACITY;
     }
 
     @Override
@@ -89,12 +87,12 @@ public class KineticConverterBlockEntity extends GeneratingKineticBlockEntity {
         float newKineticPower = 0;
         float throttle = 0;
 
-        if (backState.is(WariumAdditionsTags.Blocks.KINETIC_OUTPUT_FRONT))
+        if (backState.is(WadditionsTags.Blocks.KINETIC_OUTPUT_FRONT))
             for (Property<?> property : backState.getProperties())
                 if (property instanceof DirectionProperty direction) {
                     if (backState.getValue(direction) == facing) {
                         newKineticPower = this.level.getBlockEntity(backPos).getPersistentData().getFloat("KineticPower");
-                        throttle = WariumAdditionsUtil.getThrottle(this).orElse((double)this.maxThrottle).floatValue();
+                        throttle = WadditionsUtil.getThrottle(this).orElse((double)WadditionsUtil.MAX_THROTTLE).floatValue();
                     }
 
                     break;

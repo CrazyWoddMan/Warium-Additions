@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+// combines power
 @Mixin(RedirectorShaftTickProcedure.class)
 public class RedirectorShaftTickProcedureMixin {
 
@@ -22,7 +23,7 @@ public class RedirectorShaftTickProcedureMixin {
         remap = false,
         cancellable = true
     )
-    private static void altExecute(LevelAccessor world, double x, double y, double z, BlockState blockstate, CallbackInfo ci) {
+    private static void wadditions$execute(LevelAccessor world, double x, double y, double z, BlockState blockstate, CallbackInfo ci) {
         ci.cancel();
 
         if (world.isClientSide())

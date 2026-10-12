@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import crazywoddman.warium_additions.data.WariumAdditionsTags;
+import crazywoddman.warium_additions.data.WadditionsTags;
 
 @Mixin(FlamethrowerReloadScriptProcedure.class)
 public class FlamethrowerReloadScriptProcedureMixin {
@@ -23,6 +23,6 @@ public class FlamethrowerReloadScriptProcedureMixin {
     )
     private static Item redirectIsFluidEqual(ItemStack stack) {
         Item item = stack.getItem();
-        return item instanceof BucketItem bucket && bucket.getFluid().is(WariumAdditionsTags.Fluids.GASOLINE) ? CrustyChunksModItems.PETROLIUM_BUCKET.get() : item;
+        return item instanceof BucketItem bucket && bucket.getFluid().is(WadditionsTags.Fluids.GASOLINE) ? CrustyChunksModItems.PETROLIUM_BUCKET.get() : item;
     }
 }

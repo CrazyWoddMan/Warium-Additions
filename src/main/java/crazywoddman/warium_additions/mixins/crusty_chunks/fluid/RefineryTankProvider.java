@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import crazywoddman.warium_additions.config.Config;
+import crazywoddman.warium_additions.config.WadditionsConfig;
 
 /**
  * Adds Fluid Tank and Fluid Capability to Oil Refinrery so it could consume Crude Oil
@@ -29,15 +29,15 @@ public class RefineryTankProvider {
         at = @At("TAIL"),
         remap = false
     )
-    private void addFluidTank(BlockPos position, BlockState state, CallbackInfo callback) {
-        this.fluidTank = new FluidTank(Config.SERVER.refineryCapacity.get());
+    private void wadditions$init(BlockPos position, BlockState state, CallbackInfo callback) {
+        this.fluidTank = new FluidTank(WadditionsConfig.REFINERY_CAPACITY.get());
     }
 
     @Inject(
         method = "load",
         at = @At("TAIL")
     )
-    private void injectFluidRead(CompoundTag tag, CallbackInfo ci) {
+    private void wadditions$load(CompoundTag tag, CallbackInfo ci) {
         this.fluidTank.readFromNBT(tag.getCompound("fluidTank"));
     }
 
@@ -45,7 +45,7 @@ public class RefineryTankProvider {
         method = "saveAdditional",
         at = @At("TAIL")
     )
-    private void injectFluidSave(CompoundTag tag, CallbackInfo ci) {
+    private void wadditions$saveAdditional(CompoundTag tag, CallbackInfo ci) {
         tag.put("fluidTank", this.fluidTank.writeToNBT(new CompoundTag()));
     }
 
@@ -55,7 +55,7 @@ public class RefineryTankProvider {
         remap = false,
         cancellable = true
     )
-    private void addFluidTank(Capability<?> capability, Direction facing, CallbackInfoReturnable<LazyOptional<?>> cir) {
+    private void wadditions$getCability(Capability<?> capability, Direction facing, CallbackInfoReturnable<LazyOptional<?>> cir) {
         if (capability == ForgeCapabilities.FLUID_HANDLER)
             cir.setReturnValue(LazyOptional.of(() -> this.fluidTank).cast());
     }

@@ -37,7 +37,7 @@ public class FuelTanksTickProcedureMixin {
         cancellable = true,
         remap = false
     )
-    private static void captureFluid(LevelAccessor world, double x, double y, double z, CallbackInfo ci) {
+    private static void wadditions$captureFluid(LevelAccessor world, double x, double y, double z, CallbackInfo ci) {
         world.getBlockEntity(BlockPos.containing(x, y, z)).getCapability(ForgeCapabilities.FLUID_HANDLER).ifPresent(handler -> {
             FluidStack fluid = handler.getFluidInTank(0);
             realFluid = fluid.isEmpty() ? null : fluid.getFluid();
@@ -55,7 +55,7 @@ public class FuelTanksTickProcedureMixin {
             ordinal = 4
         )
     )
-    private static BlockPos redirectBlockPos(double nx, double ny, double nz, LevelAccessor world, double x, double y, double z) {
+    private static BlockPos wadditions$injectBlockPos(double nx, double ny, double nz, LevelAccessor world, double x, double y, double z) {
         neighbor = BlockPos.containing(nx, ny, nz);
         return neighbor;
     }
@@ -68,7 +68,7 @@ public class FuelTanksTickProcedureMixin {
         ),
         remap = false
     )
-    private static boolean redirectIsFluidEqual(FluidStack fluid1, FluidStack fluid2, LevelAccessor world, double x, double y, double z) {
+    private static boolean wadditions$isFluidEqual(FluidStack fluid1, FluidStack fluid2, LevelAccessor world, double x, double y, double z) {
         return fluid2.getFluid() == CrustyChunksModFluids.KEROSENE.get();
     }
 
@@ -78,7 +78,7 @@ public class FuelTanksTickProcedureMixin {
         at = @At(value = "STORE"),
         remap = false
     )
-    private static double modifyAmount(double original, LevelAccessor world, double x, double y, double z) {
+    private static double wadditions$amount(double original, LevelAccessor world, double x, double y, double z) {
         return neighbor == null ? 0 : Optional
             .ofNullable(world.getBlockEntity(neighbor))
             .map(blockEntity -> blockEntity
@@ -97,7 +97,7 @@ public class FuelTanksTickProcedureMixin {
         ),
         remap = false
     )
-    private static int redirectFill(IFluidHandler handler, FluidStack fluid, FluidAction action) {
+    private static int wadditions$fill(IFluidHandler handler, FluidStack fluid, FluidAction action) {
         return handler.fill(new FluidStack(realFluid, fluid.getAmount()), action);
     }
 }

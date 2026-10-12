@@ -13,5 +13,5 @@ import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 @Mixin(remap = false, value = FireboxBlockEntity.class)
 public interface FireboxBlockEntityAccessor {
     @Accessor("stacks")
-    NonNullList<ItemStack> getStacks();
+    NonNullList<ItemStack> wadditions$getStacks();
 }

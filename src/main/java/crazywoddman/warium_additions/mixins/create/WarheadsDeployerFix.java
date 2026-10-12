@@ -34,7 +34,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.simibubi.create.content.kinetics.base.DirectionalAxisKineticBlock;
 import com.simibubi.create.content.kinetics.deployer.DeployerFakePlayer;
 
-// TODO: fix VS grids placement
 @Restriction(require = @Condition("create"))
 @Mixin({
     OrdinanceClusterWarheadBlock.class,
@@ -60,7 +59,7 @@ public class WarheadsDeployerFix {
         at = @At("HEAD"),
         cancellable = true
     )
-    private void customPlacement(BlockPlaceContext context, CallbackInfoReturnable<BlockState> cir) {
+    private void wadditions$getStateForPlacement(BlockPlaceContext context, CallbackInfoReturnable<BlockState> cir) {
         if (context.getPlayer() != null && context.getPlayer().getClass().equals(DeployerFakePlayer.class)) {
             Direction deployerFacing = context.getHorizontalDirection();
             Direction placeFace = context.getClickedFace();

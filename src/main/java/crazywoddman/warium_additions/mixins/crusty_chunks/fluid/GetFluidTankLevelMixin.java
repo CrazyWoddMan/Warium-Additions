@@ -19,7 +19,7 @@ public class GetFluidTankLevelMixin {
         ),
         remap = false
     )
-    private static int redirectPut(FluidStack fluid, AtomicInteger integer, int tank, IFluidHandler handler) {
+    private static int wadditions$getAmount(FluidStack fluid, AtomicInteger integer, int tank, IFluidHandler handler) {
         int amount = fluid.getAmount();
         return handler.getTankCapacity(0) > amount ? 0 : amount;
     }

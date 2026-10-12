@@ -3,9 +3,9 @@ package crazywoddman.warium_additions.compat.create.blocks.converters;
 import com.simibubi.create.content.kinetics.base.DirectionalKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
 
-import crazywoddman.warium_additions.compat.create.WariumCreateBlockEntities;
-import crazywoddman.warium_additions.data.WariumAdditionsTags;
-import crazywoddman.warium_additions.compat.create.Shaper;
+import crazywoddman.warium_additions.data.WadditionsTags;
+import crazywoddman.warium_additions.compat.create.blocks.Shaper;
+import crazywoddman.warium_additions.compat.create.blocks.WariumCreateBlockEntities;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.math.VoxelShaper;
 import net.minecraft.core.BlockPos;
@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-// TODO add vertical placement
 public class KineticConverterBlock extends DirectionalKineticBlock implements IBE<KineticConverterBlockEntity> {
     public static final VoxelShaper SHAPE;
     static {
@@ -60,8 +59,11 @@ public class KineticConverterBlock extends DirectionalKineticBlock implements IB
             for (Direction side : Iterate.directions) {
                 BlockState state = context.getLevel().getBlockState(context.getClickedPos().relative(side));
 
-                if (state.is(WariumAdditionsTags.Blocks.KINETIC_OUTPUT_FRONT) &&
-                    state.getValue(state.hasProperty(BlockStateProperties.FACING) ? BlockStateProperties.FACING : BlockStateProperties.HORIZONTAL_FACING) == side.getOpposite()
+                if (state.is(WadditionsTags.Blocks.KINETIC_OUTPUT_FRONT)
+                 && state.getOptionalValue(BlockStateProperties.FACING)
+                         .or(() -> state.getOptionalValue(BlockStateProperties.HORIZONTAL_FACING))
+                         .map(facing -> facing == side.getOpposite())
+                         .orElse(false)
                 ) {
                     if (preferred == null) {
                         preferred = side;

@@ -7,7 +7,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraft.world.level.LevelAccessor;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 
-import crazywoddman.warium_additions.config.Config;
+import crazywoddman.warium_additions.config.WadditionsConfig;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 
@@ -25,10 +25,10 @@ public class OilFireboxUpdateProcedureMixin {
         at = @At("HEAD"),
         remap = false
     )
-    private static void setHeatLevel(LevelAccessor world, double x, double y, double z, CallbackInfo ci) {
+    private static void wadditions$execute(LevelAccessor world, double x, double y, double z, CallbackInfo ci) {
         BlockPos pos = BlockPos.containing(x, y, z);
         BlockState state = world.getBlockState(pos);
-        BlazeBurnerBlock.HeatLevel requiredHeat = BlazeBurnerBlock.HeatLevel.valueOf(Config.SERVER.keroseneFireboxHeatLevel.get());
+        BlazeBurnerBlock.HeatLevel requiredHeat = BlazeBurnerBlock.HeatLevel.valueOf(WadditionsConfig.KEROSENE_FIREBOX_HEAT.get());
         BlazeBurnerBlock.HeatLevel currentHeat = state.getValue(BlazeBurnerBlock.HEAT_LEVEL);
 
         if (world.getBlockEntity(pos).getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null).getFluidInTank(0).getAmount() > 0) {

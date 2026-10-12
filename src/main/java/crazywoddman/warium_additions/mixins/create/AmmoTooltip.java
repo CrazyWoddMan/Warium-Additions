@@ -7,6 +7,7 @@ import net.mcreator.crustychunks.block.entity.AutocannonDrumBlockEntity;
 import net.mcreator.crustychunks.block.entity.HeavyMachineGunBlockEntity;
 import net.mcreator.crustychunks.block.entity.LightMachineGunBlockEntity;
 import net.mcreator.crustychunks.block.entity.MachineGunBlockEntity;
+import net.mcreator.crustychunks.block.entity.MinigunBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -21,7 +22,13 @@ import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import java.util.List;
 
 @Restriction(require = @Condition("create"))
-@Mixin({AutocannonDrumBlockEntity.class, MachineGunBlockEntity.class, LightMachineGunBlockEntity.class, HeavyMachineGunBlockEntity.class})
+@Mixin({
+    AutocannonDrumBlockEntity.class,
+    MachineGunBlockEntity.class,
+    LightMachineGunBlockEntity.class,
+    HeavyMachineGunBlockEntity.class,
+    MinigunBlockEntity.class
+})
 public abstract class AmmoTooltip implements IHaveGoggleInformation {
 
     @Override
@@ -52,7 +59,7 @@ public abstract class AmmoTooltip implements IHaveGoggleInformation {
                             ? "huge_bullet"
                             : "small_shell";
                         case "light_machine_gun" -> "bullet";
-                        case "machine_gun" -> "large_bullet";
+                        case "machine_gun", "minigun" -> "large_bullet";
                         default -> "extra_large_bullet";
                     })
                     .withStyle(ChatFormatting.GRAY)

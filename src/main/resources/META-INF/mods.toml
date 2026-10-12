@@ -36,13 +36,6 @@ license="MIT"
     side="BOTH"
 	
 [[dependencies.${mod_id}]]
-    modId="ponder"
-    mandatory=true
-    versionRange="[0,)"
-    ordering="NONE"
-    side="CLIENT"
-	
-[[dependencies.${mod_id}]]
     modId="create"
     mandatory=false
     versionRange="[${create_version},)"
@@ -50,7 +43,7 @@ license="MIT"
     side="BOTH"
 	
 [[dependencies.${mod_id}]]
-    modId="wariumpj"
+    modId="warium_ponder_jei"
     mandatory=false
     versionRange="[${warium_ponder_jei_version},)"
     ordering="NONE"

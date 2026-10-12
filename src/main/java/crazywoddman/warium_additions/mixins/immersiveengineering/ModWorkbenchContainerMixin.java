@@ -22,7 +22,7 @@ public class ModWorkbenchContainerMixin {
             target = "Lblusunrize/immersiveengineering/common/gui/ModWorkbenchContainer;clientInventory:Lnet/minecraftforge/items/ItemStackHandler;"
         )
     )
-    private ItemStackHandler redirectClientInventory(ModWorkbenchContainer instance) {
+    private ItemStackHandler wadditions$rebindSlots(ModWorkbenchContainer instance) {
         return new ItemStackHandler(34);
     }
 
@@ -30,7 +30,7 @@ public class ModWorkbenchContainerMixin {
         method = "rebindSlots",
         constant = @Constant(intValue = 20)
     )
-    private int modifyMaxNumDynamicSlotsRebind(int value) {
+    private int wadditions$rebindSlots(int value) {
         return 33;
     }
 }

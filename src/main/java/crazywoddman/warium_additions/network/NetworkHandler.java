@@ -2,9 +2,8 @@ package crazywoddman.warium_additions.network;
 
 import java.util.function.Function;
 
-import crazywoddman.warium_additions.WariumAdditions;
+import crazywoddman.warium_additions.utils.WadditionsUtil;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -14,7 +13,7 @@ public class NetworkHandler {
     private static int packetId = 0;
 
     protected static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-        ResourceLocation.fromNamespaceAndPath(WariumAdditions.MODID, "main"),
+        WadditionsUtil.location("main"),
         () -> PROTOCOL_VERSION,
         PROTOCOL_VERSION::equals,
         PROTOCOL_VERSION::equals
@@ -22,11 +21,14 @@ public class NetworkHandler {
     
     public static void register() {
         register(ConfigSyncPacket.class, ConfigSyncPacket::decode, NetworkDirection.PLAY_TO_SERVER);
+        register(ShootPacket.class, ShootPacket::decode, NetworkDirection.PLAY_TO_SERVER);
+        register(AimPacket.class, AimPacket::decode, NetworkDirection.PLAY_TO_SERVER);
+        register(BoltPacket.class, BoltPacket::decode, NetworkDirection.PLAY_TO_SERVER);
     }
 
-    private static <T extends AbstractPacket> void register(Class<T> clazz, Function<FriendlyByteBuf, T> decoder, NetworkDirection direction) {
+    private static <T extends Packet> void register(Class<T> clazz, Function<FriendlyByteBuf, T> decoder, NetworkDirection direction) {
         CHANNEL.messageBuilder(clazz, packetId++, direction)
-            .encoder(AbstractPacket::encode)
+            .encoder(Packet::encode)
             .decoder(decoder)
             .consumerMainThread((packet, context) -> packet.handle(context))
             .add();

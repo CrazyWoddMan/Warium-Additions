@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " a ",
+    "bcb",
+    " a "
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:ingots/steel"
+    },
+    "b": {
+      "tag": "forge:glass_panes"
+    },
+    "c": {
+      "item": "crusty_chunks:brass_fitting"
+    }
+  },
+  "result": {
+    "item": "crusty_chunks:fluid_conveyor",
+    "count": 4
+  }
+}

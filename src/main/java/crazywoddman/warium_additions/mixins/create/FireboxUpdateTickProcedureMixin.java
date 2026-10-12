@@ -9,7 +9,7 @@ import net.minecraft.world.level.LevelAccessor;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel;
 
-import crazywoddman.warium_additions.config.Config;
+import crazywoddman.warium_additions.config.WadditionsConfig;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 
@@ -26,19 +26,19 @@ public class FireboxUpdateTickProcedureMixin {
         method = "execute",
         at = @At("HEAD")
     )
-    private static void setHeatLevel(LevelAccessor world, double x, double y, double z, CallbackInfo ci) {
+    private static void wadditions$execute(LevelAccessor world, double x, double y, double z, CallbackInfo ci) {
         BlockPos pos = BlockPos.containing(x, y, z);
         BlockState state = world.getBlockState(pos);
         boolean hasCoal = false;
 
-        for (ItemStack stack : ((FireboxBlockEntityAccessor)world.getBlockEntity(pos)).getStacks()) {
+        for (ItemStack stack : ((FireboxBlockEntityAccessor)world.getBlockEntity(pos)).wadditions$getStacks()) {
             if (!stack.isEmpty() && (stack.getItem() == Items.COAL || stack.getItem() == Items.COAL)) {
                 hasCoal = true;
                 break;
             }
         }
 
-        BlazeBurnerBlock.HeatLevel requiredHeat = HeatLevel.valueOf(Config.SERVER.fireboxHeatLevel.get());
+        BlazeBurnerBlock.HeatLevel requiredHeat = HeatLevel.valueOf(WadditionsConfig.FIREBOX_HEAT.get());
         BlazeBurnerBlock.HeatLevel currentHeat = state.getValue(BlazeBurnerBlock.HEAT_LEVEL);
 
         if (hasCoal) {

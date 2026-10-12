@@ -1,7 +1,7 @@
 package crazywoddman.warium_additions.compat.create.blocks.converters;
 
-import crazywoddman.warium_additions.config.Config;
-import crazywoddman.warium_additions.util.WariumAdditionsUtil;
+import crazywoddman.warium_additions.config.WadditionsConfig;
+import crazywoddman.warium_additions.utils.WadditionsUtil;
 
 import com.simibubi.create.content.kinetics.KineticNetwork;
 import com.simibubi.create.content.kinetics.base.IRotate.SpeedLevel;
@@ -23,9 +23,8 @@ public class RotationConverterBlockEntity extends SpeedGaugeBlockEntity {
         super(type, pos, state);
     }
 
-    private final int kineticToStressRatio = Config.SERVER.kineticToStressRatio.get();
-    private final int kineticToSpeedRatio = Config.SERVER.kineticToSpeedRatio.get();
-    private final int maxThrottle = Config.SERVER.maxThrottle.get();
+    private final int kineticToStressRatio = WadditionsConfig.KINETIC_TO_STRESS.get();
+    private final int kineticToSpeedRatio = WadditionsConfig.KINETIC_TO_SPEED.get();
     private float lastThrottle;
     private int lastSignal;
 
@@ -39,7 +38,7 @@ public class RotationConverterBlockEntity extends SpeedGaugeBlockEntity {
         
         BlockPos pos = getBlockPos();
         int signal = this.level.getBestNeighborSignal(pos);
-        float throttle = WariumAdditionsUtil.getThrottle(this).orElse((double)this.maxThrottle).floatValue();
+        float throttle = WadditionsUtil.getThrottle(this).orElse((double)WadditionsUtil.MAX_THROTTLE).floatValue();
 
         if (this.lastThrottle != throttle || this.lastSignal != signal) {
             this.lastThrottle = throttle;
@@ -61,7 +60,7 @@ public class RotationConverterBlockEntity extends SpeedGaugeBlockEntity {
     @Override
 	public void onSpeedChanged(float prevSpeed) {
         super.onSpeedChanged(prevSpeed);
-		float speed = Math.round(Math.abs(scaleFromSignal(getSpeed())) / this.maxThrottle * this.lastThrottle * 10) / 10;
+		float speed = Math.round(Math.abs(scaleFromSignal(getSpeed())) / WadditionsUtil.MAX_THROTTLE * this.lastThrottle * 10) / 10;
         getPersistentData().putDouble("KineticPower", speed / this.kineticToSpeedRatio);
         this.dialTarget = getDialTarget(speed);
         this.color = Color.mixColors(SpeedLevel.of(speed).getColor(), 0xffffff, .25f);
@@ -70,7 +69,7 @@ public class RotationConverterBlockEntity extends SpeedGaugeBlockEntity {
 
     @Override
     public float calculateStressApplied() {
-        return this.lastStressApplied = Math.round(scaleFromSignal(this.kineticToStressRatio) / this.kineticToSpeedRatio / this.maxThrottle * this.lastThrottle);
+        return this.lastStressApplied = Math.round(scaleFromSignal(this.kineticToStressRatio) / this.kineticToSpeedRatio / WadditionsUtil.MAX_THROTTLE * this.lastThrottle);
     }
 
     @Override
@@ -81,7 +80,7 @@ public class RotationConverterBlockEntity extends SpeedGaugeBlockEntity {
 		CreateLang.translate("gui.speedometer.title")
 			.style(ChatFormatting.GRAY)
 			.forGoggles(tooltip);
-		SpeedLevel.getFormattedSpeedText(scaleFromSignal(getSpeed()) / this.maxThrottle * this.lastThrottle, this.overStressed)
+		SpeedLevel.getFormattedSpeedText(scaleFromSignal(getSpeed()) / WadditionsUtil.MAX_THROTTLE * this.lastThrottle, this.overStressed)
 			.forGoggles(tooltip);
         addStressImpactStats(tooltip, calculateStressApplied());
 

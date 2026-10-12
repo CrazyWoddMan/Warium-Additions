@@ -4,8 +4,8 @@ import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.content.kinetics.base.DirectionalKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
 
-import crazywoddman.warium_additions.compat.create.WariumCreateBlockEntities;
-import crazywoddman.warium_additions.compat.create.Shaper;
+import crazywoddman.warium_additions.compat.create.blocks.Shaper;
+import crazywoddman.warium_additions.compat.create.blocks.WariumCreateBlockEntities;
 import net.createmod.catnip.math.VoxelShaper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

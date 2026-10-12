@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "forge:charcoal"
+      "item": "minecraft:charcoal"
     },
     {
       "item": "crusty_chunks:nitrate"
@@ -12,7 +12,7 @@
       "item": "crusty_chunks:nitrate"
     },
     {
-      "tag": "forge:charcoal"
+      "item": "minecraft:charcoal"
     },
     {
       "tag": "forge:dusts/sulfur"
@@ -21,7 +21,7 @@
       "tag": "forge:dusts/sulfur"
     },
     {
-      "tag": "forge:charcoal"
+      "item": "minecraft:charcoal"
     }
   ],
   "result": {

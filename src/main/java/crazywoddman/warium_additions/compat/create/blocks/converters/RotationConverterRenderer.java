@@ -17,6 +17,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 
+@SuppressWarnings("unused") // TODO
 public class RotationConverterRenderer extends KineticBlockEntityRenderer<RotationConverterBlockEntity> {
 
     public RotationConverterRenderer(BlockEntityRendererProvider.Context context) {
@@ -28,8 +29,7 @@ public class RotationConverterRenderer extends KineticBlockEntityRenderer<Rotati
         Direction facing = state.getValue(RotationConverterBlock.FACING);
         return CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF, state, facing.getOpposite());
     }
-
-    // TODO: God have mercy
+    
     @Override
     protected void renderSafe(RotationConverterBlockEntity blockEntity, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         if (VisualizationManager.supportsVisualization(blockEntity.getLevel()))

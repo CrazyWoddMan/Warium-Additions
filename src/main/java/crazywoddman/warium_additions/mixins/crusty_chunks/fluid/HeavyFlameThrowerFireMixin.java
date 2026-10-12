@@ -24,7 +24,7 @@ public class HeavyFlameThrowerFireMixin {
         ),
         remap = false
     )
-    private static boolean redirectIsFluidEqual(FluidStack fluid1, FluidStack fluid2, LevelAccessor world, double x, double y, double z) {
+    private static boolean wadditions$isFluidEqual(FluidStack fluid1, FluidStack fluid2, LevelAccessor world, double x, double y, double z) {
         return true;
     }
 }
